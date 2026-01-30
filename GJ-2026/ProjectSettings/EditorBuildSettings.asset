@@ -12,6 +12,12 @@ EditorBuildSettings:
     path: Assets/Scenes/TobisGameScene.unity
     guid: a037cfc2514644320bbde80cad402752
   - enabled: 1
+    path: Assets/Scenes/Dani.unity
+    guid: 109fbd125459c7ff3ae200e5a539992c
+  - enabled: 1
+    path: Assets/Scenes/GameScene.unity
+    guid: 82ca0541fe304451c93ecd8eff1d5e8e
+  - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects:

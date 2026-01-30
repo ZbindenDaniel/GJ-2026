@@ -13,6 +13,8 @@ public class MainMenuBootstrap : MonoBehaviour
     private const string EventSystemName = "EventSystem";
 
     [SerializeField] private string gameSceneName = "SampleScene";
+    [SerializeField] private string tobisSceneName = "TobisGameScene";
+    [SerializeField] private string daniSceneName = "Dani";
 
     private Canvas menuCanvas;
     private TextMeshProUGUI testStatusLabel;
@@ -35,8 +37,8 @@ public class MainMenuBootstrap : MonoBehaviour
         Button startButton = CreateButton(panel, "I want to leave the party", new Vector2(0f, 100f), "StartButton");
         startButton.onClick.AddListener(StartGame);
 
-        Button testButton = CreateButton(panel, "Run Test", new Vector2(0f, 0f), "TestButton");
-        testButton.onClick.AddListener(RunTest);
+        Button testButton = CreateButton(panel, "Test Button 1 (Tobis Scene)", new Vector2(0f, 0f), "TestButton");
+        testButton.onClick.AddListener(LoadTobisScene);
 
         Button exitButton = CreateButton(panel, "I cant get out. Please just end it.", new Vector2(0f, -100f), "ExitButton");
         exitButton.onClick.AddListener(ExitGame);
@@ -64,6 +66,22 @@ public class MainMenuBootstrap : MonoBehaviour
         {
             testStatusLabel.enabled = true;
             testStatusLabel.text = "Test: OK";
+        }
+    }
+
+    private void LoadTobisScene()
+    {
+        if (!string.IsNullOrWhiteSpace(tobisSceneName))
+        {
+            SceneManager.LoadScene(tobisSceneName);
+        }
+    }
+
+    private void LoadDaniScene()
+    {
+        if (!string.IsNullOrWhiteSpace(daniSceneName))
+        {
+            SceneManager.LoadScene(daniSceneName);
         }
     }
 
@@ -191,7 +209,13 @@ public class MainMenuBootstrap : MonoBehaviour
         Button testButton = panelTransform.Find("TestButton")?.GetComponent<Button>();
         if (testButton != null)
         {
-            testButton.onClick.AddListener(RunTest);
+            testButton.onClick.AddListener(LoadTobisScene);
+        }
+
+        Button testButton2 = panelTransform.Find("Test Button 2 (Danis Scene)")?.GetComponent<Button>();
+        if (testButton2 != null)
+        {
+            testButton2.onClick.AddListener(LoadDaniScene);
         }
 
         Button exitButton = panelTransform.Find("ExitButton")?.GetComponent<Button>();
