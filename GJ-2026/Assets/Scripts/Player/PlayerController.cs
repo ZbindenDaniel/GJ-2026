@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody rb;
     private float pitch;
+    private float yaw;
 
     private void Awake()
     {
@@ -59,19 +60,14 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         Vector2 look = lookAction != null ? lookAction.action.ReadValue<Vector2>() : Vector2.zero;
-        float yaw = look.x * lookSensitivity;
-        float pitchDelta = -look.y * lookSensitivity;
+        yaw += look.x * lookSensitivity;
+        pitch = Mathf.Clamp(pitch - look.y * lookSensitivity, minPitch, maxPitch);
 
-        if (Mathf.Abs(yaw) > 0f)
-        {
-            transform.Rotate(0f, yaw, 0f, Space.World);
-        }
-
-        pitch = Mathf.Clamp(pitch + pitchDelta, minPitch, maxPitch);
+        transform.rotation = Quaternion.Euler(0f, yaw, 0f);
 
         if (cameraPivot != null)
         {
-            cameraPivot.localEulerAngles = new Vector3(pitch, 0f, 0f);
+            cameraPivot.localRotation = Quaternion.Euler(pitch, 0f, 0f);
         }
     }
 
