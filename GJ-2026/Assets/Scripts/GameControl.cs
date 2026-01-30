@@ -17,11 +17,14 @@ public class GameControl : MonoBehaviour
     private ElevatorManager elevatorManager;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Awake()
+    void Start()
     {
-        npcManager = new NPCManager();
-        elevatorManager = new ElevatorManager();
-        
+        npcManager = gameObject.AddComponent<NPCManager>();
+        npcManager.Init();
+
+        elevatorManager = gameObject.AddComponent<ElevatorManager>();
+        elevatorManager.Init();
+
         // load all submodules
 
         // UI Manager: open UI
