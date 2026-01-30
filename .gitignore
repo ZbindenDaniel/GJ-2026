@@ -10,7 +10,7 @@
 /GJ-2026/[Bb]uilds/
 /GJ-2026/[Ll]ogs/
 /GJ-2026/[Uu]ser[Ss]ettings/
-*.log
+/GJ-2026/[Gg]*.log
 
 # By default unity supports Blender asset imports, *.blend1 blender files do not need to be commited to version control.
 *.blend1
