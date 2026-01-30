@@ -23,11 +23,8 @@ public class MainMenuBootstrap : MonoBehaviour
         if (existingCanvas != null)
         {
             menuCanvas = existingCanvas.GetComponent<Canvas>();
-            Transform statusTransform = existingCanvas.transform.Find("MenuPanel/TestStatusLabel");
-            if (statusTransform != null)
-            {
-                testStatusLabel = statusTransform.GetComponent<TextMeshProUGUI>();
-            }
+            EnsureEventSystem();
+            WireExistingUI(existingCanvas.transform);
             return;
         }
 
@@ -35,13 +32,13 @@ public class MainMenuBootstrap : MonoBehaviour
         menuCanvas = CreateCanvas();
 
         RectTransform panel = CreatePanel(menuCanvas.transform);
-        Button startButton = CreateButton(panel, "I want to leave the party", new Vector2(0f, 80f));
+        Button startButton = CreateButton(panel, "I want to leave the party", new Vector2(0f, 100f), "StartButton");
         startButton.onClick.AddListener(StartGame);
 
-        Button testButton = CreateButton(panel, "Run Test", new Vector2(0f, 0f));
+        Button testButton = CreateButton(panel, "Run Test", new Vector2(0f, 0f), "TestButton");
         testButton.onClick.AddListener(RunTest);
 
-        Button exitButton = CreateButton(panel, "I cant get out. Please just end it.", new Vector2(0f, -80f));
+        Button exitButton = CreateButton(panel, "I cant get out. Please just end it.", new Vector2(0f, -100f), "ExitButton");
         exitButton.onClick.AddListener(ExitGame);
 
         testStatusLabel = CreateLabel(panel, "Test: Ready", new Vector2(0f, -140f), 18, "TestStatusLabel");
@@ -138,9 +135,9 @@ public class MainMenuBootstrap : MonoBehaviour
         return rectTransform;
     }
 
-    private static Button CreateButton(RectTransform parent, string label, Vector2 position)
+    private static Button CreateButton(RectTransform parent, string label, Vector2 position, string name)
     {
-        GameObject buttonObject = new GameObject(label + "Button", typeof(RectTransform), typeof(Image), typeof(Button));
+        GameObject buttonObject = new GameObject(name, typeof(RectTransform), typeof(Image), typeof(Button));
         buttonObject.transform.SetParent(parent, false);
 
         Image image = buttonObject.GetComponent<Image>();
@@ -175,5 +172,42 @@ public class MainMenuBootstrap : MonoBehaviour
         rectTransform.anchoredPosition = position;
 
         return text;
+    }
+
+    private void WireExistingUI(Transform canvasTransform)
+    {
+        Transform panelTransform = canvasTransform.Find("MenuPanel");
+        if (panelTransform == null)
+        {
+            return;
+        }
+
+        Button startButton = panelTransform.Find("StartButton")?.GetComponent<Button>();
+        if (startButton != null)
+        {
+            startButton.onClick.AddListener(StartGame);
+        }
+
+        Button testButton = panelTransform.Find("TestButton")?.GetComponent<Button>();
+        if (testButton != null)
+        {
+            testButton.onClick.AddListener(RunTest);
+        }
+
+        Button exitButton = panelTransform.Find("ExitButton")?.GetComponent<Button>();
+        if (exitButton != null)
+        {
+            exitButton.onClick.AddListener(ExitGame);
+        }
+
+        Transform statusTransform = panelTransform.Find("TestStatusLabel");
+        if (statusTransform != null)
+        {
+            testStatusLabel = statusTransform.GetComponent<TextMeshProUGUI>();
+            if (testStatusLabel != null)
+            {
+                testStatusLabel.enabled = false;
+            }
+        }
     }
 }
