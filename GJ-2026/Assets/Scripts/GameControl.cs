@@ -3,16 +3,32 @@ using UnityEngine;
 
 public class GameControl : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        Console.WriteLine("Game Started");
-        
-    }
+    // [Header("Submodules")]
+    // TODO: private AudioManager audioManager;
 
-    // Update is called once per frame
-    void Update()
+    //TODO: tobi private UIManager uiManager;
+
+    // TODO: tobi private EnvironmentManager envManager;
+
+    // TODO: tobi private PlayerManager playerManager;
+
+    private NPCManager npcManager;
+
+    private ElevatorManager elevatorManager;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Awake()
     {
+        npcManager = new NPCManager();
+        elevatorManager = new ElevatorManager();
         
+        // load all submodules
+
+        // UI Manager: open UI
+        // Audio Manager: play background music
+
+        // initialize whatever is needed
+
+        Debug.Log("GameControl started.");
     }
 }

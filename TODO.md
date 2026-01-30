@@ -8,29 +8,29 @@
 - master control
 - Trackt progress
 
-### EnvironmentControl (Tobi)
+### EnvironmentManager (Tobi)
 - masken laden
 . Räume/props laden
 - NPC laden
 
-### PlayerController (Tobi)
+### PlayerManager (Tobi)
 
 - walking, looking around
 - mask selection
 - (emotes)
 
-### NPCControl (Dani)
+### NPCManager (Dani)
 
 - body animations
 - face animations (schauen, hints)
 
-### ElevatorControl (Dani, bugs: Tobi)
+### ElevatorManager (Dani, bugs: Tobi)
 
 - door animations
 - triggering sound
 
 
-### UI (Tobi)
+### UiManager (Tobi)
 
 - start game. startscreen
 - pause menu: exit, restart
