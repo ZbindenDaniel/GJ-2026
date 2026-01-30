@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 4d16d8ad51b714161b0c3496f7f71076
   - enabled: 1
+    path: Assets/Scenes/TobisGameScene.unity
+    guid: a037cfc2514644320bbde80cad402752
+  - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects:
