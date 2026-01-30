@@ -35,13 +35,16 @@ public class MainMenuBootstrap : MonoBehaviour
         menuCanvas = CreateCanvas();
 
         RectTransform panel = CreatePanel(menuCanvas.transform);
-        Button startButton = CreateButton(panel, "Start Game", new Vector2(0f, 50f));
+        Button startButton = CreateButton(panel, "I want to leave the party", new Vector2(0f, 80f));
         startButton.onClick.AddListener(StartGame);
 
-        Button testButton = CreateButton(panel, "Run Test", new Vector2(0f, -20f));
+        Button testButton = CreateButton(panel, "Run Test", new Vector2(0f, 0f));
         testButton.onClick.AddListener(RunTest);
 
-        testStatusLabel = CreateLabel(panel, "Test: Ready", new Vector2(0f, -100f), 18, "TestStatusLabel");
+        Button exitButton = CreateButton(panel, "I cant get out. Please just end it.", new Vector2(0f, -80f));
+        exitButton.onClick.AddListener(ExitGame);
+
+        testStatusLabel = CreateLabel(panel, "Test: Ready", new Vector2(0f, -140f), 18, "TestStatusLabel");
         testStatusLabel.enabled = false;
     }
 
@@ -65,6 +68,15 @@ public class MainMenuBootstrap : MonoBehaviour
             testStatusLabel.enabled = true;
             testStatusLabel.text = "Test: OK";
         }
+    }
+
+    private void ExitGame()
+    {
+        Debug.Log("Exit button pressed.");
+        Application.Quit();
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
     }
 
     private static void EnsureEventSystem()
