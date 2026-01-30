@@ -150,7 +150,7 @@ GameObject:
   - component: {fileID: 3519383475679531390}
   - component: {fileID: 2111551034413944306}
   - component: {fileID: 8746998326958928657}
-  - component: {fileID: 8182021470304262003}
+  - component: {fileID: 4884486126607096607}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -281,7 +281,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &8182021470304262003
+--- !u!114 &4884486126607096607
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -290,7 +290,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8177708246003185148}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dc9fe18a940c49ba93dae97ced0ffdf, type: 3}
+  m_Script: {fileID: 11500000, guid: db4f7dda85786497a889b4b516033db1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   moveSpeed: 5
