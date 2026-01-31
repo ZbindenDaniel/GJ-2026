@@ -32,7 +32,9 @@ public class NpcControl : MonoBehaviour
     [SerializeField] private float _headShakeAngle = 15f;
     [SerializeField] private float _headShakeSpeed = 2f;
     [SerializeField] private float _playerDetectionDistance = 4f;
-    [SerializeField] private float _viewUpdateInterval = 0.5f;
+    [SerializeField] private float _playerAwarenessRange = 6f;
+    [SerializeField] private float _viewUpdateInterval = 1.5f;
+    [SerializeField] private float _reactionInterval = 2f;
     [SerializeField] private float _randomLookRange = 10f;
     [SerializeField] private int _lookAtPlayerCycle = 20;
     [SerializeField] private int _idleResetCycle = 30;
@@ -67,6 +69,7 @@ public class NpcControl : MonoBehaviour
     private float viewTimer;
     private int viewCycleCount;
     private bool lookingAtPlayer;
+    private float nextReactionTime;
 
     void Start()
     {
@@ -86,7 +89,14 @@ public class NpcControl : MonoBehaviour
     {
         if (lookingAtPlayer && player != null)
         {
-            targetPoint = player.position;
+            if (IsPlayerInAwarenessRange())
+            {
+                targetPoint = player.position;
+            }
+            else
+            {
+                lookingAtPlayer = false;
+            }
         }
         // Smoothly rotate towards the target point
         Vector3 direction = (targetPoint - transform.position).normalized;
@@ -103,13 +113,18 @@ public class NpcControl : MonoBehaviour
         {
             if (IsPlayer(hit.collider))
             {
-                try
+                if (Time.time >= nextReactionTime)
                 {
-                    EvaluateMask(hit.collider);
-                }
-                catch (System.Exception ex)
-                {
-                    Debug.LogWarning($"{name} failed to evaluate mask during raycast: {ex.Message}");
+                    nextReactionTime = Time.time + _reactionInterval;
+
+                    try
+                    {
+                        EvaluateMask(hit.collider);
+                    }
+                    catch (System.Exception ex)
+                    {
+                        Debug.LogWarning($"{name} failed to evaluate mask during raycast: {ex.Message}");
+                    }
                 }
             }
         }
@@ -637,11 +652,28 @@ public class NpcControl : MonoBehaviour
     {
         if (player != null)
         {
-            LookAtPlayer();
+            if (IsPlayerInAwarenessRange())
+            {
+                LookAtPlayer();
+                return;
+            }
+
+            Debug.Log($"{name} skipped looking at player for {context} because they are out of awareness range.");
             return;
         }
 
         Debug.LogWarning($"{name} has no player assigned for {context}.");
+    }
+
+    private bool IsPlayerInAwarenessRange()
+    {
+        if (player == null)
+        {
+            return false;
+        }
+
+        Vector3 offset = player.position - transform.position;
+        return offset.sqrMagnitude <= _playerAwarenessRange * _playerAwarenessRange;
     }
 
     private void TriggerAnimatorState(NpcMood mood)
