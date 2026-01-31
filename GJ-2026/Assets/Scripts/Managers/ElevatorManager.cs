@@ -1,9 +1,9 @@
-using System.Linq;
+using System;
 using UnityEngine;
 
 public class ElevatorManager : MonoBehaviour
 {
-    private ElevatorControl elevatorControl;
+    private ElevatorControl[] elevatorControls;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -17,16 +17,67 @@ public class ElevatorManager : MonoBehaviour
 
     public void Init()
     {
-        elevatorControl = Object.FindObjectsByType<ElevatorControl>(FindObjectsSortMode.None).Single();
-        if (elevatorControl == null)
+        elevatorControls = Object.FindObjectsByType<ElevatorControl>(FindObjectsSortMode.None);
+        if (elevatorControls == null || elevatorControls.Length == 0)
         {
-            Debug.LogError("ElevatorControl not found in the scene.");
+            Debug.LogError("ElevatorManager did not find any ElevatorControls in the scene.");
             return;
         }
-        elevatorControl.Init();
-        Debug.Log("ElevatorManager initialized. opening doors.");
+        if (elevatorControls.Length != 4)
+        {
+            Debug.LogWarning($"ElevatorManager expected 4 ElevatorControls but found {elevatorControls.Length}.");
+        }
 
-        elevatorControl.OpenDoors();
+        for (int i = 0; i < elevatorControls.Length; i++)
+        {
+            ElevatorControl control = elevatorControls[i];
+            if (control == null)
+            {
+                Debug.LogWarning($"ElevatorManager found a null ElevatorControl at index {i}.");
+                continue;
+            }
+
+            try
+            {
+                control.Init();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"ElevatorManager failed to initialize ElevatorControl at index {i}.", ex);
+                continue;
+            }
+        }
+
+        Debug.Log("ElevatorManager initialized. opening doors.");
+        OpenAllDoors();
         // Initialization code for ElevatorManager
+    }
+
+    private void OpenAllDoors()
+    {
+        if (elevatorControls == null || elevatorControls.Length == 0)
+        {
+            Debug.LogWarning("ElevatorManager tried to open doors without any ElevatorControls available.");
+            return;
+        }
+
+        for (int i = 0; i < elevatorControls.Length; i++)
+        {
+            ElevatorControl control = elevatorControls[i];
+            if (control == null)
+            {
+                Debug.LogWarning($"ElevatorManager cannot open doors for a null ElevatorControl at index {i}.");
+                continue;
+            }
+
+            try
+            {
+                control.OpenDoors();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"ElevatorManager failed to open doors for ElevatorControl at index {i}.", ex);
+            }
+        }
     }
 }

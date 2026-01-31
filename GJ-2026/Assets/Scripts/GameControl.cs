@@ -48,4 +48,24 @@ public class GameControl : MonoBehaviour
     {
         Debug.Log($"GameControl elevator occupancy changed. Player inside: {isInside}");
     }
+
+    public void SetNpcReaction(NpcReactionState reaction)
+    {
+        Debug.Log($"GameControl requested NPC reaction change to: {reaction}");
+
+        try
+        {
+            if (npcManager == null)
+            {
+                Debug.LogError("GameControl cannot set NPC reaction because NPCManager is missing.");
+                return;
+            }
+
+            npcManager.React(reaction);
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"GameControl failed to set NPC reaction: {ex}");
+        }
+    }
 }

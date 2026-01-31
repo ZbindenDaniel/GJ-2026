@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -91,7 +90,7 @@ public class RoomEntryTrigger : MonoBehaviour
             Debug.Log($"RoomEntryTrigger triggering NPC reaction: {_reaction}.", this);
             _npcManager.TriggerRoomReaction(_reaction);
         }
-        catch (Exception ex)
+        catch (System.Exception ex)
         {
             Debug.LogError($"RoomEntryTrigger failed to trigger reaction: {ex}", this);
         }
