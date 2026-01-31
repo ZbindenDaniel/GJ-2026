@@ -8,7 +8,6 @@ This is a Unity game jam project. Details on can be found int [OVERVIEW](OVERVIE
 Constraints:
 
 * Mechanics are not fully defined yet.
-* It may be 2D, 3D, or something hybrid.
 * Development speed > architectural elegance.
 * Code must be understandable and easy to modify under time pressure.
 * No overengineering.

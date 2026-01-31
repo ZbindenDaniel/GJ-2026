@@ -9,11 +9,21 @@ public class ElevatorControl : MonoBehaviour
     private Transform rightDoor;
     private  Vector3 rightDoorTargetPos;
 
+    private Collider elevatorCollider;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     public void Start()
     {
+        elevatorCollider = GetComponent<Collider>();
     }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Collision detected with elevator: " + collision.gameObject.name);
+        
+    }
+
     public void Init()
     {
         leftDoor = transform.Find("door L");
@@ -48,4 +58,5 @@ public class ElevatorControl : MonoBehaviour
         rightDoorTargetPos = new Vector3(0f, 0f, -.5f);
         // Implementation for closing elevator doors
     }
+
 }
