@@ -37,6 +37,10 @@ public class NPCSpamController : MonoBehaviour
         {
             Quaternion rotation = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
             GameObject npc = Instantiate(npcPrefab, positions[i], rotation, npcParent);
+            if (!npc.activeSelf)
+            {
+                npc.SetActive(true);
+            }
             spawnedNpcs.Add(npc);
 
             NpcControl npcControl = npc.GetComponent<NpcControl>();

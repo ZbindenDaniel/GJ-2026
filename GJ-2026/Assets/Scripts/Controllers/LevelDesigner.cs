@@ -94,6 +94,8 @@ public class LevelDesigner : MonoBehaviour
     private static List<MaskOptionData> CreateMaskOptions(List<NpcDesignData> npcs, int attributeCount, int level)
     {
         int maskCount = CalculateMaskCount(level);
+        int maxUnique = GetMaxUniqueMasks(attributeCount);
+        maskCount = Mathf.Min(maskCount, maxUnique);
         List<MaskOptionData> options = new List<MaskOptionData>(maskCount);
 
         if (npcs == null || npcs.Count == 0)
@@ -110,13 +112,15 @@ public class LevelDesigner : MonoBehaviour
 
         options.Add(new MaskOptionData { Mask = mostCommon, FitType = MaskFitType.Best });
 
-        while (options.Count < maskCount)
+        int guard = 0;
+        while (options.Count < maskCount && guard < 200)
         {
             MaskOptionData next = CreateNextMaskOption(mostCommon, attributeCount, options);
             if (used.Add(next.Mask))
             {
                 options.Add(next);
             }
+            guard++;
         }
 
         return options;
@@ -191,6 +195,14 @@ public class LevelDesigner : MonoBehaviour
             mask.EyeColor = EyeColor.None;
         }
         return mask;
+    }
+
+    private static int GetMaxUniqueMasks(int attributeCount)
+    {
+        int shapeCount = 3;
+        int eyeCount = attributeCount >= 2 ? 3 : 1;
+        int patternCount = attributeCount >= 3 ? 3 : 1;
+        return shapeCount * eyeCount * patternCount;
     }
 
     private static MaskAttributes CreatePartialMask(MaskAttributes baseMask, int attributeCount)

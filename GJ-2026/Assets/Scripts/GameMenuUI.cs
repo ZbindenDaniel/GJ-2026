@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+#if ENABLE_INPUT_SYSTEM
+using UnityEngine.InputSystem;
+#endif
 
 public class GameMenuUI : MonoBehaviour
 {
@@ -33,7 +36,11 @@ public class GameMenuUI : MonoBehaviour
 
     private void Update()
     {
+#if ENABLE_INPUT_SYSTEM
+        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
+#else
         if (Input.GetKeyDown(KeyCode.Escape))
+#endif
         {
             ToggleMenu();
         }

@@ -16,10 +16,13 @@ public class MaskSpamController : MonoBehaviour
     [Header("Layout")]
     [SerializeField] private float padding = 24f;
     [SerializeField] private float spacing = 16f;
+    [SerializeField] private float circleRadius = 2.5f;
+    [SerializeField] private float maskYOffset = 3f;
 
     [Header("Testing")]
     [SerializeField] private bool testingMaskCycle = false;
     [SerializeField] private float testingMaskIntervalSeconds = 10f;
+    [SerializeField] private bool logSpawnDetails = true;
 
     private readonly List<GameObject> spawnedMasks = new List<GameObject>();
     private float hideTimer;
@@ -49,8 +52,12 @@ public class MaskSpamController : MonoBehaviour
         lastDesign = design;
         List<MaskOptionData> options = design.AvailableMasks ?? new List<MaskOptionData>();
         int count = Mathf.Clamp(options.Count, MinMasks, MaxMasks);
+        if (logSpawnDetails)
+        {
+            Debug.Log($"MaskSpamController spawning {count} masks (options: {options.Count}).");
+        }
 
-        List<Vector2> positions = GeneratePositions(count, maskParent.rect);
+        List<Vector3> positions = GeneratePositions(count);
         for (int i = 0; i < count; i++)
         {
             GameObject maskObject = Instantiate(maskPrefab, maskParent);
@@ -59,12 +66,24 @@ public class MaskSpamController : MonoBehaviour
             RectTransform rectTransform = maskObject.GetComponent<RectTransform>();
             if (rectTransform != null)
             {
-                rectTransform.anchoredPosition = positions[i];
+                rectTransform.anchoredPosition = new Vector2(positions[i].x, positions[i].y);
+            }
+            else
+            {
+                if (i == 0)
+                {
+                    Debug.LogWarning("MaskSpamController: maskPrefab has no RectTransform. Use a UI prefab (Image/Button) under a Canvas.");
+                }
+                maskObject.transform.localPosition = positions[i];
             }
 
             if (i < options.Count)
             {
                 ApplyMaskData(maskObject, options[i]);
+                if (logSpawnDetails)
+                {
+                    Debug.Log($"Mask {i}: shape={options[i].Mask.Shape}, eye={options[i].Mask.EyeColor}, pattern={options[i].Mask.Pattern}, fit={options[i].FitType}");
+                }
             }
         }
 
@@ -114,42 +133,27 @@ public class MaskSpamController : MonoBehaviour
         spawnedMasks.Clear();
     }
 
-    private List<Vector2> GeneratePositions(int count, Rect rect)
+    private List<Vector3> GeneratePositions(int count)
     {
-        List<Vector2> positions = new List<Vector2>(count);
-        float left = rect.xMin + padding;
-        float right = rect.xMax - padding;
-        float top = rect.yMax - padding;
-        float bottom = rect.yMin + padding;
-
-        float width = right - left;
-        int maxTopSlots = Mathf.Max(1, Mathf.FloorToInt(width / Mathf.Max(1f, spacing)) + 1);
-        int topCount = Mathf.Max(1, Mathf.Min(count, maxTopSlots));
-        float topSpacing = topCount > 1 ? width / (topCount - 1) : 0f;
-
-        for (int i = 0; i < count && i < topCount; i++)
-        {
-            float x = left + topSpacing * i;
-            positions.Add(new Vector2(x, top));
-        }
-
-        int remaining = count - positions.Count;
-        if (remaining <= 0)
+        List<Vector3> positions = new List<Vector3>(count);
+        if (count <= 0)
         {
             return positions;
         }
 
-        int maxSideSlots = Mathf.Max(1, Mathf.FloorToInt(Mathf.Max(0f, top - bottom) / Mathf.Max(1f, spacing)) + 1);
-        int sideSlots = Mathf.Min(Mathf.CeilToInt(remaining / 2f), maxSideSlots);
-        float height = Mathf.Max(0f, top - bottom);
-        float sideSpacing = sideSlots > 1 ? height / (sideSlots - 1) : 0f;
+        float step = 360f / count;
+        float startAngle = 0f;
 
-        for (int i = 0; i < remaining; i++)
+        for (int i = 0; i < count; i++)
         {
-            float y = top - sideSpacing * (i / 2f);
-            bool leftSide = i % 2 == 0;
-            float x = leftSide ? left : right;
-            positions.Add(new Vector2(x, y));
+            float offsetIndex = i == 0 ? 0f : Mathf.Ceil(i / 2f);
+            float direction = (i % 2 == 0) ? -1f : 1f;
+            float angle = startAngle + direction * step * offsetIndex;
+            float radians = angle * Mathf.Deg2Rad;
+
+            float x = Mathf.Sin(radians) * circleRadius;
+            float z = -Mathf.Cos(radians) * circleRadius;
+            positions.Add(new Vector3(x, maskYOffset, z));
         }
 
         return positions;
