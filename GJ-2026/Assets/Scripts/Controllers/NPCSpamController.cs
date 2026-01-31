@@ -4,11 +4,11 @@ using UnityEngine;
 public class NPCSpamController : MonoBehaviour
 {
     // Static tuning knobs (fast jam tweaks)
-    public static Vector3 LevelSize = new Vector3(12f, 0f, 12f);
+    public static Vector3 LevelSize = new Vector3(10f, 0f, 10f);
     public static float MinNpcDistance = 1.5f;
     public static int MaxAttemptsPerNpc = 25;
     public static Vector3 LevelCenter = Vector3.zero;
-    public static float GroundY = 0f;
+    public static float GroundY = 0.5f;
 
     [Header("Prefab")]
     [SerializeField] private GameObject npcPrefab;
@@ -40,6 +40,7 @@ public class NPCSpamController : MonoBehaviour
             if (!npc.activeSelf)
             {
                 npc.SetActive(true);
+                npc.GetComponent<NpcControl>().LookAtPlayer();
             }
             spawnedNpcs.Add(npc);
 
