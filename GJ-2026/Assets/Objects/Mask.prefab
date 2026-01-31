@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2387987995658608084
 Transform:
   m_ObjectHideFlags: 0
@@ -233,6 +233,7 @@ GameObject:
   - component: {fileID: 3900566949689369520}
   - component: {fileID: 1374756056681346463}
   - component: {fileID: 3572008026094774142}
+  - component: {fileID: 6960769959759713755}
   m_Layer: 0
   m_Name: Mask
   m_TagString: Untagged
@@ -334,3 +335,18 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6960769959759713755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8982437066094884216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96460283f6c94f9ab7f8dcccf7cd184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskSelectable
+  highlightObject: {fileID: 977265655857485465}
+  highlightRenderers: []
+  highlightColor: {r: 1, g: 0.9, b: 0.2, a: 1}

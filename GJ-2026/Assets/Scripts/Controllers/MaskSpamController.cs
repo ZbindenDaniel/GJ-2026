@@ -95,21 +95,22 @@ public class MaskSpamController : MonoBehaviour
         }
 
         float primaryRange = Mathf.Abs(primaryZStart - primaryZEnd);
-        int maxPrimary = Mathf.Max(1, Mathf.FloorToInt(primaryRange / Mathf.Max(0.0001f, spacing)));
-        int primaryCount = Mathf.Min(count, maxPrimary);
-        float primaryStep = primaryRange / Mathf.Max(1, primaryCount);
-        if (primaryStep < spacing)
-        {
-            primaryStep = spacing;
-            primaryCount = Mathf.Max(1, Mathf.FloorToInt(primaryRange / primaryStep));
-        }
-
         float direction = primaryZStart >= primaryZEnd ? -1f : 1f;
         float start = primaryZStart;
-        float offset = primaryStep * 0.5f;
+
+        float usableRange = Mathf.Max(0f, primaryRange - 2f * spacing);
+        int maxPrimary = Mathf.Max(1, Mathf.FloorToInt(usableRange / Mathf.Max(0.0001f, spacing)) + 1);
+        int primaryCount = Mathf.Min(count, maxPrimary);
+        float primaryStep = primaryCount > 1 ? usableRange / (primaryCount - 1) : 0f;
+        if (primaryStep < spacing && primaryCount > 1)
+        {
+            primaryStep = spacing;
+            primaryCount = Mathf.Max(1, Mathf.FloorToInt(usableRange / primaryStep) + 1);
+        }
+
         for (int i = 0; i < primaryCount && positions.Count < count; i++)
         {
-            float z = start + direction * (offset + primaryStep * i);
+            float z = start + direction * (spacing + primaryStep * i);
             positions.Add(new Vector3(x, primaryY, z * zDirection));
         }
 

@@ -4,7 +4,6 @@ public class MaskSelectable : MonoBehaviour
 {
     [SerializeField] private GameObject highlightObject;
     [SerializeField] private Renderer[] highlightRenderers;
-    [SerializeField] private SpriteRenderer highlightSprite;
     [SerializeField] private Color highlightColor = new Color(1f, 0.9f, 0.2f, 1f);
 
     private Color[] originalColors;
@@ -15,6 +14,16 @@ public class MaskSelectable : MonoBehaviour
 
     private void Awake()
     {
+        if (highlightObject == null)
+        {
+            highlightObject = FindHighlightChild(transform);
+        }
+
+        if ((highlightRenderers == null || highlightRenderers.Length == 0) && highlightObject != null)
+        {
+            highlightRenderers = highlightObject.GetComponentsInChildren<Renderer>(true);
+        }
+
         if (highlightRenderers != null && highlightRenderers.Length > 0)
         {
             originalColors = new Color[highlightRenderers.Length];
@@ -27,10 +36,6 @@ public class MaskSelectable : MonoBehaviour
         if (highlightObject != null)
         {
             highlightObject.SetActive(false);
-        }
-        if (highlightSprite != null)
-        {
-            highlightSprite.enabled = false;
         }
     }
 
@@ -56,9 +61,9 @@ public class MaskSelectable : MonoBehaviour
         {
             highlightObject.SetActive(active);
         }
-        if (highlightSprite != null)
+        else if (active)
         {
-            highlightSprite.enabled = active;
+            Debug.LogWarning($"MaskSelectable on {name} has no highlightObject assigned or found.");
         }
 
         if (highlightRenderers != null && highlightRenderers.Length > 0)
@@ -71,6 +76,7 @@ public class MaskSelectable : MonoBehaviour
                     continue;
                 }
 
+                renderer.enabled = active;
                 if (active)
                 {
                     renderer.material.color = highlightColor;
@@ -94,5 +100,30 @@ public class MaskSelectable : MonoBehaviour
         SetHighlighted(false);
         gameObject.SetActive(false);
         return true;
+    }
+
+    private static GameObject FindHighlightChild(Transform root)
+    {
+        if (root == null)
+        {
+            return null;
+        }
+
+        for (int i = 0; i < root.childCount; i++)
+        {
+            Transform child = root.GetChild(i);
+            if (child == null)
+            {
+                continue;
+            }
+
+            string name = child.name.ToLowerInvariant();
+            if (name.Contains("highlight") || name.Contains("flare") || name.Contains("outline"))
+            {
+                return child.gameObject;
+            }
+        }
+
+        return null;
     }
 }
