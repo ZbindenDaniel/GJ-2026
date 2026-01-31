@@ -6,7 +6,7 @@ public class RoomEntryTrigger : MonoBehaviour
     [SerializeField] public GameControl GameControl;
     [SerializeField] private float _reactionDelay = 0.5f;
     [SerializeField] private Collider _triggerCollider;
-    [SerializeField] private NpcReactionState _reaction = NpcReactionState.Idle;
+    [SerializeField] private NpcMood _reaction = NpcMood.Idle;
 
     private NPCManager _npcManager;
     private bool _reactionScheduled;

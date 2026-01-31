@@ -17,7 +17,7 @@ public class NPCManager : MonoBehaviour
         // Initialization code for NPCs
     }
 
-    public void TriggerRoomReaction(NpcReactionState reaction)
+    public void TriggerRoomReaction(NpcMood reaction)
     {
         if (npcs == null || npcs.Length == 0)
         {
@@ -63,7 +63,26 @@ public class NPCManager : MonoBehaviour
 
 
 
-        // check npc moods
+        if (npcs != null && npcs.Length > 0)
+        {
+            foreach (var npc in npcs)
+            {
+                if (npc == null)
+                {
+                    Debug.LogWarning("NPCManager FixedUpdate found a missing NPC reference while checking moods.");
+                    continue;
+                }
+
+                try
+                {
+                    _ = npc.Mood;
+                }
+                catch (System.Exception ex)
+                {
+                    Debug.LogWarning($"NPCManager failed to read NPC mood: {ex.Message}");
+                }
+            }
+        }
 
         // accoring to moods set room reactio (attack, dance, ignore, whatevaaa)
         
