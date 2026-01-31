@@ -35,6 +35,7 @@ public class NpcControl : MonoBehaviour
     public void LookAtPoint(Vector3 viewFocusPoint)
     {
         // Debug.Log(gameObject.name + " is looking at point " + viewFocusPoint);
+        
         targetPoint = viewFocusPoint;
     }
 

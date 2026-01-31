@@ -13,7 +13,6 @@ public class ElevatorManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
     }
 
     public void Init()
@@ -24,7 +23,7 @@ public class ElevatorManager : MonoBehaviour
             Debug.LogError("ElevatorControl not found in the scene.");
             return;
         }
-        // elevatorControl.Init();
+        elevatorControl.Init();
         Debug.Log("ElevatorManager initialized. opening doors.");
 
         elevatorControl.OpenDoors();

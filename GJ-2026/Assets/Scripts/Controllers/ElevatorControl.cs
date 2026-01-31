@@ -13,7 +13,6 @@ public class ElevatorControl : MonoBehaviour
 
     public void Start()
     {
-        Init();
     }
     public void Init()
     {
@@ -38,15 +37,15 @@ public class ElevatorControl : MonoBehaviour
     public void OpenDoors()
     {
         Debug.Log("Elevator doors opening.");
-        leftDoorTargetPos = new Vector3(leftDoor.localPosition.x, leftDoor.localPosition.y, 1f);
-        rightDoorTargetPos = new Vector3(rightDoor.localPosition.x, rightDoor.localPosition.y, -1f);
+        leftDoorTargetPos = new Vector3(0f, 0f, 1f);
+        rightDoorTargetPos = new Vector3(0f, 0f, -1f);
     }
 
     public void CloseDoors()
     {
         Debug.Log("Elevator doors closing.");
-        leftDoorTargetPos = new Vector3(leftDoor.localPosition.x, leftDoor.localPosition.y, .5f);
-        rightDoorTargetPos = new Vector3(rightDoor.localPosition.x, rightDoor.localPosition.y, -.5f);
+        leftDoorTargetPos = new Vector3(0f, 0f, .5f);
+        rightDoorTargetPos = new Vector3(0f, 0f, -.5f);
         // Implementation for closing elevator doors
     }
 }

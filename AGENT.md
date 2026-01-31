@@ -3,7 +3,7 @@
 
 ## Project Overview
 
-This is a Unity game jam project.
+This is a Unity game jam project. Details on can be found int [OVERVIEW](OVERVIEW.md)
 
 Constraints:
 
@@ -14,7 +14,7 @@ Constraints:
 * No overengineering.
 
 Primary goal:
-Deliver a playable, stable prototype quickly and iterate aggressively.
+Deliver a playable, stable prototype quickly and iterate.
 
 ---
 
