@@ -24,6 +24,7 @@ Man ist an einer Party in einem riesen Gebäude. Man möchte das gebäude aber l
 
 - Auswahl der Maske
 - Kurzer einblick in den Raum
+ - Auf jeder Ebene gibt es 4 Aufzug-Optionen: Die aktuelle Kabine ist immer +2, die anderen sind -1, 0 oder +1.
 
 ### Masken
 

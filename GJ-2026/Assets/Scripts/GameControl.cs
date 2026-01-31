@@ -23,6 +23,7 @@ public class GameControl : MonoBehaviour
     [SerializeField] private MaskSpamController maskSpamController;
     private int currentLevel;
     private float testingTimer;
+    private LevelDesignData currentDesign;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -92,6 +93,7 @@ public class GameControl : MonoBehaviour
         }
 
         LevelDesignData design = levelDesigner.GetLevelDesign(level);
+        currentDesign = design;
         npcSpamController.SpawnLevel(design);
         if (maskSpamController != null)
         {
@@ -104,9 +106,25 @@ public class GameControl : MonoBehaviour
         Debug.Log($"GameControl elevator occupancy changed. Player inside: {isInside}");
     }
 
-    public void OnElevatorClosedWithPlayer(string elevatorName)
+    public void OnElevatorOccupancyChanged(int elevatorIndex, bool isInside)
     {
-        Debug.Log($"GameControl elevator closed with player inside. Elevator: {elevatorName}");
+        Debug.Log($"GameControl elevator occupancy changed. Elevator {elevatorIndex} inside: {isInside}");
+        if (!isInside || currentDesign == null || currentDesign.Elevators == null)
+        {
+            return;
+        }
+
+        for (int i = 0; i < currentDesign.Elevators.Count; i++)
+        {
+            ElevatorDesignData elevator = currentDesign.Elevators[i];
+            if (elevator != null && elevator.Index == elevatorIndex)
+            {
+                Debug.Log($"GameControl elevator direction: {elevator.Direction}");
+                return;
+            }
+        }
+
+        Debug.LogWarning($"GameControl could not find elevator index {elevatorIndex} in current design.");
     }
 
     public void SetNpcReaction(NpcMood reaction)
