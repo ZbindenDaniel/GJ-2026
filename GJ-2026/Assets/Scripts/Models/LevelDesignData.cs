@@ -11,4 +11,6 @@ public class LevelDesignData
     public List<MaskOptionData> AvailableMasks;
     public List<ElevatorDesignData> Elevators;
     public int PlayerElevatorIndex;
+    public MaskAttributes PlayerMask;
+    public List<MaskAttributes> LiftChoices;
 }

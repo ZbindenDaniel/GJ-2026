@@ -36,7 +36,8 @@ public class LevelDesigner : MonoBehaviour
             Npcs = new List<NpcDesignData>(npcCount),
             AvailableMasks = new List<MaskOptionData>(),
             Elevators = new List<ElevatorDesignData>(),
-            PlayerElevatorIndex = 0
+            PlayerElevatorIndex = 0,
+            LiftChoices = new List<MaskAttributes>()
         };
 
         for (int i = 0; i < npcCount; i++)
@@ -50,6 +51,8 @@ public class LevelDesigner : MonoBehaviour
         }
 
         design.AvailableMasks = CreateMaskOptions(design.Npcs, attributeCount, safeLevel);
+        design.PlayerMask = PickPlayerMask(design.AvailableMasks, attributeCount);
+        design.LiftChoices = CreateLiftChoices(design.PlayerMask, attributeCount);
         design.Elevators = CreateElevators();
         design.PlayerElevatorIndex = GetPlayerElevatorIndex(design.Elevators.Count);
         return design;
@@ -181,6 +184,103 @@ public class LevelDesigner : MonoBehaviour
         }
 
         return options;
+    }
+
+    private static MaskAttributes PickPlayerMask(List<MaskOptionData> options, int attributeCount)
+    {
+        if (options != null && options.Count > 0)
+        {
+            int index = Random.Range(0, options.Count);
+            return NormalizeMask(options[index].Mask, attributeCount);
+        }
+
+        return CreateMaskAttributes(attributeCount);
+    }
+
+    private static List<MaskAttributes> CreateLiftChoices(MaskAttributes playerMask, int attributeCount)
+    {
+        List<MaskAttributes> choices = new List<MaskAttributes>(3);
+        HashSet<MaskAttributes> used = new HashSet<MaskAttributes>();
+
+        MaskAttributes normalizedPlayer = NormalizeMask(playerMask, attributeCount);
+        choices.Add(normalizedPlayer);
+        used.Add(normalizedPlayer);
+
+        if (attributeCount < 2)
+        {
+            MaskAttributes alt1 = normalizedPlayer;
+            alt1.Shape = GetDifferentShape(normalizedPlayer.Shape);
+            choices.Add(alt1);
+            used.Add(alt1);
+
+            MaskAttributes alt2 = alt1;
+            alt2.Shape = GetDifferentShape(alt1.Shape);
+            if (!used.Contains(alt2))
+            {
+                choices.Add(alt2);
+            }
+            else
+            {
+                choices.Add(normalizedPlayer);
+            }
+        }
+        else
+        {
+            MaskAttributes decoy1 = CreateDecoy(normalizedPlayer, 1);
+            MaskAttributes decoy2 = CreateDecoy(normalizedPlayer, 2);
+
+            if (used.Add(decoy1))
+            {
+                choices.Add(decoy1);
+            }
+            if (choices.Count < 3 && used.Add(decoy2))
+            {
+                choices.Add(decoy2);
+            }
+
+            while (choices.Count < 3)
+            {
+                MaskAttributes extra = CreateDecoy(normalizedPlayer, Random.Range(1, 3));
+                if (used.Add(extra))
+                {
+                    choices.Add(extra);
+                }
+            }
+        }
+
+        // Shuffle
+        for (int i = choices.Count - 1; i > 0; i--)
+        {
+            int swap = Random.Range(0, i + 1);
+            MaskAttributes temp = choices[i];
+            choices[i] = choices[swap];
+            choices[swap] = temp;
+        }
+
+        return choices;
+    }
+
+    private static MaskAttributes CreateDecoy(MaskAttributes baseMask, int changes)
+    {
+        MaskAttributes mask = baseMask;
+        int remaining = Mathf.Clamp(changes, 1, 2);
+
+        if (remaining > 0)
+        {
+            mask.Shape = GetDifferentShape(mask.Shape);
+            remaining--;
+        }
+        if (remaining > 0)
+        {
+            mask.EyeState = GetDifferentEyeState(mask.EyeState);
+            remaining--;
+        }
+        if (remaining > 0)
+        {
+            mask.Mouth = GetDifferentMouthMood(mask.Mouth);
+        }
+
+        return mask;
     }
 
     private static MaskOptionData CreateNextMaskOption(MaskAttributes baseMask, int attributeCount, List<MaskOptionData> existing)

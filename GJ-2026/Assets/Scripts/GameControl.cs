@@ -118,7 +118,7 @@ public class GameControl : MonoBehaviour
         LevelDesignData design = levelDesigner.GetLevelDesign(level);
         currentDesign = design;
         npcSpamController.SpawnLevel(design);
-        AssignPlayerMask(design);
+        CurrentPlayerMask = design.PlayerMask;
         musicManager.PlayFloorSound(design.LevelIndex);
         elevatorManager.ResetElevators();
         if (enableMaskSpawning && maskSpamController != null)
@@ -221,19 +221,6 @@ public class GameControl : MonoBehaviour
         Debug.Log($"GameControl mask selected. Shape={mask.Shape}, Eyes={mask.EyeState}, Mouth={mask.Mouth}, Fit={fitType}");
     }
 
-    private void AssignPlayerMask(LevelDesignData design)
-    {
-        if (design == null || design.AvailableMasks == null || design.AvailableMasks.Count == 0)
-        {
-            CurrentPlayerMask = default;
-            Debug.LogWarning("GameControl could not assign a player mask (no available masks).");
-            return;
-        }
-
-        int index = UnityEngine.Random.Range(0, design.AvailableMasks.Count);
-        CurrentPlayerMask = design.AvailableMasks[index].Mask;
-        Debug.Log($"GameControl assigned player mask: Shape={CurrentPlayerMask.Shape}, Eyes={CurrentPlayerMask.EyeState}, Mouth={CurrentPlayerMask.Mouth}");
-    }
 
     public void SetNpcReaction(NpcMood reaction)
     {
