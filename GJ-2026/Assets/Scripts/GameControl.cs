@@ -18,8 +18,8 @@ public class GameControl : MonoBehaviour
 
     private NPCManager npcManager;
     private ElevatorManager elevatorManager;
-    private LevelDesigner levelDesigner;
-    private NPCSpamController npcSpamController;
+    [SerializeField] private LevelDesigner levelDesigner;
+    [SerializeField] private NPCSpamController npcSpamController;
     private int currentLevel;
     private float testingTimer;
 
@@ -32,8 +32,14 @@ public class GameControl : MonoBehaviour
         elevatorManager = gameObject.AddComponent<ElevatorManager>();
         elevatorManager.Init();
 
-        levelDesigner = gameObject.AddComponent<LevelDesigner>();
-        npcSpamController = gameObject.AddComponent<NPCSpamController>();
+        if (levelDesigner == null)
+        {
+            levelDesigner = GetComponent<LevelDesigner>();
+        }
+        if (npcSpamController == null)
+        {
+            npcSpamController = GetComponent<NPCSpamController>();
+        }
 
         currentLevel = Mathf.Max(1, startLevel);
         SpawnLevel(currentLevel);
