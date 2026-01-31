@@ -12,10 +12,11 @@ public class MaskSpamController : MonoBehaviour
     [SerializeField] private Transform maskParent;
     [SerializeField] private GameObject maskPrefab;
     [SerializeField] private MaskModelLibrary maskModelLibrary;
+    [SerializeField] private bool useCombinedMaskPrefab = true;
 
     [Header("Mask Correction")]
     [SerializeField] private Vector3 maskLocalPositionOffset = Vector3.zero;
-    [SerializeField] private Vector3 maskLocalRotationOffset = Vector3.zero;
+    [SerializeField] private Vector3 maskLocalRotationOffset = new Vector3(0f, 90f, 0f);
     [SerializeField] private Vector3 maskLocalScaleMultiplier = Vector3.one;
 
     [Header("Model Codes")]
@@ -45,12 +46,17 @@ public class MaskSpamController : MonoBehaviour
 
     public void SpawnMasks(LevelDesignData design)
     {
-        SpawnMasksInternal(design, maskParent);
+        SpawnMasksInternal(design, maskParent, null);
     }
 
     public void SpawnMasks(LevelDesignData design, Transform worldParent)
     {
-        SpawnMasksInternal(design, worldParent);
+        SpawnMasksInternal(design, worldParent, null);
+    }
+
+    public void SpawnMasks(LevelDesignData design, Transform worldParent, Quaternion rotationOverride)
+    {
+        SpawnMasksInternal(design, worldParent, rotationOverride);
     }
 
     private void Update()
@@ -134,7 +140,7 @@ public class MaskSpamController : MonoBehaviour
         return positions;
     }
 
-    private void SpawnMasksInternal(LevelDesignData design, Transform parentTransform)
+    private void SpawnMasksInternal(LevelDesignData design, Transform parentTransform, Quaternion? rotationOverride)
     {
         if (design == null)
         {
@@ -174,7 +180,11 @@ public class MaskSpamController : MonoBehaviour
             MaskOptionData option = i < options.Count ? options[i] : null;
             GameObject prefabToSpawn = maskPrefab;
             string maskCode = option != null ? BuildMaskCode(option) : null;
-            if (maskModelLibrary != null && !string.IsNullOrWhiteSpace(maskCode))
+            if (logSpawnDetails)
+            {
+                Debug.Log($"MaskSpamController combined={useCombinedMaskPrefab}, maskCode={maskCode ?? "none"}");
+            }
+            if (!useCombinedMaskPrefab && maskModelLibrary != null && !string.IsNullOrWhiteSpace(maskCode))
             {
                 GameObject resolved = maskModelLibrary.GetPrefab(maskCode);
                 if (resolved != null)
@@ -186,7 +196,7 @@ public class MaskSpamController : MonoBehaviour
                     Debug.LogWarning($"MaskSpamController: No prefab found for code '{maskCode}'. Falling back to default maskPrefab.");
                 }
             }
-            else if (logSpawnDetails)
+            else if (!useCombinedMaskPrefab && logSpawnDetails)
             {
                 if (maskModelLibrary == null)
                 {
@@ -201,13 +211,25 @@ public class MaskSpamController : MonoBehaviour
             GameObject maskObject = Instantiate(prefabToSpawn, parentTransform);
             spawnedMasks.Add(maskObject);
 
+            if (useCombinedMaskPrefab && maskObject != null && !string.IsNullOrWhiteSpace(maskCode))
+            {
+                ActivateMaskVariant(maskObject.transform, maskCode, logSpawnDetails);
+            }
+            else if (logSpawnDetails && useCombinedMaskPrefab)
+            {
+                Debug.LogWarning("MaskSpamController skipping ActivateMaskVariant (missing maskCode or maskObject).");
+            }
+
+            Quaternion baseRotation = rotationOverride ?? parentTransform.rotation;
+            maskObject.transform.rotation = baseRotation;
+
             Vector3 position = positions.Count > 0 ? positions[Mathf.Min(i, positions.Count - 1)] : Vector3.zero;
             maskObject.transform.localPosition = position + maskLocalPositionOffset;
             maskObject.transform.localRotation = Quaternion.Euler(maskLocalRotationOffset);
             maskObject.transform.localScale = Vector3.Scale(maskObject.transform.localScale, maskLocalScaleMultiplier);
             if (logSpawnDetails)
             {
-                Debug.Log($"Mask {i} code: {maskCode ?? "none"}, local pos: {maskObject.transform.localPosition}, world pos: {maskObject.transform.position}");
+                Debug.Log($"Mask {i} code: {maskCode ?? "none"}, local pos: {maskObject.transform.localPosition}, local rot: {maskObject.transform.localEulerAngles}, world pos: {maskObject.transform.position}");
             }
 
             if (option != null)
@@ -236,6 +258,85 @@ public class MaskSpamController : MonoBehaviour
         }
 
         selectable.SetData(option);
+    }
+
+    private static void ActivateMaskVariant(Transform root, string code, bool logDetails)
+    {
+        if (root == null || string.IsNullOrWhiteSpace(code))
+        {
+            return;
+        }
+
+        bool found = false;
+        int childCount = root.childCount;
+        if (logDetails)
+        {
+            Debug.Log($"MaskSpamController searching for mask '{code}' under {root.name} with {childCount} children.");
+        }
+
+        for (int i = 0; i < childCount; i++)
+        {
+            Transform child = root.GetChild(i);
+            if (child == null)
+            {
+                continue;
+            }
+
+            string childName = child.name;
+            if (childName.EndsWith("(Clone)", StringComparison.OrdinalIgnoreCase))
+            {
+                childName = childName.Substring(0, childName.Length - "(Clone)".Length);
+            }
+
+            bool isHighlight = childName.IndexOf("highlight", StringComparison.OrdinalIgnoreCase) >= 0;
+            bool match = string.Equals(childName, code, StringComparison.OrdinalIgnoreCase);
+            bool shouldBeActive = match || isHighlight;
+
+            if (!shouldBeActive)
+            {
+                UnityEngine.Object.Destroy(child.gameObject);
+                continue;
+            }
+
+            child.gameObject.SetActive(true);
+            if (match)
+            {
+                found = true;
+                if (logDetails)
+                {
+                    Debug.Log($"MaskSpamController enabled mask child '{child.name}'.");
+                }
+            }
+        }
+
+        if (!found)
+        {
+            if (logDetails)
+            {
+                List<string> childNames = new List<string>();
+                for (int i = 0; i < root.childCount; i++)
+                {
+                    Transform child = root.GetChild(i);
+                    if (child == null)
+                    {
+                        continue;
+                    }
+
+                    string childName = child.name;
+                    if (childName.EndsWith("(Clone)", StringComparison.OrdinalIgnoreCase))
+                    {
+                        childName = childName.Substring(0, childName.Length - "(Clone)".Length);
+                    }
+                    childNames.Add(childName);
+                }
+
+                // Debug.LogWarning($"MaskSpamController: Could not find child mask '{code}' under {root.name}. Available: {string.Join(\", \", childNames)}");
+            }
+            else
+            {
+                Debug.LogWarning($"MaskSpamController: Could not find child mask '{code}' under {root.name}.");
+            }
+        }
     }
 
     [Serializable]

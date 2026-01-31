@@ -117,7 +117,7 @@ public class GameControl : MonoBehaviour
         {
             if (elevatorTransform != null)
             {
-                maskSpamController.SpawnMasks(design, elevatorTransform);
+                maskSpamController.SpawnMasks(design, elevatorTransform, elevatorTransform.rotation);
             }
             else
             {

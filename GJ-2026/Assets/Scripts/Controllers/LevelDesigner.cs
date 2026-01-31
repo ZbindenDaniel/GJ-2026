@@ -68,11 +68,7 @@ public class LevelDesigner : MonoBehaviour
         {
             return 1;
         }
-        if (level <= 4)
-        {
-            return 2;
-        }
-        return 3;
+        return 2;
     }
 
     private static int CalculateMaskCount(int level)
@@ -91,14 +87,11 @@ public class LevelDesigner : MonoBehaviour
             Mouth = GetRandomMouthMood()
         };
 
-        // Reduce attributes for early levels.
-        if (attributeCount < 3)
-        {
-            mask.Mouth = MouthMood.None;
-        }
+        // Only allow both eyes + mouth or none at all.
         if (attributeCount < 2)
         {
             mask.EyeState = EyeState.None;
+            mask.Mouth = MouthMood.None;
         }
 
         return mask;
@@ -250,13 +243,10 @@ public class LevelDesigner : MonoBehaviour
 
     private static MaskAttributes NormalizeMask(MaskAttributes mask, int attributeCount)
     {
-        if (attributeCount < 3)
-        {
-            mask.Mouth = MouthMood.None;
-        }
         if (attributeCount < 2)
         {
             mask.EyeState = EyeState.None;
+            mask.Mouth = MouthMood.None;
         }
         return mask;
     }
@@ -265,19 +255,15 @@ public class LevelDesigner : MonoBehaviour
     {
         int shapeCount = 3;
         int eyeCount = attributeCount >= 2 ? 3 : 1;
-        int patternCount = attributeCount >= 3 ? 3 : 1;
-        return shapeCount * eyeCount * patternCount;
+        int mouthCount = attributeCount >= 2 ? 3 : 1;
+        return shapeCount * eyeCount * mouthCount;
     }
 
     private static MaskAttributes CreatePartialMask(MaskAttributes baseMask, int attributeCount)
     {
         MaskAttributes mask = baseMask;
 
-        if (attributeCount >= 3)
-        {
-            mask.Mouth = GetDifferentMouthMood(baseMask.Mouth);
-        }
-        else if (attributeCount == 2)
+        if (attributeCount >= 2)
         {
             mask.EyeState = GetDifferentEyeState(baseMask.EyeState);
         }
@@ -297,9 +283,6 @@ public class LevelDesigner : MonoBehaviour
         if (attributeCount >= 2)
         {
             mask.EyeState = GetDifferentEyeState(baseMask.EyeState);
-        }
-        if (attributeCount >= 3)
-        {
             mask.Mouth = GetDifferentMouthMood(baseMask.Mouth);
         }
 
