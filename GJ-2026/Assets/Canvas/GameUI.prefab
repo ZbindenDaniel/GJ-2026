@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2488898540110695501}
+  - component: {fileID: 4603456001193671664}
   m_Layer: 0
   m_Name: GameUI
   m_TagString: Untagged
@@ -33,6 +34,24 @@ Transform:
   - {fileID: 5360199366119849895}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4603456001193671664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 303653754670073967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d9e0fa58f0848b8a07e15084c9d5c67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameMenuUI
+  gameMenuCanvas: {fileID: 546153281530351124}
+  openMenuIconButton: {fileID: 4177988147448213970}
+  backButton: {fileID: 6459373210305265384}
+  quitGameButton: {fileID: 7849185472054876061}
+  mainMenuButton: {fileID: 4325166380389784436}
+  mainMenuSceneName: MainMenu
 --- !u!1001 &113778012713893185
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -189,6 +208,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameUICanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 1073573639500577222, guid: a3161d5cdce9c4c968f366bf82fd9afd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2329327694848630987, guid: a3161d5cdce9c4c968f366bf82fd9afd, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0.5
@@ -329,7 +352,8 @@ PrefabInstance:
       propertyPath: quitGameButton
       value: 
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7187522275492978409, guid: a3161d5cdce9c4c968f366bf82fd9afd, type: 3}
     m_RemovedGameObjects:
     - {fileID: 1059591507834242449, guid: a3161d5cdce9c4c968f366bf82fd9afd, type: 3}
     - {fileID: 2507331884184459120, guid: a3161d5cdce9c4c968f366bf82fd9afd, type: 3}

@@ -31,6 +31,14 @@ public class GameMenuUI : MonoBehaviour
         WireButton(mainMenuButton, GoToMainMenu);
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ToggleMenu();
+        }
+    }
+
     private void ResolveReferences()
     {
         if (gameMenuCanvas == null)
@@ -77,6 +85,16 @@ public class GameMenuUI : MonoBehaviour
         {
             gameMenuCanvas.SetActive(false);
         }
+    }
+
+    private void ToggleMenu()
+    {
+        if (gameMenuCanvas == null)
+        {
+            return;
+        }
+
+        gameMenuCanvas.SetActive(!gameMenuCanvas.activeSelf);
     }
 
     private void QuitGame()
