@@ -7,6 +7,7 @@ public class RoomEntryTrigger : MonoBehaviour
     [SerializeField] private float _reactionDelay = 0.5f;
     [SerializeField] private NPCManager _npcManager;
     [SerializeField] private Collider _triggerCollider;
+    [SerializeField] private NPCManager.RoomReaction _reaction = NPCManager.RoomReaction.PlayerLooking;
 
     private bool _reactionScheduled;
 
@@ -87,14 +88,8 @@ public class RoomEntryTrigger : MonoBehaviour
 
         try
         {
-            var triggerMethod = _npcManager.GetType().GetMethod("TriggerRoomReaction");
-            if (triggerMethod == null)
-            {
-                Debug.LogWarning("RoomEntryTrigger could not find TriggerRoomReaction on NPCManager.", this);
-                yield break;
-            }
-
-            triggerMethod.Invoke(_npcManager, null);
+            Debug.Log($"RoomEntryTrigger triggering NPC reaction: {_reaction}.", this);
+            _npcManager.TriggerRoomReaction(_reaction);
         }
         catch (Exception ex)
         {
