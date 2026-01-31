@@ -51,6 +51,7 @@ public class GameControl : MonoBehaviour
         {
             levelDesigner = GetComponent<LevelDesigner>();
         }
+
         if (npcSpamController == null)
         {
             npcSpamController = GetComponent<NPCSpamController>();
@@ -64,11 +65,8 @@ public class GameControl : MonoBehaviour
             maskSelectionController = FindFirstObjectByType<MaskSelectionController>();
         }
 
-        currentLevel = Mathf.Max(1, startLevel);
-        if (spawnOnStart)
-        {
-            SpawnLevel(currentLevel, null);
-        }
+        // currentLevel = Mathf.Max(1, startLevel);
+        // SpawnLevel(currentLevel);
 
         // load all submodules
 
