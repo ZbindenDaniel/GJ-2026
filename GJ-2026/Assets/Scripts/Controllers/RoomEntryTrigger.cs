@@ -6,6 +6,7 @@ public class RoomEntryTrigger : MonoBehaviour
     [SerializeField] private float _reactionDelay = 0.5f;
     [SerializeField] private NPCManager _npcManager;
     [SerializeField] private Collider _triggerCollider;
+    [SerializeField] private NPCManager.RoomReaction _reaction = NPCManager.RoomReaction.PlayerLooking;
 
     private bool _reactionScheduled;
 
@@ -86,7 +87,8 @@ public class RoomEntryTrigger : MonoBehaviour
 
         try
         {
-            _npcManager.TriggerRoomReaction(NpcReactionState.Aggressive);
+            Debug.Log($"RoomEntryTrigger triggering NPC reaction: {_reaction}.", this);
+            _npcManager.TriggerRoomReaction(_reaction);
         }
         catch (System.Exception ex)
         {
