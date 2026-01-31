@@ -127,6 +127,11 @@ public class GameControl : MonoBehaviour
         Debug.LogWarning($"GameControl could not find elevator index {elevatorIndex} in current design.");
     }
 
+    public void OnElevatorClosedWithPlayer(string elevatorName)
+    {
+        Debug.Log($"GameControl elevator closed with player inside. Elevator: {elevatorName}");
+    }
+
     public void SetNpcReaction(NpcMood reaction)
     {
         Debug.Log($"GameControl requested NPC reaction change to: {reaction}");
