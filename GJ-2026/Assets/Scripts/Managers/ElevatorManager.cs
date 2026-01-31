@@ -17,7 +17,7 @@ public class ElevatorManager : MonoBehaviour
 
     public void Init()
     {
-        elevatorControls = Object.FindObjectsByType<ElevatorControl>(FindObjectsSortMode.None);
+        elevatorControls = UnityEngine.Object.FindObjectsByType<ElevatorControl>(FindObjectsSortMode.None);
         if (elevatorControls == null || elevatorControls.Length == 0)
         {
             Debug.LogError("ElevatorManager did not find any ElevatorControls in the scene.");
@@ -43,7 +43,7 @@ public class ElevatorManager : MonoBehaviour
             }
             catch (Exception ex)
             {
-                Debug.LogError($"ElevatorManager failed to initialize ElevatorControl at index {i}.", ex);
+                Debug.LogError($"ElevatorManager failed to initialize ElevatorControl at index {i}. {ex.Message}");
                 continue;
             }
         }
@@ -76,7 +76,7 @@ public class ElevatorManager : MonoBehaviour
             }
             catch (Exception ex)
             {
-                Debug.LogError($"ElevatorManager failed to open doors for ElevatorControl at index {i}.", ex);
+                Debug.LogError($"ElevatorManager failed to open doors for ElevatorControl at index {i}. {ex.Message}");
             }
         }
     }

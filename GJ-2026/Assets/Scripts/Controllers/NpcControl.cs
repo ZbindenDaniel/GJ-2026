@@ -2,6 +2,8 @@ using UnityEngine;
 
 public enum NpcReactionState
 {
+    LookAtPlayer,
+
     Idle,
     Happy,
     Aggressive

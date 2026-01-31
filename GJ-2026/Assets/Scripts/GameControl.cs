@@ -98,7 +98,7 @@ public class GameControl : MonoBehaviour
                 return;
             }
 
-            npcManager.React(reaction);
+            npcManager.TriggerRoomReaction(reaction);
         }
         catch (Exception ex)
         {

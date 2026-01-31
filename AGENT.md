@@ -3,7 +3,8 @@
 
 ## Project Overview
 
-This is a Unity game jam project. Details on can be found int [OVERVIEW](OVERVIEW.md)
+This is a Unity game jam project. Details on can be found int [OVERVIEW](OVERVIEW.md). 
+Current progress is tracked in [PLANNING](PLANNING.md)
 
 Constraints:
 
