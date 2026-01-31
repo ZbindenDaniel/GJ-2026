@@ -25,8 +25,8 @@ public class ElevatorControl : MonoBehaviour
 
     public void Init()
     {
-        leftDoor = transform.Find("door L");
-        rightDoor = transform.Find("door R");
+        leftDoor = transform.Find("LeftElevatorDoor");
+        rightDoor = transform.Find("RightElevatorDoor");
         leftDoorTargetPos = leftDoor.localPosition;
         rightDoorTargetPos = rightDoor.localPosition;
     }
