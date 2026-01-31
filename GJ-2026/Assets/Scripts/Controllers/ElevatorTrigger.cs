@@ -207,7 +207,7 @@ public class ElevatorTrigger : MonoBehaviour
             }
             else
             {
-                _gameControl.OnElevatorOccupancyChanged(isInside);
+                _gameControl.OnElevatorOccupancyChanged(0, isInside);
             }
         }
         catch (Exception ex)

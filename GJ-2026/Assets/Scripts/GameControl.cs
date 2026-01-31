@@ -102,11 +102,6 @@ public class GameControl : MonoBehaviour
         }
     }
 
-    public void OnElevatorOccupancyChanged(bool isInside)
-    {
-        Debug.Log($"GameControl elevator occupancy changed. Player inside: {isInside}");
-    }
-
     public void OnElevatorOccupancyChanged(int elevatorIndex, bool isInside)
     {
         Debug.Log($"GameControl elevator occupancy changed. Elevator {elevatorIndex} inside: {isInside}");
