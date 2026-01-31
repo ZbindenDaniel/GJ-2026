@@ -13,11 +13,15 @@ public class GameControl : MonoBehaviour
     // TODO: tobi private PlayerManager playerManager;
 
     [SerializeField] private int startLevel = 1;
+    [SerializeField] private bool testingLevelCycle = false;
+    [SerializeField] private float testingLevelIntervalSeconds = 10f;
 
     private NPCManager npcManager;
     private ElevatorManager elevatorManager;
     private LevelDesigner levelDesigner;
     private NPCSpamController npcSpamController;
+    private int currentLevel;
+    private float testingTimer;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -31,8 +35,8 @@ public class GameControl : MonoBehaviour
         levelDesigner = gameObject.AddComponent<LevelDesigner>();
         npcSpamController = gameObject.AddComponent<NPCSpamController>();
 
-        LevelDesignData design = levelDesigner.GetLevelDesign(startLevel);
-        npcSpamController.SpawnLevel(design);
+        currentLevel = Mathf.Max(1, startLevel);
+        SpawnLevel(currentLevel);
 
         // load all submodules
 
@@ -42,6 +46,33 @@ public class GameControl : MonoBehaviour
         // initialize whatever is needed
 
         Debug.Log("GameControl started.");
+    }
+
+    void Update()
+    {
+        if (!testingLevelCycle)
+        {
+            return;
+        }
+
+        testingTimer += Time.deltaTime;
+        if (testingTimer >= testingLevelIntervalSeconds)
+        {
+            testingTimer = 0f;
+            currentLevel++;
+            SpawnLevel(currentLevel);
+        }
+    }
+
+    private void SpawnLevel(int level)
+    {
+        if (levelDesigner == null || npcSpamController == null)
+        {
+            return;
+        }
+
+        LevelDesignData design = levelDesigner.GetLevelDesign(level);
+        npcSpamController.SpawnLevel(design);
     }
 
     public void OnElevatorOccupancyChanged(bool isInside)
