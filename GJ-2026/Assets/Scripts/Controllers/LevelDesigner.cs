@@ -34,7 +34,6 @@ public class LevelDesigner : MonoBehaviour
             NpcCount = npcCount,
             AttributeCount = attributeCount,
             Npcs = new List<NpcDesignData>(npcCount),
-            AvailableMasks = new List<MaskOptionData>(),
             Elevators = new List<ElevatorDesignData>(),
             PlayerElevatorIndex = 0,
             LiftChoices = new List<MaskAttributes>()
@@ -50,8 +49,7 @@ public class LevelDesigner : MonoBehaviour
             design.Npcs.Add(npc);
         }
 
-        design.AvailableMasks = CreateMaskOptions(design.Npcs, attributeCount, safeLevel);
-        design.PlayerMask = PickPlayerMask(design.AvailableMasks, attributeCount);
+        design.PlayerMask = PickPlayerMask(design.Npcs, attributeCount);
         design.LiftChoices = CreateLiftChoices(design.PlayerMask, attributeCount);
         design.Elevators = CreateElevators();
         design.PlayerElevatorIndex = GetPlayerElevatorIndex(design.Elevators.Count);
@@ -151,47 +149,12 @@ public class LevelDesigner : MonoBehaviour
         return index;
     }
 
-    private static List<MaskOptionData> CreateMaskOptions(List<NpcDesignData> npcs, int attributeCount, int level)
+    private static MaskAttributes PickPlayerMask(List<NpcDesignData> npcs, int attributeCount)
     {
-        int maskCount = CalculateMaskCount(level);
-        int maxUnique = GetMaxUniqueMasks(attributeCount);
-        maskCount = Mathf.Min(maskCount, maxUnique);
-        List<MaskOptionData> options = new List<MaskOptionData>(maskCount);
-
-        if (npcs == null || npcs.Count == 0)
+        if (npcs != null && npcs.Count > 0)
         {
-            for (int i = 0; i < maskCount; i++)
-            {
-                options.Add(new MaskOptionData { Mask = CreateMaskAttributes(attributeCount), FitType = MaskFitType.None });
-            }
-            return options;
-        }
-
-        MaskAttributes mostCommon = GetMostCommonMask(npcs, attributeCount);
-        HashSet<MaskAttributes> used = new HashSet<MaskAttributes> { mostCommon };
-
-        options.Add(new MaskOptionData { Mask = mostCommon, FitType = MaskFitType.Best });
-
-        int guard = 0;
-        while (options.Count < maskCount && guard < 200)
-        {
-            MaskOptionData next = CreateNextMaskOption(mostCommon, attributeCount, options);
-            if (used.Add(next.Mask))
-            {
-                options.Add(next);
-            }
-            guard++;
-        }
-
-        return options;
-    }
-
-    private static MaskAttributes PickPlayerMask(List<MaskOptionData> options, int attributeCount)
-    {
-        if (options != null && options.Count > 0)
-        {
-            int index = Random.Range(0, options.Count);
-            return NormalizeMask(options[index].Mask, attributeCount);
+            int index = Random.Range(0, npcs.Count);
+            return NormalizeMask(npcs[index].Mask, attributeCount);
         }
 
         return CreateMaskAttributes(attributeCount);
@@ -283,63 +246,6 @@ public class LevelDesigner : MonoBehaviour
         return mask;
     }
 
-    private static MaskOptionData CreateNextMaskOption(MaskAttributes baseMask, int attributeCount, List<MaskOptionData> existing)
-    {
-        bool needPartial = !HasFitType(existing, MaskFitType.Partial);
-        bool needNone = !HasFitType(existing, MaskFitType.None);
-
-        if (needPartial)
-        {
-            return new MaskOptionData { Mask = CreatePartialMask(baseMask, attributeCount), FitType = MaskFitType.Partial };
-        }
-
-        if (needNone)
-        {
-            return new MaskOptionData { Mask = CreateNoneMask(baseMask, attributeCount), FitType = MaskFitType.None };
-        }
-
-        // Mix of partial and none once we already have both.
-        return Random.Range(0, 2) == 0
-            ? new MaskOptionData { Mask = CreatePartialMask(baseMask, attributeCount), FitType = MaskFitType.Partial }
-            : new MaskOptionData { Mask = CreateNoneMask(baseMask, attributeCount), FitType = MaskFitType.None };
-    }
-
-    private static bool HasFitType(List<MaskOptionData> options, MaskFitType type)
-    {
-        for (int i = 0; i < options.Count; i++)
-        {
-            if (options[i].FitType == type)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private static MaskAttributes GetMostCommonMask(List<NpcDesignData> npcs, int attributeCount)
-    {
-        Dictionary<MaskAttributes, int> counts = new Dictionary<MaskAttributes, int>();
-        MaskAttributes best = npcs[0].Mask;
-        int bestCount = 0;
-
-        for (int i = 0; i < npcs.Count; i++)
-        {
-            MaskAttributes mask = NormalizeMask(npcs[i].Mask, attributeCount);
-            if (!counts.ContainsKey(mask))
-            {
-                counts[mask] = 0;
-            }
-
-            counts[mask]++;
-            if (counts[mask] > bestCount)
-            {
-                bestCount = counts[mask];
-                best = mask;
-            }
-        }
-
-        return best;
-    }
 
     private static MaskAttributes NormalizeMask(MaskAttributes mask, int attributeCount)
     {
@@ -359,35 +265,6 @@ public class LevelDesigner : MonoBehaviour
         return shapeCount * eyeCount * mouthCount;
     }
 
-    private static MaskAttributes CreatePartialMask(MaskAttributes baseMask, int attributeCount)
-    {
-        MaskAttributes mask = baseMask;
-
-        if (attributeCount >= 2)
-        {
-            mask.EyeState = GetDifferentEyeState(baseMask.EyeState);
-        }
-        else
-        {
-            mask.Shape = GetDifferentShape(baseMask.Shape);
-        }
-
-        return mask;
-    }
-
-    private static MaskAttributes CreateNoneMask(MaskAttributes baseMask, int attributeCount)
-    {
-        MaskAttributes mask = baseMask;
-
-        mask.Shape = GetDifferentShape(baseMask.Shape);
-        if (attributeCount >= 2)
-        {
-            mask.EyeState = GetDifferentEyeState(baseMask.EyeState);
-            mask.Mouth = GetDifferentMouthMood(baseMask.Mouth);
-        }
-
-        return mask;
-    }
 
     private static MaskShape GetDifferentShape(MaskShape current)
     {

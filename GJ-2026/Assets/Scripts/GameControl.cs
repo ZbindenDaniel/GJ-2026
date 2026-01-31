@@ -216,9 +216,9 @@ public class GameControl : MonoBehaviour
         SpawnLevel(currentLevel, elevatorTransform);
     }
 
-    public void OnMaskSelected(MaskAttributes mask, MaskFitType fitType)
+    public void OnMaskSelected(MaskAttributes mask)
     {
-        Debug.Log($"GameControl mask selected. Shape={mask.Shape}, Eyes={mask.EyeState}, Mouth={mask.Mouth}, Fit={fitType}");
+        Debug.Log($"GameControl mask selected. Shape={mask.Shape}, Eyes={mask.EyeState}, Mouth={mask.Mouth}");
     }
 
 

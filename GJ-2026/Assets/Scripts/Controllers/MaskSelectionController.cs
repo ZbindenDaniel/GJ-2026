@@ -42,7 +42,7 @@ public class MaskSelectionController : MonoBehaviour
                 hasSelected = true;
                 if (gameControl != null)
                 {
-                    gameControl.OnMaskSelected(hovered.MaskAttributes, hovered.FitType);
+                    gameControl.OnMaskSelected(hovered.MaskAttributes);
                 }
             }
         }
