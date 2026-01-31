@@ -32,7 +32,6 @@ public class NpcControl : MonoBehaviour
     [SerializeField] private float _nodSpeed = 2f;
     [SerializeField] private float _headShakeAngle = 15f;
     [SerializeField] private float _headShakeSpeed = 2f;
-    [SerializeField] private float _playerDetectionDistance = 4f;
     [SerializeField] private float _playerAwarenessRange = 6f;
     [SerializeField] private float _viewUpdateInterval = 1.5f;
     [SerializeField] private float _reactionInterval = 2f;
@@ -108,27 +107,6 @@ public class NpcControl : MonoBehaviour
         }
 
         TryMoveAssault();
-
-        // raycast -- player
-        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, _playerDetectionDistance))
-        {
-            if (IsPlayer(hit.collider))
-            {
-                if (Time.time >= nextReactionTime)
-                {
-                    nextReactionTime = Time.time + _reactionInterval;
-
-                    try
-                    {
-                        EvaluateMask(hit.collider);
-                    }
-                    catch (System.Exception ex)
-                    {
-                        Debug.LogWarning($"{name} failed to evaluate mask during raycast: {ex.Message}");
-                    }
-                }
-            }
-        }
 
         UpdateMoodState();
         UpdateViewCycle();
@@ -396,26 +374,16 @@ public class NpcControl : MonoBehaviour
         }
     }
 
-    private void EvaluateMask(Collider playerCollider)
+    public void EvaluateMask()
     {
-        if (playerCollider == null)
+        if (Time.time < nextReactionTime)
         {
-            Debug.LogWarning($"{name} EvaluateMask called with no player collider.");
             return;
         }
 
+        nextReactionTime = Time.time + _reactionInterval;
         NpcMood evaluatedMood = (NpcMood)Random.Range(0, System.Enum.GetNames(typeof(NpcMood)).Length);
         SetMood(evaluatedMood);
-    }
-
-    private bool IsPlayer(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            return true;
-        }
-
-        return other.GetComponent<PlayerController>() != null;
     }
 
     private void AddHeadClips()

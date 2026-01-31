@@ -67,7 +67,10 @@ public class MaskSelectionController : MonoBehaviour
             Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
             if (Physics.Raycast(ray, out RaycastHit hit, maxDistance, maskLayer, QueryTriggerInteraction.Collide))
             {
-                newHover = hit.collider.GetComponentInParent<MaskSelectable>();
+                if (hit.collider.GetComponentInParent<NpcControl>() == null)
+                {
+                    newHover = hit.collider.GetComponentInParent<MaskSelectable>();
+                }
             }
         }
 
