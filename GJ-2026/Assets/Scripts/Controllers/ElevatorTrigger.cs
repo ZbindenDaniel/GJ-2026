@@ -7,6 +7,7 @@ public class ElevatorTrigger : MonoBehaviour
 {
     [SerializeField] private ElevatorControl _elevatorControl;
     [SerializeField] private GameControl _gameControl;
+    [SerializeField] private int _elevatorIndex = -1;
     [SerializeField] private float _closeDoorsDelay = 1.5f;
     [SerializeField] private float _reopenDoorsDelay = 1.5f;
 
@@ -177,7 +178,14 @@ public class ElevatorTrigger : MonoBehaviour
 
         try
         {
-            _gameControl.OnElevatorOccupancyChanged(isInside);
+            if (_elevatorIndex >= 0)
+            {
+                _gameControl.OnElevatorOccupancyChanged(_elevatorIndex, isInside);
+            }
+            else
+            {
+                _gameControl.OnElevatorOccupancyChanged(isInside);
+            }
         }
         catch (Exception ex)
         {

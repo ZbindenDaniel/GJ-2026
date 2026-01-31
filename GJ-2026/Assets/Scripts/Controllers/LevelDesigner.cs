@@ -12,6 +12,9 @@ public class LevelDesigner : MonoBehaviour
     public static int MinMasks = 3;
     public static int MaxMasks = 8;
     public static int MasksPerLevel = 1;
+    public static int ElevatorCount = 4;
+    public static bool ShuffleElevators = true;
+    public static int DefaultPlayerElevatorIndex = 1;
 
     public LevelDesignData GetLevelDesign(int level)
     {
@@ -25,7 +28,9 @@ public class LevelDesigner : MonoBehaviour
             NpcCount = npcCount,
             AttributeCount = attributeCount,
             Npcs = new List<NpcDesignData>(npcCount),
-            AvailableMasks = new List<MaskOptionData>()
+            AvailableMasks = new List<MaskOptionData>(),
+            Elevators = new List<ElevatorDesignData>(),
+            PlayerElevatorIndex = 0
         };
 
         for (int i = 0; i < npcCount; i++)
@@ -39,6 +44,8 @@ public class LevelDesigner : MonoBehaviour
         }
 
         design.AvailableMasks = CreateMaskOptions(design.Npcs, attributeCount, safeLevel);
+        design.Elevators = CreateElevators();
+        design.PlayerElevatorIndex = GetPlayerElevatorIndex(design.Elevators.Count);
         return design;
     }
 
@@ -89,6 +96,57 @@ public class LevelDesigner : MonoBehaviour
         }
 
         return mask;
+    }
+
+    private static List<ElevatorDesignData> CreateElevators()
+    {
+        List<ElevatorDesignData> elevators = new List<ElevatorDesignData>();
+        if (ElevatorCount <= 0)
+        {
+            return elevators;
+        }
+
+        int playerIndex = GetPlayerElevatorIndex(ElevatorCount);
+        List<int> directions = new List<int> { -1, 0, 1 };
+        while (directions.Count < ElevatorCount - 1)
+        {
+            directions.Add(0);
+        }
+
+        if (ShuffleElevators)
+        {
+            for (int i = directions.Count - 1; i > 0; i--)
+            {
+                int swapIndex = Random.Range(0, i + 1);
+                int temp = directions[i];
+                directions[i] = directions[swapIndex];
+                directions[swapIndex] = temp;
+            }
+        }
+
+        int directionIndex = 0;
+        for (int i = 0; i < ElevatorCount; i++)
+        {
+            int direction = i == playerIndex ? 2 : directions[directionIndex++ % directions.Count];
+            elevators.Add(new ElevatorDesignData
+            {
+                Index = i,
+                Direction = direction
+            });
+        }
+
+        return elevators;
+    }
+
+    private static int GetPlayerElevatorIndex(int elevatorCount)
+    {
+        if (elevatorCount <= 0)
+        {
+            return 0;
+        }
+
+        int index = Mathf.Clamp(DefaultPlayerElevatorIndex, 0, elevatorCount - 1);
+        return index;
     }
 
     private static List<MaskOptionData> CreateMaskOptions(List<NpcDesignData> npcs, int attributeCount, int level)
