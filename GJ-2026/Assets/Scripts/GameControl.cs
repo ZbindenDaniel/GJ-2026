@@ -22,6 +22,7 @@ public class GameControl : MonoBehaviour
     [SerializeField] private NPCSpamController npcSpamController;
     [SerializeField] private ElevatorManager elevatorManager;
     [SerializeField] private MaskSpamController maskSpamController;
+    [SerializeField] private MusicManager musicManager;
     [SerializeField] private MaskSelectionController maskSelectionController;
     private int currentLevel;
     private float testingTimer;

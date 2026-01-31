@@ -62,6 +62,10 @@ public class ElevatorControl : MonoBehaviour
         Debug.Log("Elevator doors closing.");
         leftDoorTargetPos = new Vector3(0f, 0f, .01f);
         rightDoorTargetPos = new Vector3(0f, 0f, -.01f);
+
+        // TODO: only if player inside elevator play music
+
+        PlayElevetorMusic();
     }
 
     public void PlayElevetorMusic()
