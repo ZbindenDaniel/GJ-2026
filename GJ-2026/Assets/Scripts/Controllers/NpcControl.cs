@@ -3,10 +3,8 @@ using UnityEngine;
 public enum NpcMood
 {
     LookAtPlayer,
-
     Idle,
     Happy,
-    Aggressive,
     Vibe,
     Assault,
     Engage,
@@ -75,7 +73,7 @@ public class NpcControl : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(lookingAtPlayer && player != null)
+        if (lookingAtPlayer && player != null)
         {
             targetPoint = player.position;
         }
@@ -145,9 +143,6 @@ public class NpcControl : MonoBehaviour
                 break;
             case NpcMood.Idle:
                 ApplyIdleMood();
-                break;
-            case NpcMood.Aggressive:
-                ApplyAggressiveMood();
                 break;
             case NpcMood.Happy:
                 ApplyHappyMood();
@@ -292,7 +287,7 @@ public class NpcControl : MonoBehaviour
             return;
         }
 
-        NpcMood evaluatedMood = NpcMood.Aggressive;
+        NpcMood evaluatedMood = (NpcMood)Random.Range(0, System.Enum.GetNames(typeof(NpcMood)).Length);
         SetMood(evaluatedMood);
     }
 
@@ -527,13 +522,6 @@ public class NpcControl : MonoBehaviour
         Idle();
         PlayReactionAnimation(NpcMood.Idle);
         TriggerAnimatorState(NpcMood.Idle);
-    }
-
-    private void ApplyAggressiveMood()
-    {
-        TryLookAtPlayer("aggressive mood");
-        PlayReactionAnimation(NpcMood.Aggressive);
-        TriggerAnimatorState(NpcMood.Aggressive);
     }
 
     private void ApplyHappyMood()
