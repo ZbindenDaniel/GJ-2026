@@ -8,9 +8,11 @@ public class ElevatorTrigger : MonoBehaviour
     [SerializeField] private ElevatorControl _elevatorControl;
     [SerializeField] private GameControl _gameControl;
     [SerializeField] private float _closeDoorsDelay = 1.5f;
+    [SerializeField] private float _reopenDoorsDelay = 1.5f;
 
     private bool isPlayerInside;
     private Coroutine closeDoorsRoutine;
+    private Coroutine reopenDoorsRoutine;
     private Collider triggerCollider;
 
     private void Awake()
@@ -38,6 +40,12 @@ public class ElevatorTrigger : MonoBehaviour
         {
             StopCoroutine(closeDoorsRoutine);
             closeDoorsRoutine = null;
+        }
+
+        if (reopenDoorsRoutine != null)
+        {
+            StopCoroutine(reopenDoorsRoutine);
+            reopenDoorsRoutine = null;
         }
     }
 
@@ -111,8 +119,52 @@ public class ElevatorTrigger : MonoBehaviour
     private IEnumerator CloseDoorsAfterDelay()
     {
         yield return new WaitForSeconds(_closeDoorsDelay);
-        _elevatorControl.CloseDoors();
+        try
+        {
+            _elevatorControl.CloseDoors();
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Failed to close elevator doors for {GetElevatorName()}: {ex}");
+        }
+
+        if (isPlayerInside)
+        {
+            NotifyGameControlElevatorClosedWithPlayer();
+            ScheduleOpenDoors();
+        }
         closeDoorsRoutine = null;
+    }
+
+    private void ScheduleOpenDoors()
+    {
+        if (_elevatorControl == null)
+        {
+            Debug.LogWarning("ElevatorTrigger missing ElevatorControl reference for reopening.");
+            return;
+        }
+
+        if (reopenDoorsRoutine != null)
+        {
+            StopCoroutine(reopenDoorsRoutine);
+        }
+
+        reopenDoorsRoutine = StartCoroutine(OpenDoorsAfterDelay());
+    }
+
+    private IEnumerator OpenDoorsAfterDelay()
+    {
+        yield return new WaitForSeconds(_reopenDoorsDelay);
+        try
+        {
+            _elevatorControl.OpenDoors();
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Failed to open elevator doors for {GetElevatorName()}: {ex}");
+        }
+
+        reopenDoorsRoutine = null;
     }
 
     private void NotifyGameControl(bool isInside)
@@ -130,6 +182,24 @@ public class ElevatorTrigger : MonoBehaviour
         catch (Exception ex)
         {
             Debug.LogError($"Failed to notify GameControl about elevator occupancy: {ex}");
+        }
+    }
+
+    private void NotifyGameControlElevatorClosedWithPlayer()
+    {
+        if (_gameControl == null)
+        {
+            Debug.LogWarning("ElevatorTrigger could not find GameControl to notify about elevator closing.");
+            return;
+        }
+
+        try
+        {
+            _gameControl.OnElevatorClosedWithPlayer();
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Failed to notify GameControl about elevator closing with player: {ex}");
         }
     }
 
