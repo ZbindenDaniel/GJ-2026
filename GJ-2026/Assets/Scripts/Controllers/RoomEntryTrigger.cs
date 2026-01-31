@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class RoomEntryTrigger : MonoBehaviour
 {
+    public GameControl GameControl;
     [SerializeField] private float _reactionDelay = 0.5f;
     [SerializeField] private NPCManager _npcManager;
     [SerializeField] private Collider _triggerCollider;
@@ -10,6 +11,11 @@ public class RoomEntryTrigger : MonoBehaviour
 
     private bool _reactionScheduled;
 
+
+    void Start()
+    {
+        _npcManager = GameControl.Npcmanager;
+    }
     private void Reset()
     {
         _triggerCollider = GetComponent<Collider>();

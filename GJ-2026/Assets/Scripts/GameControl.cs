@@ -16,7 +16,7 @@ public class GameControl : MonoBehaviour
     [SerializeField] private bool testingLevelCycle = false;
     [SerializeField] private float testingLevelIntervalSeconds = 10f;
 
-    private NPCManager npcManager;
+    public NPCManager Npcmanager { get; private set; }
     private ElevatorManager elevatorManager;
     [SerializeField] private LevelDesigner levelDesigner;
     [SerializeField] private NPCSpamController npcSpamController;
@@ -26,8 +26,8 @@ public class GameControl : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        npcManager = gameObject.AddComponent<NPCManager>();
-        npcManager.Init();
+        Npcmanager = gameObject.AddComponent<NPCManager>();
+        Npcmanager.Init();
 
         elevatorManager = gameObject.AddComponent<ElevatorManager>();
         elevatorManager.Init();
@@ -92,13 +92,13 @@ public class GameControl : MonoBehaviour
 
         try
         {
-            if (npcManager == null)
+            if (Npcmanager == null)
             {
                 Debug.LogError("GameControl cannot set NPC reaction because NPCManager is missing.");
                 return;
             }
 
-            npcManager.TriggerRoomReaction(reaction);
+            Npcmanager.TriggerRoomReaction(reaction);
         }
         catch (Exception ex)
         {
