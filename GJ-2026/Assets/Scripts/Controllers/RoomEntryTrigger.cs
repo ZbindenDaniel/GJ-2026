@@ -14,7 +14,30 @@ public class RoomEntryTrigger : MonoBehaviour
 
     void Start()
     {
-        _npcManager = GameControl.Npcmanager;
+        try
+        {
+            if (GameControl == null)
+            {
+                GameControl = FindFirstObjectByType<GameControl>();
+                if (GameControl == null)
+                {
+                    Debug.LogWarning("RoomEntryTrigger missing GameControl reference; NPC reaction setup skipped.", this);
+                    return;
+                }
+
+                Debug.LogWarning("RoomEntryTrigger GameControl reference was missing; using scene lookup fallback.", this);
+            }
+
+            _npcManager = GameControl.Npcmanager;
+            if (_npcManager == null)
+            {
+                Debug.LogWarning("RoomEntryTrigger missing NPCManager reference from GameControl.", this);
+            }
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError($"RoomEntryTrigger failed during Start setup: {ex}", this);
+        }
     }
     private void Reset()
     {

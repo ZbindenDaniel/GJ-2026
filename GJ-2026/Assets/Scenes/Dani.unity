@@ -544,6 +544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 755cd86a3cd6ab7978ebb60d0bbebc9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomEntryTrigger
+  GameControl: {fileID: 1425304569}
   _reactionDelay: 0.5
   _npcManager: {fileID: 0}
   _triggerCollider: {fileID: 1599046117}
