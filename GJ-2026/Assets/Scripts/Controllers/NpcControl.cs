@@ -33,6 +33,10 @@ public class NpcControl : MonoBehaviour
     [SerializeField] private float _headShakeAngle = 15f;
     [SerializeField] private float _headShakeSpeed = 2f;
     [SerializeField] private float _playerDetectionDistance = 4f;
+    [SerializeField] private float _viewUpdateInterval = 0.5f;
+    [SerializeField] private float _randomLookRange = 10f;
+    [SerializeField] private int _lookAtPlayerCycle = 20;
+    [SerializeField] private int _idleResetCycle = 30;
 
     public NpcMood Mood = NpcMood.Idle;
 
@@ -49,6 +53,8 @@ public class NpcControl : MonoBehaviour
     private bool loggedMissingBodyAnimation;
 
     private Vector3 targetPoint;
+    private float viewTimer;
+    private int viewCycleCount;
 
     void Start()
     {
@@ -83,6 +89,9 @@ public class NpcControl : MonoBehaviour
                 }
             }
         }
+
+        UpdateMoodState();
+        UpdateViewCycle();
     }
 
     public void LookAtPlayer()
@@ -103,7 +112,7 @@ public class NpcControl : MonoBehaviour
         LookAtPoint(transform.position + initialViewDirection);
     }
 
-    public void ApplyReactionState(NpcMood newState)
+    private void ApplyReactionState(NpcMood newState)
     {
         if (newState == currentMood)
         {
@@ -115,68 +124,33 @@ public class NpcControl : MonoBehaviour
 
         switch (newState)
         {
+            case NpcMood.LookAtPlayer:
+                ApplyLookAtPlayerMood();
+                break;
             case NpcMood.Idle:
-                Idle();
+                ApplyIdleMood();
                 break;
             case NpcMood.Aggressive:
-                if (player != null)
-                {
-                    LookAtPlayer();
-                }
-                else
-                {
-                    Debug.LogWarning($"{name} has no player assigned for aggressive reaction.");
-                }
+                ApplyAggressiveMood();
                 break;
             case NpcMood.Happy:
-                Debug.Log($"{name} is happy.");
+                ApplyHappyMood();
                 break;
             case NpcMood.Vibe:
-                Idle();
+                ApplyVibeMood();
                 break;
             case NpcMood.Assault:
-                if (player != null)
-                {
-                    LookAtPlayer();
-                }
-                else
-                {
-                    Debug.LogWarning($"{name} has no player assigned for assault reaction.");
-                }
+                ApplyAssaultMood();
                 break;
             case NpcMood.Engage:
-                if (player != null)
-                {
-                    LookAtPlayer();
-                }
-                else
-                {
-                    Debug.LogWarning($"{name} has no player assigned for engage reaction.");
-                }
+                ApplyEngageMood();
                 break;
             case NpcMood.Nodding:
-                Idle();
+                ApplyNoddingMood();
                 break;
             case NpcMood.HeadShaking:
-                Idle();
+                ApplyHeadShakingMood();
                 break;
-        }
-
-        PlayReactionAnimation(newState);
-
-        if (_animator == null)
-        {
-            Debug.LogWarning($"{name} has no animator assigned; skipping reaction animation.");
-            return;
-        }
-
-        try
-        {
-            _animator.SetTrigger(newState.ToString());
-        }
-        catch (System.Exception ex)
-        {
-            Debug.LogWarning($"{name} failed to play reaction animation for {newState}: {ex.Message}");
         }
     }
 
@@ -303,11 +277,7 @@ public class NpcControl : MonoBehaviour
         }
 
         NpcMood evaluatedMood = NpcMood.Aggressive;
-        if (Mood != evaluatedMood)
-        {
-            Mood = evaluatedMood;
-            Debug.Log($"{name} mood set to {Mood} after evaluating player mask.");
-        }
+        SetMood(evaluatedMood);
     }
 
     private bool IsPlayer(Collider other)
@@ -455,6 +425,169 @@ public class NpcControl : MonoBehaviour
         if (_bodyTransform != null)
         {
             _bodyTransform.localPosition = initialBodyLocalPosition;
+        }
+    }
+
+    public void SetMood(NpcMood newMood)
+    {
+        if (Mood == newMood)
+        {
+            return;
+        }
+
+        Mood = newMood;
+        Debug.Log($"{name} mood set to {Mood}.");
+    }
+
+    private void UpdateMoodState()
+    {
+        if (Mood == currentMood)
+        {
+            return;
+        }
+
+        try
+        {
+            ApplyReactionState(Mood);
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogWarning($"{name} failed to apply mood {Mood}: {ex.Message}");
+        }
+    }
+
+    private void UpdateViewCycle()
+    {
+        if (!ShouldUpdateViewCycle())
+        {
+            return;
+        }
+
+        viewTimer += Time.fixedDeltaTime;
+        if (viewTimer < _viewUpdateInterval)
+        {
+            return;
+        }
+
+        viewTimer = 0f;
+        viewCycleCount++;
+
+        if (viewCycleCount == _lookAtPlayerCycle)
+        {
+            TryLookAtPlayer("view cycle look at player");
+            return;
+        }
+
+        if (viewCycleCount == _idleResetCycle)
+        {
+            Idle();
+            return;
+        }
+
+        if (viewCycleCount < _lookAtPlayerCycle)
+        {
+            LookAtPoint(new Vector3(Random.Range(-_randomLookRange, _randomLookRange), 0f, Random.Range(-_randomLookRange, _randomLookRange)));
+        }
+    }
+
+    private bool ShouldUpdateViewCycle()
+    {
+        return currentMood == NpcMood.Idle
+            || currentMood == NpcMood.Happy
+            || currentMood == NpcMood.Vibe
+            || currentMood == NpcMood.Nodding
+            || currentMood == NpcMood.HeadShaking;
+    }
+
+    private void ApplyLookAtPlayerMood()
+    {
+        TryLookAtPlayer("look-at-player mood");
+        PlayReactionAnimation(NpcMood.LookAtPlayer);
+        TriggerAnimatorState(NpcMood.LookAtPlayer);
+    }
+
+    private void ApplyIdleMood()
+    {
+        Idle();
+        PlayReactionAnimation(NpcMood.Idle);
+        TriggerAnimatorState(NpcMood.Idle);
+    }
+
+    private void ApplyAggressiveMood()
+    {
+        TryLookAtPlayer("aggressive mood");
+        PlayReactionAnimation(NpcMood.Aggressive);
+        TriggerAnimatorState(NpcMood.Aggressive);
+    }
+
+    private void ApplyHappyMood()
+    {
+        Idle();
+        PlayReactionAnimation(NpcMood.Happy);
+        TriggerAnimatorState(NpcMood.Happy);
+    }
+
+    private void ApplyVibeMood()
+    {
+        Idle();
+        PlayReactionAnimation(NpcMood.Vibe);
+        TriggerAnimatorState(NpcMood.Vibe);
+    }
+
+    private void ApplyAssaultMood()
+    {
+        TryLookAtPlayer("assault mood");
+        PlayReactionAnimation(NpcMood.Assault);
+        TriggerAnimatorState(NpcMood.Assault);
+    }
+
+    private void ApplyEngageMood()
+    {
+        TryLookAtPlayer("engage mood");
+        PlayReactionAnimation(NpcMood.Engage);
+        TriggerAnimatorState(NpcMood.Engage);
+    }
+
+    private void ApplyNoddingMood()
+    {
+        Idle();
+        PlayReactionAnimation(NpcMood.Nodding);
+        TriggerAnimatorState(NpcMood.Nodding);
+    }
+
+    private void ApplyHeadShakingMood()
+    {
+        Idle();
+        PlayReactionAnimation(NpcMood.HeadShaking);
+        TriggerAnimatorState(NpcMood.HeadShaking);
+    }
+
+    private void TryLookAtPlayer(string context)
+    {
+        if (player != null)
+        {
+            LookAtPlayer();
+            return;
+        }
+
+        Debug.LogWarning($"{name} has no player assigned for {context}.");
+    }
+
+    private void TriggerAnimatorState(NpcMood mood)
+    {
+        if (_animator == null)
+        {
+            Debug.LogWarning($"{name} has no animator assigned; skipping reaction animation.");
+            return;
+        }
+
+        try
+        {
+            _animator.SetTrigger(mood.ToString());
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogWarning($"{name} failed to play reaction animation for {mood}: {ex.Message}");
         }
     }
 }
