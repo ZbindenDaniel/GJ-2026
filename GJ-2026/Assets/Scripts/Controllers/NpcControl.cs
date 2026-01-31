@@ -36,6 +36,16 @@ public class NpcControl : MonoBehaviour
     [SerializeField] private float _randomLookRange = 10f;
     [SerializeField] private int _lookAtPlayerCycle = 20;
     [SerializeField] private int _idleResetCycle = 30;
+    [Header("Reaction Audio Settings")]
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip _lookAtPlayerClip;
+    [SerializeField] private AudioClip _idleClip;
+    [SerializeField] private AudioClip _happyClip;
+    [SerializeField] private AudioClip _vibeClip;
+    [SerializeField] private AudioClip _assaultClip;
+    [SerializeField] private AudioClip _engageClip;
+    [SerializeField] private AudioClip _noddingClip;
+    [SerializeField] private AudioClip _headShakingClip;
 
     public NpcMood Mood = NpcMood.Idle;
 
@@ -51,6 +61,7 @@ public class NpcControl : MonoBehaviour
     private bool loggedMissingBody;
     private bool loggedMissingHeadAnimation;
     private bool loggedMissingBodyAnimation;
+    private bool loggedMissingAudioSource;
 
     private Vector3 targetPoint;
     private float viewTimer;
@@ -163,6 +174,8 @@ public class NpcControl : MonoBehaviour
                 ApplyHeadShakingMood();
                 break;
         }
+
+        PlayMoodAudio(newState);
     }
 
     private void CacheMotionOffsets()
@@ -276,6 +289,60 @@ public class NpcControl : MonoBehaviour
         catch (System.Exception ex)
         {
             Debug.LogWarning($"{name} failed to play reaction animation for {state}: {ex.Message}");
+        }
+    }
+
+    private void PlayMoodAudio(NpcMood mood)
+    {
+        if (_audioSource == null)
+        {
+            if (!loggedMissingAudioSource)
+            {
+                loggedMissingAudioSource = true;
+                Debug.LogWarning($"{name} has no audio source assigned; mood audio will be skipped.");
+            }
+            return;
+        }
+
+        AudioClip clip = GetMoodClip(mood);
+        if (clip == null)
+        {
+            Debug.LogWarning($"{name} has no audio clip assigned for mood {mood}.");
+            return;
+        }
+
+        try
+        {
+            _audioSource.PlayOneShot(clip);
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogWarning($"{name} failed to play audio for mood {mood}: {ex.Message}");
+        }
+    }
+
+    private AudioClip GetMoodClip(NpcMood mood)
+    {
+        switch (mood)
+        {
+            case NpcMood.LookAtPlayer:
+                return _lookAtPlayerClip;
+            case NpcMood.Idle:
+                return _idleClip;
+            case NpcMood.Happy:
+                return _happyClip;
+            case NpcMood.Vibe:
+                return _vibeClip;
+            case NpcMood.Assault:
+                return _assaultClip;
+            case NpcMood.Engage:
+                return _engageClip;
+            case NpcMood.Nodding:
+                return _noddingClip;
+            case NpcMood.HeadShaking:
+                return _headShakingClip;
+            default:
+                return null;
         }
     }
 
