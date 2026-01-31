@@ -59,6 +59,10 @@ public class NPCSpamController : MonoBehaviour
             if (npcControl != null && player != null)
             {
                 npcControl.player = player;
+                if (design.Npcs != null && i < design.Npcs.Count)
+                {
+                    npcControl.SetMaskAttributes(design.Npcs[i].Mask);
+                }
             }
         }
     }
