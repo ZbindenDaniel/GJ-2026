@@ -87,11 +87,11 @@ public class GameControl : MonoBehaviour
         {
             testingTimer = 0f;
             currentLevel++;
-            SpawnLevel(currentLevel, null);
+            SpawnLevel(currentLevel);
         }
     }
 
-    private void SpawnLevel(int level, Transform elevatorTransform)
+    private void SpawnLevel(int level)
     {
         if (levelDesigner == null || npcSpamController == null)
         {
@@ -110,17 +110,6 @@ public class GameControl : MonoBehaviour
         npcSpamController.SpawnLevel(design);
         musicManager.PlayFloorSound(design.LevelIndex);
         elevatorManager.ResetElevators();
-        if (maskSpamController != null)
-        {
-            if (elevatorTransform != null)
-            {
-                maskSpamController.SpawnMasks(design, elevatorTransform, elevatorTransform.rotation);
-            }
-            else
-            {
-                maskSpamController.SpawnMasks(design, null);
-            }
-        }
 
         if (maskSelectionController != null)
         {
@@ -202,7 +191,7 @@ public class GameControl : MonoBehaviour
     {
         Debug.Log($"GameControl elevator closed with player inside. Elevator index: {elevatorIndex}");
         currentLevel++;
-        SpawnLevel(currentLevel, elevatorTransform);
+        SpawnLevel(currentLevel);
     }
 
     public void OnMaskSelected(MaskAttributes mask, MaskFitType fitType)
