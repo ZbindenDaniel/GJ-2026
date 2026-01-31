@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d21d8a8234ce04357be33e65222e4829, type: 3}
+  m_Name: MaskModelLibrary
+  m_EditorClassIdentifier: Assembly-CSharp::MaskModelLibrary
+  entries:
+  - code: MR.HF
+    prefab: {fileID: 919132149155446097, guid: 78fe346a391fec387a92e5b8a39aed1a, type: 3}
+  - code: MR.HN
+    prefab: {fileID: 919132149155446097, guid: 155585810ad7eeceb826786981e9442c, type: 3}
+  - code: MR.HS
+    prefab: {fileID: 919132149155446097, guid: 028cc4521d592aef3a36d75ffdc27e6d, type: 3}
+  - code: MR.IF
+    prefab: {fileID: 919132149155446097, guid: be3f9a59290ff4f73a0e5316e09bb5e8, type: 3}
+  - code: MR.IN
+    prefab: {fileID: 919132149155446097, guid: 58537b451e49c7455b2568a922b1649c, type: 3}
+  - code: MR.IS
+    prefab: {fileID: 919132149155446097, guid: 29400b429774bd49dacb06c380f2605c, type: 3}
+  - code: MR.SF
+    prefab: {fileID: 919132149155446097, guid: 14c60dfe70248b35bbc8607a2d0a8f5d, type: 3}
+  - code: MR.SN
+    prefab: {fileID: 919132149155446097, guid: 84c6629b119af182dbf9bebb2e6450ba, type: 3}
+  - code: MR.SS
+    prefab: {fileID: 919132149155446097, guid: 6eb3bc12fe94944fca03eb31fa65d029, type: 3}
+  - code: MS.HF
+    prefab: {fileID: 919132149155446097, guid: 30b516ae19179d456b61606b776964e4, type: 3}
+  - code: MS.HF
+    prefab: {fileID: 919132149155446097, guid: 30b516ae19179d456b61606b776964e4, type: 3}
+  - code: MS.HF
+    prefab: {fileID: 919132149155446097, guid: 30b516ae19179d456b61606b776964e4, type: 3}
+  - code: MS.IF
+    prefab: {fileID: 919132149155446097, guid: 637773eef4b94fed79259db2b86d36f2, type: 3}
+  - code: MS.IN
+    prefab: {fileID: 919132149155446097, guid: 69a98ba7d685ce00d8bf441e0aeb2a0d, type: 3}
+  - code: MS.HF
+    prefab: {fileID: 919132149155446097, guid: 30b516ae19179d456b61606b776964e4, type: 3}
+  - code: MS.SF
+    prefab: {fileID: 919132149155446097, guid: 7edf07775f6766060ba6b309f817a76c, type: 3}
+  - code: MS.SN
+    prefab: {fileID: 919132149155446097, guid: 26335163b8a379563a4b4be23fe475b3, type: 3}
+  - code: MS.SS
+    prefab: {fileID: 919132149155446097, guid: 8d4e644a9b1d9d87da36343f0eb82e27, type: 3}
+  - code: MT.HF
+    prefab: {fileID: 919132149155446097, guid: 041c111e2c093f75a9fc54fb91eee99d, type: 3}
+  - code: MT.HN
+    prefab: {fileID: 919132149155446097, guid: baf2ae6b43cc45d7b95ecfcebb03c32c, type: 3}
+  - code: MT.HS
+    prefab: {fileID: 919132149155446097, guid: 028cc4521d592aef3a36d75ffdc27e6d, type: 3}
+  - code: MT.IF
+    prefab: {fileID: 919132149155446097, guid: be3f9a59290ff4f73a0e5316e09bb5e8, type: 3}
+  - code: MT.IN
+    prefab: {fileID: 919132149155446097, guid: 58537b451e49c7455b2568a922b1649c, type: 3}
+  - code: MT.IS
+    prefab: {fileID: 919132149155446097, guid: 29400b429774bd49dacb06c380f2605c, type: 3}
+  - code: MT.O
+    prefab: {fileID: 919132149155446097, guid: ea736316e74589f24b0042617531ea2e, type: 3}
+  - code: MT.SF
+    prefab: {fileID: 919132149155446097, guid: be3c5f23f6a532fdf92c639e500409b7, type: 3}
+  - code: MT.SN
+    prefab: {fileID: 919132149155446097, guid: 70e36e7e6b0f3d2298eecad71d915c48, type: 3}
+  - code: MT.SS
+    prefab: {fileID: 919132149155446097, guid: 84915025ef50eefeca26825f946ef895, type: 3}
+  - code: MS.O
+    prefab: {fileID: 919132149155446097, guid: 409c876e874422504bd1440d6ee20675, type: 3}
+  - code: MR.O
+    prefab: {fileID: 919132149155446097, guid: 8a913afcb5f3e2dc586ac711dbc59683, type: 3}
