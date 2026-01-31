@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -87,16 +86,9 @@ public class RoomEntryTrigger : MonoBehaviour
 
         try
         {
-            var triggerMethod = _npcManager.GetType().GetMethod("TriggerRoomReaction");
-            if (triggerMethod == null)
-            {
-                Debug.LogWarning("RoomEntryTrigger could not find TriggerRoomReaction on NPCManager.", this);
-                yield break;
-            }
-
-            triggerMethod.Invoke(_npcManager, null);
+            _npcManager.TriggerRoomReaction(NpcReactionState.Aggressive);
         }
-        catch (Exception ex)
+        catch (System.Exception ex)
         {
             Debug.LogError($"RoomEntryTrigger failed to trigger reaction: {ex}", this);
         }
