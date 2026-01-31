@@ -52,4 +52,16 @@ public class ElevatorManager : MonoBehaviour
         Debug.Log("ElevatorManager initialized and opened doors.");
         // Initialization code for ElevatorManager
     }
+
+    public void ResetElevators()
+    {
+        foreach (var elevator in elevatorControls)
+        {
+            if (elevator != null)
+            {
+                elevator.OpenDoors();
+            }
+        }
+        
+    }
 }

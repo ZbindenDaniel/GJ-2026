@@ -217,7 +217,7 @@ MonoBehaviour:
   _gameControl: {fileID: 0}
   _elevatorIndex: -1
   _closeDoorsDelay: 1.5
-  _reopenDoorsDelay: 5
+  _reopenDoorsDelay: 10
 --- !u!1001 &3934319135603135991
 PrefabInstance:
   m_ObjectHideFlags: 0

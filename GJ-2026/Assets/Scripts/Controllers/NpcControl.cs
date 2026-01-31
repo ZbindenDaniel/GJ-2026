@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum NpcMood
@@ -32,10 +33,22 @@ public class NpcControl : MonoBehaviour
     [SerializeField] private float _headShakeAngle = 15f;
     [SerializeField] private float _headShakeSpeed = 2f;
     [SerializeField] private float _playerDetectionDistance = 4f;
-    [SerializeField] private float _viewUpdateInterval = 0.5f;
+    [SerializeField] private float _playerAwarenessRange = 6f;
+    [SerializeField] private float _viewUpdateInterval = 1.5f;
+    [SerializeField] private float _reactionInterval = 2f;
     [SerializeField] private float _randomLookRange = 10f;
     [SerializeField] private int _lookAtPlayerCycle = 20;
     [SerializeField] private int _idleResetCycle = 30;
+    [Header("Reaction Audio Settings")]
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private List<AudioClip> _lookAtPlayerClips;
+    [SerializeField] private List<AudioClip> _idleClips;
+    [SerializeField] private List<AudioClip> _happyClips;
+    [SerializeField] private List<AudioClip> _vibeClips;
+    [SerializeField] private List<AudioClip> _assaultClips;
+    [SerializeField] private List<AudioClip> _engageClips;
+    [SerializeField] private List<AudioClip> _noddingClips;
+    [SerializeField] private List<AudioClip> _headShakingClips;
 
     public NpcMood Mood = NpcMood.Idle;
 
@@ -51,11 +64,13 @@ public class NpcControl : MonoBehaviour
     private bool loggedMissingBody;
     private bool loggedMissingHeadAnimation;
     private bool loggedMissingBodyAnimation;
+    private bool loggedMissingAudioSource;
 
     private Vector3 targetPoint;
     private float viewTimer;
     private int viewCycleCount;
     private bool lookingAtPlayer;
+    private float nextReactionTime;
 
     void Start()
     {
@@ -75,14 +90,21 @@ public class NpcControl : MonoBehaviour
     {
         if (lookingAtPlayer && player != null)
         {
-            targetPoint = player.position;
+            if (IsPlayerInAwarenessRange())
+            {
+                targetPoint = player.position;
+            }
+            else
+            {
+                lookingAtPlayer = false;
+            }
         }
         // Smoothly rotate towards the target point
         Vector3 direction = (targetPoint - transform.position).normalized;
         if (direction != Vector3.zero)
         {
             Quaternion toRotation = Quaternion.LookRotation(direction, Vector3.up);
-            transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, Time.fixedDeltaTime * 2f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, Time.fixedDeltaTime * 1f);
         }
 
         TryMoveAssault();
@@ -92,13 +114,18 @@ public class NpcControl : MonoBehaviour
         {
             if (IsPlayer(hit.collider))
             {
-                try
+                if (Time.time >= nextReactionTime)
                 {
-                    EvaluateMask(hit.collider);
-                }
-                catch (System.Exception ex)
-                {
-                    Debug.LogWarning($"{name} failed to evaluate mask during raycast: {ex.Message}");
+                    nextReactionTime = Time.time + _reactionInterval;
+
+                    try
+                    {
+                        EvaluateMask(hit.collider);
+                    }
+                    catch (System.Exception ex)
+                    {
+                        Debug.LogWarning($"{name} failed to evaluate mask during raycast: {ex.Message}");
+                    }
                 }
             }
         }
@@ -163,6 +190,8 @@ public class NpcControl : MonoBehaviour
                 ApplyHeadShakingMood();
                 break;
         }
+
+        PlayMoodAudio(newState);
     }
 
     private void CacheMotionOffsets()
@@ -199,7 +228,6 @@ public class NpcControl : MonoBehaviour
             }
 
             _headAnimation.playAutomatically = false;
-
             try
             {
                 AddHeadClips();
@@ -276,6 +304,95 @@ public class NpcControl : MonoBehaviour
         catch (System.Exception ex)
         {
             Debug.LogWarning($"{name} failed to play reaction animation for {state}: {ex.Message}");
+        }
+    }
+
+    private void PlayMoodAudio(NpcMood mood)
+    {
+        if (_audioSource == null)
+        {
+            if (!loggedMissingAudioSource)
+            {
+                loggedMissingAudioSource = true;
+                Debug.LogWarning($"{name} has no audio source assigned; mood audio will be skipped.");
+            }
+            return;
+        }
+
+        AudioClip clip = GetMoodClip(mood);
+        if (clip == null)
+        {
+            Debug.LogWarning($"{name} has no audio clips assigned for mood {mood}.");
+            return;
+        }
+
+        try
+        {
+            _audioSource.PlayOneShot(clip);
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogWarning($"{name} failed to play audio for mood {mood}: {ex.Message}");
+        }
+    }
+
+    private AudioClip GetMoodClip(NpcMood mood)
+    {
+        List<AudioClip> clips = null;
+
+        switch (mood)
+        {
+            case NpcMood.LookAtPlayer:
+                clips = _lookAtPlayerClips;
+                break;
+            case NpcMood.Idle:
+                clips = _idleClips;
+                break;
+            case NpcMood.Happy:
+                clips = _happyClips;
+                break;
+            case NpcMood.Vibe:
+                clips = _vibeClips;
+                break;
+            case NpcMood.Assault:
+                clips = _assaultClips;
+                break;
+            case NpcMood.Engage:
+                clips = _engageClips;
+                break;
+            case NpcMood.Nodding:
+                clips = _noddingClips;
+                break;
+            case NpcMood.HeadShaking:
+                clips = _headShakingClips;
+                break;
+        }
+
+        return GetRandomClip(clips, mood);
+    }
+
+    private AudioClip GetRandomClip(List<AudioClip> clips, NpcMood mood)
+    {
+        if (clips == null || clips.Count == 0)
+        {
+            return null;
+        }
+
+        try
+        {
+            int index = Random.Range(0, clips.Count);
+            AudioClip clip = clips[index];
+            if (clip == null)
+            {
+                Debug.LogWarning($"{name} has an empty audio slot for mood {mood}.");
+            }
+
+            return clip;
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogWarning($"{name} failed to select audio for mood {mood}: {ex.Message}");
+            return null;
         }
     }
 
@@ -570,11 +687,28 @@ public class NpcControl : MonoBehaviour
     {
         if (player != null)
         {
-            LookAtPlayer();
+            if (IsPlayerInAwarenessRange())
+            {
+                LookAtPlayer();
+                return;
+            }
+
+            Debug.Log($"{name} skipped looking at player for {context} because they are out of awareness range.");
             return;
         }
 
         Debug.LogWarning($"{name} has no player assigned for {context}.");
+    }
+
+    private bool IsPlayerInAwarenessRange()
+    {
+        if (player == null)
+        {
+            return false;
+        }
+
+        Vector3 offset = player.position - transform.position;
+        return offset.sqrMagnitude <= _playerAwarenessRange * _playerAwarenessRange;
     }
 
     private void TriggerAnimatorState(NpcMood mood)

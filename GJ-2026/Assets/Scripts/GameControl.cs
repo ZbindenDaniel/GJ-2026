@@ -113,6 +113,8 @@ public class GameControl : MonoBehaviour
         LevelDesignData design = levelDesigner.GetLevelDesign(level);
         currentDesign = design;
         npcSpamController.SpawnLevel(design);
+        musicManager.PlayFloorSound(design.LevelIndex);
+        elevatorManager.ResetElevators();
         if (maskSpamController != null)
         {
             if (elevatorTransform != null)
@@ -133,11 +135,6 @@ public class GameControl : MonoBehaviour
         {
             Debug.LogWarning("GameControl missing MaskSelectionController. Selection will not reset between levels.");
         }
-    }
-
-    public void OnElevatorOccupancyChanged(bool isInside)
-    {
-        Debug.Log($"GameControl elevator occupancy changed. Player inside: {isInside}");
     }
 
     public void OnElevatorOccupancyChanged(int elevatorIndex, bool isInside)
@@ -170,6 +167,40 @@ public class GameControl : MonoBehaviour
     public void OnElevatorClosedWithPlayer(string elevatorName)
     {
         Debug.Log($"GameControl elevator closed with player inside. Elevator: {elevatorName}");
+        try
+        {
+            if (musicManager == null)
+            {
+                Debug.LogWarning("GameControl cannot fade out music because MusicManager is missing.");
+                return;
+            }
+
+            musicManager.FadeOut();
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"GameControl failed to fade out music for elevator {elevatorName}: {ex}");
+        }
+    }
+
+    public void OnElevatorOpenedWithPlayer(string elevatorName)
+    {
+        Debug.Log($"GameControl elevator opened with player inside. Elevator: {elevatorName}");
+        try
+        {
+            if (musicManager == null)
+            {
+                Debug.LogWarning("GameControl cannot fade in music because MusicManager is missing.");
+                return;
+            }
+
+            SpawnLevel(currentLevel++);
+            musicManager.FadeIn();
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"GameControl failed to fade in music for elevator {elevatorName}: {ex}");
+        }
     }
 
     public void OnElevatorClosedWithPlayer(int elevatorIndex, Transform elevatorTransform)
