@@ -161,7 +161,7 @@ public class MaskSpamController : MonoBehaviour
         ClearMasks();
 
         lastDesign = design;
-        List<MaskOptionData> options = design.AvailableMasks ?? new List<MaskOptionData>();
+        List<MaskAttributes> options = design.LiftChoices ?? new List<MaskAttributes>();
         int count = Mathf.Clamp(options.Count, MinMasks, MaxMasks);
         if (logSpawnDetails)
         {
@@ -177,9 +177,9 @@ public class MaskSpamController : MonoBehaviour
         }
         for (int i = 0; i < count; i++)
         {
-            MaskOptionData option = i < options.Count ? options[i] : null;
+            MaskAttributes? option = i < options.Count ? options[i] : null;
             GameObject prefabToSpawn = maskPrefab;
-            string maskCode = option != null ? BuildMaskCode(option) : null;
+            string maskCode = option.HasValue ? BuildMaskCode(option.Value) : null;
             if (logSpawnDetails)
             {
                 Debug.Log($"MaskSpamController combined={useCombinedMaskPrefab}, maskCode={maskCode ?? "none"}");
@@ -232,19 +232,19 @@ public class MaskSpamController : MonoBehaviour
                 Debug.Log($"Mask {i} code: {maskCode ?? "none"}, local pos: {maskObject.transform.localPosition}, local rot: {maskObject.transform.localEulerAngles}, world pos: {maskObject.transform.position}");
             }
 
-            if (option != null)
+            if (option.HasValue)
             {
-                ApplyMaskData(maskObject, option);
+                ApplyMaskData(maskObject, option.Value);
                 if (logSpawnDetails)
                 {
-                    Debug.Log($"Mask {i}: shape={option.Mask.Shape}, eyes={option.Mask.EyeState}, mouth={option.Mask.Mouth}, fit={option.FitType}");
+                    Debug.Log($"Mask {i}: shape={option.Value.Shape}, eyes={option.Value.EyeState}, mouth={option.Value.Mouth}");
                 }
             }
         }
 
         hideTimer = AutoHideSeconds;
     }
-    private static void ApplyMaskData(GameObject maskObject, MaskOptionData option)
+    private static void ApplyMaskData(GameObject maskObject, MaskAttributes option)
     {
         if (maskObject == null)
         {
@@ -346,15 +346,10 @@ public class MaskSpamController : MonoBehaviour
         public string code;
     }
 
-    private string BuildMaskCode(MaskOptionData option)
+    private string BuildMaskCode(MaskAttributes option)
     {
-        if (option == null)
-        {
-            return null;
-        }
-
-        string shapeCode = GetShapeCode(option.Mask.Shape);
-        string eyeCode = GetEyeCode(option.Mask.EyeState);
+        string shapeCode = GetShapeCode(option.Shape);
+        string eyeCode = GetEyeCode(option.EyeState);
         if (string.IsNullOrWhiteSpace(shapeCode))
         {
             return null;
@@ -365,7 +360,7 @@ public class MaskSpamController : MonoBehaviour
             return $"M{shapeCode}.O";
         }
 
-        string moodCode = GetMouthCode(option.Mask.Mouth);
+        string moodCode = GetMouthCode(option.Mouth);
         if (string.IsNullOrWhiteSpace(eyeCode) || string.IsNullOrWhiteSpace(moodCode))
         {
             return null;

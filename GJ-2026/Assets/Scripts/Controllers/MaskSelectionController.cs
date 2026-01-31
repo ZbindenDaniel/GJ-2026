@@ -37,7 +37,7 @@ public class MaskSelectionController : MonoBehaviour
             {
                 if (gameControl != null)
                 {
-                    gameControl.OnMaskSelected(hovered.MaskAttributes, hovered.FitType);
+                    gameControl.OnMaskSelected(hovered.MaskAttributes);
                 }
             }
         }

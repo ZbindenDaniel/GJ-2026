@@ -10,7 +10,6 @@ public class MaskSelectable : MonoBehaviour
     private bool isSelected;
 
     public MaskAttributes MaskAttributes { get; private set; }
-    public MaskFitType FitType { get; private set; }
 
     private void Awake()
     {
@@ -39,15 +38,9 @@ public class MaskSelectable : MonoBehaviour
         }
     }
 
-    public void SetData(MaskOptionData option)
+    public void SetData(MaskAttributes attributes)
     {
-        if (option == null)
-        {
-            return;
-        }
-
-        MaskAttributes = option.Mask;
-        FitType = option.FitType;
+        MaskAttributes = attributes;
     }
 
     public void SetHighlighted(bool active)
