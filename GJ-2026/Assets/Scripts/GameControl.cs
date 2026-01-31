@@ -20,6 +20,7 @@ public class GameControl : MonoBehaviour
     [SerializeField] private LevelDesigner levelDesigner;
     [SerializeField] private NPCSpamController npcSpamController;
     [SerializeField] private ElevatorManager elevatorManager;
+    [SerializeField] private MaskSpamController maskSpamController;
     private int currentLevel;
     private float testingTimer;
 
@@ -48,6 +49,10 @@ public class GameControl : MonoBehaviour
         if (npcSpamController == null)
         {
             npcSpamController = GetComponent<NPCSpamController>();
+        }
+        if (maskSpamController == null)
+        {
+            maskSpamController = GetComponent<MaskSpamController>();
         }
 
         currentLevel = Mathf.Max(1, startLevel);
@@ -88,6 +93,10 @@ public class GameControl : MonoBehaviour
 
         LevelDesignData design = levelDesigner.GetLevelDesign(level);
         npcSpamController.SpawnLevel(design);
+        if (maskSpamController != null)
+        {
+            maskSpamController.SpawnMasks(design);
+        }
     }
 
     public void OnElevatorOccupancyChanged(bool isInside)

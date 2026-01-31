@@ -1,11 +1,33 @@
 using System;
 
 [Serializable]
-public struct MaskAttributes
+public struct MaskAttributes : IEquatable<MaskAttributes>
 {
     public MaskShape Shape;
     public EyeColor EyeColor;
     public MaskPattern Pattern;
+
+    public bool Equals(MaskAttributes other)
+    {
+        return Shape == other.Shape && EyeColor == other.EyeColor && Pattern == other.Pattern;
+    }
+
+    public override bool Equals(object obj)
+    {
+        return obj is MaskAttributes other && Equals(other);
+    }
+
+    public override int GetHashCode()
+    {
+        unchecked
+        {
+            int hash = 17;
+            hash = hash * 31 + (int)Shape;
+            hash = hash * 31 + (int)EyeColor;
+            hash = hash * 31 + (int)Pattern;
+            return hash;
+        }
+    }
 }
 
 public enum MaskShape

@@ -9,6 +9,10 @@ public class LevelDesigner : MonoBehaviour
     public static int NpcsPerLevel = 1;
     public static int BaseLevel = 1;
 
+    public static int MinMasks = 3;
+    public static int MaxMasks = 8;
+    public static int MasksPerLevel = 1;
+
     public LevelDesignData GetLevelDesign(int level)
     {
         int safeLevel = Mathf.Max(1, level);
@@ -20,7 +24,8 @@ public class LevelDesigner : MonoBehaviour
             LevelIndex = safeLevel,
             NpcCount = npcCount,
             AttributeCount = attributeCount,
-            Npcs = new List<NpcDesignData>(npcCount)
+            Npcs = new List<NpcDesignData>(npcCount),
+            AvailableMasks = new List<MaskOptionData>()
         };
 
         for (int i = 0; i < npcCount; i++)
@@ -33,6 +38,7 @@ public class LevelDesigner : MonoBehaviour
             design.Npcs.Add(npc);
         }
 
+        design.AvailableMasks = CreateMaskOptions(design.Npcs, attributeCount, safeLevel);
         return design;
     }
 
@@ -56,6 +62,13 @@ public class LevelDesigner : MonoBehaviour
         return 3;
     }
 
+    private static int CalculateMaskCount(int level)
+    {
+        int levelIndex = Mathf.Max(0, level - BaseLevel);
+        int count = MinMasks + levelIndex * MasksPerLevel;
+        return Mathf.Clamp(count, MinMasks, MaxMasks);
+    }
+
     private static MaskAttributes CreateMaskAttributes(int attributeCount)
     {
         MaskAttributes mask = new MaskAttributes
@@ -76,6 +89,175 @@ public class LevelDesigner : MonoBehaviour
         }
 
         return mask;
+    }
+
+    private static List<MaskOptionData> CreateMaskOptions(List<NpcDesignData> npcs, int attributeCount, int level)
+    {
+        int maskCount = CalculateMaskCount(level);
+        List<MaskOptionData> options = new List<MaskOptionData>(maskCount);
+
+        if (npcs == null || npcs.Count == 0)
+        {
+            for (int i = 0; i < maskCount; i++)
+            {
+                options.Add(new MaskOptionData { Mask = CreateMaskAttributes(attributeCount), FitType = MaskFitType.None });
+            }
+            return options;
+        }
+
+        MaskAttributes mostCommon = GetMostCommonMask(npcs, attributeCount);
+        HashSet<MaskAttributes> used = new HashSet<MaskAttributes> { mostCommon };
+
+        options.Add(new MaskOptionData { Mask = mostCommon, FitType = MaskFitType.Best });
+
+        while (options.Count < maskCount)
+        {
+            MaskOptionData next = CreateNextMaskOption(mostCommon, attributeCount, options);
+            if (used.Add(next.Mask))
+            {
+                options.Add(next);
+            }
+        }
+
+        return options;
+    }
+
+    private static MaskOptionData CreateNextMaskOption(MaskAttributes baseMask, int attributeCount, List<MaskOptionData> existing)
+    {
+        bool needPartial = !HasFitType(existing, MaskFitType.Partial);
+        bool needNone = !HasFitType(existing, MaskFitType.None);
+
+        if (needPartial)
+        {
+            return new MaskOptionData { Mask = CreatePartialMask(baseMask, attributeCount), FitType = MaskFitType.Partial };
+        }
+
+        if (needNone)
+        {
+            return new MaskOptionData { Mask = CreateNoneMask(baseMask, attributeCount), FitType = MaskFitType.None };
+        }
+
+        // Mix of partial and none once we already have both.
+        return Random.Range(0, 2) == 0
+            ? new MaskOptionData { Mask = CreatePartialMask(baseMask, attributeCount), FitType = MaskFitType.Partial }
+            : new MaskOptionData { Mask = CreateNoneMask(baseMask, attributeCount), FitType = MaskFitType.None };
+    }
+
+    private static bool HasFitType(List<MaskOptionData> options, MaskFitType type)
+    {
+        for (int i = 0; i < options.Count; i++)
+        {
+            if (options[i].FitType == type)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static MaskAttributes GetMostCommonMask(List<NpcDesignData> npcs, int attributeCount)
+    {
+        Dictionary<MaskAttributes, int> counts = new Dictionary<MaskAttributes, int>();
+        MaskAttributes best = npcs[0].Mask;
+        int bestCount = 0;
+
+        for (int i = 0; i < npcs.Count; i++)
+        {
+            MaskAttributes mask = NormalizeMask(npcs[i].Mask, attributeCount);
+            if (!counts.ContainsKey(mask))
+            {
+                counts[mask] = 0;
+            }
+
+            counts[mask]++;
+            if (counts[mask] > bestCount)
+            {
+                bestCount = counts[mask];
+                best = mask;
+            }
+        }
+
+        return best;
+    }
+
+    private static MaskAttributes NormalizeMask(MaskAttributes mask, int attributeCount)
+    {
+        if (attributeCount < 3)
+        {
+            mask.Pattern = MaskPattern.None;
+        }
+        if (attributeCount < 2)
+        {
+            mask.EyeColor = EyeColor.None;
+        }
+        return mask;
+    }
+
+    private static MaskAttributes CreatePartialMask(MaskAttributes baseMask, int attributeCount)
+    {
+        MaskAttributes mask = baseMask;
+
+        if (attributeCount >= 3)
+        {
+            mask.Pattern = GetDifferentPattern(baseMask.Pattern);
+        }
+        else if (attributeCount == 2)
+        {
+            mask.EyeColor = GetDifferentEyeColor(baseMask.EyeColor);
+        }
+        else
+        {
+            mask.Shape = GetDifferentShape(baseMask.Shape);
+        }
+
+        return mask;
+    }
+
+    private static MaskAttributes CreateNoneMask(MaskAttributes baseMask, int attributeCount)
+    {
+        MaskAttributes mask = baseMask;
+
+        mask.Shape = GetDifferentShape(baseMask.Shape);
+        if (attributeCount >= 2)
+        {
+            mask.EyeColor = GetDifferentEyeColor(baseMask.EyeColor);
+        }
+        if (attributeCount >= 3)
+        {
+            mask.Pattern = GetDifferentPattern(baseMask.Pattern);
+        }
+
+        return mask;
+    }
+
+    private static MaskShape GetDifferentShape(MaskShape current)
+    {
+        MaskShape next = GetRandomShape();
+        while (next == current)
+        {
+            next = GetRandomShape();
+        }
+        return next;
+    }
+
+    private static EyeColor GetDifferentEyeColor(EyeColor current)
+    {
+        EyeColor next = GetRandomEyeColor();
+        while (next == current)
+        {
+            next = GetRandomEyeColor();
+        }
+        return next;
+    }
+
+    private static MaskPattern GetDifferentPattern(MaskPattern current)
+    {
+        MaskPattern next = GetRandomPattern();
+        while (next == current)
+        {
+            next = GetRandomPattern();
+        }
+        return next;
     }
 
     private static MaskShape GetRandomShape()
