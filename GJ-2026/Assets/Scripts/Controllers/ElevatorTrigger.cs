@@ -1,0 +1,145 @@
+using System;
+using System.Collections;
+using UnityEngine;
+
+[RequireComponent(typeof(Collider))]
+public class ElevatorTrigger : MonoBehaviour
+{
+    [SerializeField] private ElevatorControl _elevatorControl;
+    [SerializeField] private GameControl _gameControl;
+    [SerializeField] private float _closeDoorsDelay = 1.5f;
+
+    private bool isPlayerInside;
+    private Coroutine closeDoorsRoutine;
+    private Collider triggerCollider;
+
+    private void Awake()
+    {
+        triggerCollider = GetComponent<Collider>();
+        if (triggerCollider != null && !triggerCollider.isTrigger)
+        {
+            Debug.LogWarning($"ElevatorTrigger expects a trigger collider on {name}.");
+        }
+
+        if (_elevatorControl == null)
+        {
+            _elevatorControl = GetComponentInParent<ElevatorControl>();
+        }
+
+        if (_gameControl == null)
+        {
+            _gameControl = FindFirstObjectByType<GameControl>();
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (closeDoorsRoutine != null)
+        {
+            StopCoroutine(closeDoorsRoutine);
+            closeDoorsRoutine = null;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!IsPlayerCollider(other))
+        {
+            return;
+        }
+
+        if (isPlayerInside)
+        {
+            return;
+        }
+
+        isPlayerInside = true;
+        Debug.Log($"Player entered elevator trigger for {GetElevatorName()}.");
+        NotifyGameControl(true);
+        ScheduleCloseDoors();
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (!IsPlayerCollider(other))
+        {
+            return;
+        }
+
+        if (!isPlayerInside)
+        {
+            return;
+        }
+
+        isPlayerInside = false;
+        Debug.Log($"Player exited elevator trigger for {GetElevatorName()}.");
+        NotifyGameControl(false);
+        ScheduleCloseDoors();
+    }
+
+    private bool IsPlayerCollider(Collider other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+
+        if (other.CompareTag("Player"))
+        {
+            return true;
+        }
+
+        return other.GetComponentInParent<PlayerController>() != null;
+    }
+
+    private void ScheduleCloseDoors()
+    {
+        if (_elevatorControl == null)
+        {
+            Debug.LogWarning("ElevatorTrigger missing ElevatorControl reference.");
+            return;
+        }
+
+        if (closeDoorsRoutine != null)
+        {
+            StopCoroutine(closeDoorsRoutine);
+        }
+
+        closeDoorsRoutine = StartCoroutine(CloseDoorsAfterDelay());
+    }
+
+    private IEnumerator CloseDoorsAfterDelay()
+    {
+        yield return new WaitForSeconds(_closeDoorsDelay);
+        _elevatorControl.CloseDoors();
+        closeDoorsRoutine = null;
+    }
+
+    private void NotifyGameControl(bool isInside)
+    {
+        if (_gameControl == null)
+        {
+            Debug.LogWarning("ElevatorTrigger could not find GameControl to notify.");
+            return;
+        }
+
+        try
+        {
+            _gameControl.OnElevatorOccupancyChanged(isInside);
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Failed to notify GameControl about elevator occupancy: {ex}");
+        }
+    }
+
+    private string GetElevatorName()
+    {
+        if (_elevatorControl != null)
+        {
+            return _elevatorControl.name;
+        }
+
+        return name;
+    }
+}

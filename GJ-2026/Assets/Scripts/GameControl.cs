@@ -34,4 +34,9 @@ public class GameControl : MonoBehaviour
 
         Debug.Log("GameControl started.");
     }
+
+    public void OnElevatorOccupancyChanged(bool isInside)
+    {
+        Debug.Log($"GameControl elevator occupancy changed. Player inside: {isInside}");
+    }
 }
