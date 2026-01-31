@@ -412,31 +412,45 @@ MonoBehaviour:
   _assaultMoveSpeed: 1.5
   _engageBounceHeight: 0.05
   _engageBounceSpeed: 2.5
-  _nodAngle: 15
+  _nodAngle: 40
   _nodSpeed: 2
-  _headShakeAngle: 15
-  _headShakeSpeed: 2
+  _headShakeAngle: 20
+  _headShakeSpeed: 4
   _playerDetectionDistance: 4
-  _playerAwarenessRange: 6
-  _viewUpdateInterval: 0.5
+  _playerAwarenessRange: 4
+  _viewUpdateInterval: 1
   _reactionInterval: 2
-  _randomLookRange: 10
-  _lookAtPlayerCycle: 20
-  _idleResetCycle: 30
+  _randomLookRange: 20
+  _lookAtPlayerCycle: 10
+  _idleResetCycle: 20
   _audioSource: {fileID: 4229973137754095392}
   _lookAtPlayerClips:
   - {fileID: 8300000, guid: 634e247d2996eb89ea4f167f858caf32, type: 3}
-  _idleClips: []
+  _idleClips:
+  - {fileID: 8300000, guid: 6b009ecdb9423f1ac86dd373c4929515, type: 3}
+  - {fileID: 8300000, guid: f26fdb37876f9d1a3979a46b3e1d6d5a, type: 3}
   _happyClips:
   - {fileID: 8300000, guid: ed9c4fb5e4bfde36c8badfbe0f321491, type: 3}
-  _vibeClips: []
+  _vibeClips:
+  - {fileID: 8300000, guid: b106d14674586e0eba832ba234dda262, type: 3}
+  - {fileID: 8300000, guid: 52c78b9a8e810ad77960a66cc1b1ad6b, type: 3}
   _assaultClips:
   - {fileID: 8300000, guid: 020efcd9ffa0c66ff96e27afa5981693, type: 3}
+  - {fileID: 8300000, guid: 7661a81b759828f7d888658bbe8f71c7, type: 3}
+  - {fileID: 8300000, guid: f33a604ea730d38eab47a9eeab494def, type: 3}
+  - {fileID: 8300000, guid: 40fca1f2e4f3c3f27b5aa321e8291184, type: 3}
   _engageClips:
   - {fileID: 8300000, guid: 86858e0086b878504955eef28648ae67, type: 3}
+  - {fileID: 8300000, guid: 634e247d2996eb89ea4f167f858caf32, type: 3}
+  - {fileID: 8300000, guid: 4822a78b4bdaffb99a0e62c5bb764563, type: 3}
+  - {fileID: 8300000, guid: 7fd035f54a997a931951fe258c9c317c, type: 3}
+  - {fileID: 8300000, guid: 5c9b38436f8a66d0bbc1b7058db10927, type: 3}
   _noddingClips:
   - {fileID: 8300000, guid: 17536c95b43722db2ad05884929e561d, type: 3}
-  _headShakingClips: []
+  - {fileID: 8300000, guid: 17536c95b43722db2ad05884929e561d, type: 3}
+  _headShakingClips:
+  - {fileID: 8300000, guid: 8f746493e9c12475aade455ba2b6e16a, type: 3}
+  - {fileID: 8300000, guid: 6918c6da94edd8aef8746a8fa0424bda, type: 3}
   Mood: 1
 --- !u!54 &2573335260912716472
 Rigidbody:

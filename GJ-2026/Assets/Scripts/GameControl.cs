@@ -48,6 +48,7 @@ public class GameControl : MonoBehaviour
         {
             levelDesigner = GetComponent<LevelDesigner>();
         }
+
         if (npcSpamController == null)
         {
             npcSpamController = GetComponent<NPCSpamController>();
@@ -57,8 +58,8 @@ public class GameControl : MonoBehaviour
             maskSpamController = GetComponent<MaskSpamController>();
         }
 
-        currentLevel = Mathf.Max(1, startLevel);
-        SpawnLevel(currentLevel);
+        // currentLevel = Mathf.Max(1, startLevel);
+        // SpawnLevel(currentLevel);
 
         // load all submodules
 

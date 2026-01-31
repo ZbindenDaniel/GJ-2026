@@ -4,7 +4,7 @@ using UnityEngine;
 public class NPCSpamController : MonoBehaviour
 {
     // Static tuning knobs (fast jam tweaks)
-    public static Vector3 LevelSize = new Vector3(10f, 0f, 10f);
+    public static Vector3 LevelSize = new Vector3(8f, 0f, 8f);
     public static float MinNpcDistance = 1.5f;
     public static int MaxAttemptsPerNpc = 25;
     public static Vector3 LevelCenter = Vector3.zero;
@@ -37,6 +37,11 @@ public class NPCSpamController : MonoBehaviour
         {
             Quaternion rotation = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
             GameObject npc = Instantiate(npcPrefab, positions[i], rotation, npcParent);
+
+            // scale the height (Y) randomly between 0.8 and 1.2
+            float scale = Random.Range(0.8f, 1.2f);
+            npc.transform.localScale = new Vector3(1f, scale, 1f);
+
             if (!npc.activeSelf)
             {
                 npc.SetActive(true);
