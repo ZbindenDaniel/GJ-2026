@@ -26,6 +26,7 @@ public class NpcControl : MonoBehaviour
     [SerializeField] private float _vibeBounceSpeed = 3f;
     [SerializeField] private float _assaultShakeAngle = 6f;
     [SerializeField] private float _assaultShakeSpeed = 18f;
+    [SerializeField] private float _assaultMoveSpeed = 1.5f;
     [SerializeField] private float _engageBounceHeight = 0.05f;
     [SerializeField] private float _engageBounceSpeed = 2.5f;
     [SerializeField] private float _nodAngle = 15f;
@@ -47,6 +48,7 @@ public class NpcControl : MonoBehaviour
     private Vector3 initialBodyLocalPosition;
     private Animation _headAnimation;
     private Animation _bodyAnimation;
+    private Rigidbody _rigidbody;
     private bool loggedMissingHead;
     private bool loggedMissingBody;
     private bool loggedMissingHeadAnimation;
@@ -59,6 +61,12 @@ public class NpcControl : MonoBehaviour
 
     void Start()
     {
+        _rigidbody = GetComponent<Rigidbody>();
+        if (_rigidbody == null)
+        {
+            Debug.LogWarning($"{name} is missing a Rigidbody; assault movement will be skipped.");
+        }
+
         initialViewDirection = transform.forward;
         CacheMotionOffsets();
         SetupReactionAnimations();
@@ -78,6 +86,8 @@ public class NpcControl : MonoBehaviour
             Quaternion toRotation = Quaternion.LookRotation(direction, Vector3.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, Time.fixedDeltaTime * 2f);
         }
+
+        TryMoveAssault();
 
         // raycast -- player
         if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, _playerDetectionDistance))
@@ -594,6 +604,36 @@ public class NpcControl : MonoBehaviour
         catch (System.Exception ex)
         {
             Debug.LogWarning($"{name} failed to play reaction animation for {mood}: {ex.Message}");
+        }
+    }
+
+    private void TryMoveAssault()
+    {
+        if (currentMood != NpcMood.Assault)
+        {
+            return;
+        }
+
+        if (_rigidbody == null || player == null)
+        {
+            return;
+        }
+
+        try
+        {
+            Vector3 targetPosition = new Vector3(player.position.x, transform.position.y, player.position.z);
+            Vector3 moveDirection = targetPosition - transform.position;
+            if (moveDirection.sqrMagnitude <= 0.01f)
+            {
+                return;
+            }
+
+            Vector3 step = moveDirection.normalized * _assaultMoveSpeed * Time.fixedDeltaTime;
+            _rigidbody.MovePosition(transform.position + step);
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogWarning($"{name} failed to move during assault: {ex.Message}");
         }
     }
 }
