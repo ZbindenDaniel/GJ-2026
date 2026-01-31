@@ -40,44 +40,16 @@ public class ElevatorManager : MonoBehaviour
             try
             {
                 control.Init();
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError($"ElevatorManager failed to initialize ElevatorControl at index {i}. {ex.Message}");
-                continue;
-            }
-        }
-
-        Debug.Log("ElevatorManager initialized. opening doors.");
-        OpenAllDoors();
-        // Initialization code for ElevatorManager
-    }
-
-    private void OpenAllDoors()
-    {
-        if (elevatorControls == null || elevatorControls.Length == 0)
-        {
-            Debug.LogWarning("ElevatorManager tried to open doors without any ElevatorControls available.");
-            return;
-        }
-
-        for (int i = 0; i < elevatorControls.Length; i++)
-        {
-            ElevatorControl control = elevatorControls[i];
-            if (control == null)
-            {
-                Debug.LogWarning($"ElevatorManager cannot open doors for a null ElevatorControl at index {i}.");
-                continue;
-            }
-
-            try
-            {
                 control.OpenDoors();
             }
             catch (Exception ex)
             {
-                Debug.LogError($"ElevatorManager failed to open doors for ElevatorControl at index {i}. {ex.Message}");
+                Debug.LogError($"ElevatorManager failed to initialize or open doors for ElevatorControl at index {i}. {ex.Message}");
+                continue;
             }
         }
+
+        Debug.Log("ElevatorManager initialized and opened doors.");
+        // Initialization code for ElevatorManager
     }
 }
