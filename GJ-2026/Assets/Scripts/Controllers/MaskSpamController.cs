@@ -13,6 +13,11 @@ public class MaskSpamController : MonoBehaviour
     [SerializeField] private GameObject maskPrefab;
     [SerializeField] private MaskModelLibrary maskModelLibrary;
 
+    [Header("Mask Correction")]
+    [SerializeField] private Vector3 maskLocalPositionOffset = Vector3.zero;
+    [SerializeField] private Vector3 maskLocalRotationOffset = Vector3.zero;
+    [SerializeField] private Vector3 maskLocalScaleMultiplier = Vector3.one;
+
     [Header("Model Codes")]
     [SerializeField] private EyeStateCode[] eyeStateCodes;
 
@@ -176,13 +181,30 @@ public class MaskSpamController : MonoBehaviour
                 {
                     prefabToSpawn = resolved;
                 }
+                else if (logSpawnDetails)
+                {
+                    Debug.LogWarning($"MaskSpamController: No prefab found for code '{maskCode}'. Falling back to default maskPrefab.");
+                }
+            }
+            else if (logSpawnDetails)
+            {
+                if (maskModelLibrary == null)
+                {
+                    Debug.LogWarning("MaskSpamController: MaskModelLibrary is not assigned. Using default maskPrefab.");
+                }
+                else
+                {
+                    Debug.LogWarning("MaskSpamController: Mask code is empty. Using default maskPrefab.");
+                }
             }
 
             GameObject maskObject = Instantiate(prefabToSpawn, parentTransform);
             spawnedMasks.Add(maskObject);
 
             Vector3 position = positions.Count > 0 ? positions[Mathf.Min(i, positions.Count - 1)] : Vector3.zero;
-            maskObject.transform.localPosition = position;
+            maskObject.transform.localPosition = position + maskLocalPositionOffset;
+            maskObject.transform.localRotation = Quaternion.Euler(maskLocalRotationOffset);
+            maskObject.transform.localScale = Vector3.Scale(maskObject.transform.localScale, maskLocalScaleMultiplier);
             if (logSpawnDetails)
             {
                 Debug.Log($"Mask {i} code: {maskCode ?? "none"}, local pos: {maskObject.transform.localPosition}, world pos: {maskObject.transform.position}");

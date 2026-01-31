@@ -69,3 +69,7 @@ MonoBehaviour:
     prefab: {fileID: 919132149155446097, guid: 70e36e7e6b0f3d2298eecad71d915c48, type: 3}
   - code: MT.SS
     prefab: {fileID: 919132149155446097, guid: 84915025ef50eefeca26825f946ef895, type: 3}
+  - code: MS.O
+    prefab: {fileID: 919132149155446097, guid: 409c876e874422504bd1440d6ee20675, type: 3}
+  - code: MR.O
+    prefab: {fileID: 919132149155446097, guid: 8a913afcb5f3e2dc586ac711dbc59683, type: 3}

@@ -1328,9 +1328,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MaskSpamController
   maskParent: {fileID: 0}
   maskPrefab: {fileID: 8982437066094884216, guid: 178725466fe0e4c8bab7a4f12cd6807b, type: 3}
-  maskModelLibrary: {fileID: 0}
-  eyeColorCodes: []
-  fitTypeCodes: []
+  maskModelLibrary: {fileID: 11400000, guid: 67fe9522483324cfa9fed53b42c22eef, type: 2}
+  eyeStateCodes: []
   spacing: 0.3
   primaryY: 2.3
   x: 0.09
