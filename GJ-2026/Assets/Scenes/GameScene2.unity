@@ -1266,7 +1266,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8746998326958928657, guid: 70cb3053c22854c75b80db17b5622e45, type: 3}
       propertyPath: m_Constraints
-      value: 80
+      value: 84
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1328,6 +1328,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MaskSpamController
   maskParent: {fileID: 0}
   maskPrefab: {fileID: 8982437066094884216, guid: 178725466fe0e4c8bab7a4f12cd6807b, type: 3}
+  maskModelLibrary: {fileID: 0}
+  eyeColorCodes: []
+  fitTypeCodes: []
   spacing: 0.3
   primaryY: 2.3
   x: 0.09

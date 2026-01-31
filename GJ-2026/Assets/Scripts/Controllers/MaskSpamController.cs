@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 public class MaskSpamController : MonoBehaviour
@@ -10,6 +11,11 @@ public class MaskSpamController : MonoBehaviour
     [Header("World")]
     [SerializeField] private Transform maskParent;
     [SerializeField] private GameObject maskPrefab;
+    [SerializeField] private MaskModelLibrary maskModelLibrary;
+
+    [Header("Model Codes")]
+    [SerializeField] private EyeColorCode[] eyeColorCodes;
+    [SerializeField] private FitTypeCode[] fitTypeCodes;
 
     [Header("Layout")]
     [SerializeField] private float spacing = 0.2f;
@@ -161,22 +167,34 @@ public class MaskSpamController : MonoBehaviour
         }
         for (int i = 0; i < count; i++)
         {
-            GameObject maskObject = Instantiate(maskPrefab, parentTransform);
+            MaskOptionData option = i < options.Count ? options[i] : null;
+            GameObject prefabToSpawn = maskPrefab;
+            string maskCode = option != null ? BuildMaskCode(option) : null;
+            if (maskModelLibrary != null && !string.IsNullOrWhiteSpace(maskCode))
+            {
+                GameObject resolved = maskModelLibrary.GetPrefab(maskCode);
+                if (resolved != null)
+                {
+                    prefabToSpawn = resolved;
+                }
+            }
+
+            GameObject maskObject = Instantiate(prefabToSpawn, parentTransform);
             spawnedMasks.Add(maskObject);
 
             Vector3 position = positions.Count > 0 ? positions[Mathf.Min(i, positions.Count - 1)] : Vector3.zero;
             maskObject.transform.localPosition = position;
             if (logSpawnDetails)
             {
-                Debug.Log($"Mask {i} local pos: {maskObject.transform.localPosition}, world pos: {maskObject.transform.position}");
+                Debug.Log($"Mask {i} code: {maskCode ?? "none"}, local pos: {maskObject.transform.localPosition}, world pos: {maskObject.transform.position}");
             }
 
-            if (i < options.Count)
+            if (option != null)
             {
-                ApplyMaskData(maskObject, options[i]);
+                ApplyMaskData(maskObject, option);
                 if (logSpawnDetails)
                 {
-                    Debug.Log($"Mask {i}: shape={options[i].Mask.Shape}, eye={options[i].Mask.EyeColor}, pattern={options[i].Mask.Pattern}, fit={options[i].FitType}");
+                    Debug.Log($"Mask {i}: shape={option.Mask.Shape}, eye={option.Mask.EyeColor}, pattern={option.Mask.Pattern}, fit={option.FitType}");
                 }
             }
         }
@@ -197,5 +215,103 @@ public class MaskSpamController : MonoBehaviour
         }
 
         selectable.SetData(option);
+    }
+
+    [Serializable]
+    private struct EyeColorCode
+    {
+        public EyeColor eyeColor;
+        public string code;
+    }
+
+    [Serializable]
+    private struct FitTypeCode
+    {
+        public MaskFitType fitType;
+        public string code;
+    }
+
+    private string BuildMaskCode(MaskOptionData option)
+    {
+        if (option == null)
+        {
+            return null;
+        }
+
+        string shapeCode = GetShapeCode(option.Mask.Shape);
+        string eyeCode = GetEyeCode(option.Mask.EyeColor);
+        if (string.IsNullOrWhiteSpace(shapeCode))
+        {
+            return null;
+        }
+
+        if (string.Equals(eyeCode, "O", System.StringComparison.OrdinalIgnoreCase))
+        {
+            return $"M{shapeCode}.O";
+        }
+
+        string moodCode = GetFitCode(option.FitType);
+        if (string.IsNullOrWhiteSpace(eyeCode) || string.IsNullOrWhiteSpace(moodCode))
+        {
+            return null;
+        }
+
+        return $"M{shapeCode}.{eyeCode}{moodCode}";
+    }
+
+    private static string GetShapeCode(MaskShape shape)
+    {
+        switch (shape)
+        {
+            case MaskShape.Round:
+                return "R";
+            case MaskShape.Square:
+                return "S";
+            case MaskShape.Triangle:
+                return "T";
+            default:
+                return string.Empty;
+        }
+    }
+
+    private string GetEyeCode(EyeColor eyeColor)
+    {
+        if (eyeColor == EyeColor.None)
+        {
+            return "O";
+        }
+
+        if (eyeColorCodes == null)
+        {
+            return string.Empty;
+        }
+
+        for (int i = 0; i < eyeColorCodes.Length; i++)
+        {
+            if (eyeColorCodes[i].eyeColor == eyeColor)
+            {
+                return eyeColorCodes[i].code;
+            }
+        }
+
+        return string.Empty;
+    }
+
+    private string GetFitCode(MaskFitType fitType)
+    {
+        if (fitTypeCodes == null)
+        {
+            return string.Empty;
+        }
+
+        for (int i = 0; i < fitTypeCodes.Length; i++)
+        {
+            if (fitTypeCodes[i].fitType == fitType)
+            {
+                return fitTypeCodes[i].code;
+            }
+        }
+
+        return string.Empty;
     }
 }
