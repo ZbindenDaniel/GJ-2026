@@ -46,6 +46,7 @@ public class NPCSpamController : MonoBehaviour
             if (!npc.activeSelf)
             {
                 npc.SetActive(true);
+                npc.GetComponent<NpcControl>().LookAtPlayer();
             }
             spawnedNpcs.Add(npc);
 

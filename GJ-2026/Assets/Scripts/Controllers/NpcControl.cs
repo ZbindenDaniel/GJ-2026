@@ -55,6 +55,7 @@ public class NpcControl : MonoBehaviour
     private Vector3 targetPoint;
     private float viewTimer;
     private int viewCycleCount;
+    private bool lookingAtPlayer;
 
     void Start()
     {
@@ -66,6 +67,10 @@ public class NpcControl : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if(lookingAtPlayer && player != null)
+        {
+            targetPoint = player.position;
+        }
         // Smoothly rotate towards the target point
         Vector3 direction = (targetPoint - transform.position).normalized;
         if (direction != Vector3.zero)
@@ -97,12 +102,13 @@ public class NpcControl : MonoBehaviour
     public void LookAtPlayer()
     {
         LookAtPoint(player.position);
+        lookingAtPlayer = true;
     }
 
     public void LookAtPoint(Vector3 viewFocusPoint)
     {
         // Debug.Log(gameObject.name + " is looking at point " + viewFocusPoint);
-        
+        lookingAtPlayer = false;
         targetPoint = viewFocusPoint;
     }
 
