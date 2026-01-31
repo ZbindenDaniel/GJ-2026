@@ -15,9 +15,15 @@ public class LevelDesigner : MonoBehaviour
     public static int ElevatorCount = 4;
     public static bool ShuffleElevators = true;
     public static int DefaultPlayerElevatorIndex = 1;
+    private bool _loggedOnce;
 
     public LevelDesignData GetLevelDesign(int level)
     {
+        if (!_loggedOnce)
+        {
+            Debug.Log($"LevelDesigner called. Level={level}.");
+            _loggedOnce = true;
+        }
         int safeLevel = Mathf.Max(1, level);
         int attributeCount = GetAttributeCount(safeLevel);
         int npcCount = CalculateNpcCount(safeLevel);

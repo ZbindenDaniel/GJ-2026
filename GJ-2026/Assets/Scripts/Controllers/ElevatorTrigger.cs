@@ -131,7 +131,9 @@ public class ElevatorTrigger : MonoBehaviour
 
         if (isPlayerInside)
         {
+            Debug.Log($"ElevatorTrigger closing with player. Index={_elevatorIndex}, name={GetElevatorName()}");
             NotifyGameControlElevatorClosedWithPlayer(GetElevatorName());
+            NotifyGameControlElevatorClosedWithPlayer();
             ScheduleOpenDoors();
         }
         closeDoorsRoutine = null;
@@ -208,6 +210,23 @@ public class ElevatorTrigger : MonoBehaviour
         catch (Exception ex)
         {
             Debug.LogError($"Failed to notify GameControl about elevator closing with player ({elevatorName}): {ex}");
+        }
+    }
+
+    private void NotifyGameControlElevatorClosedWithPlayer()
+    {
+        if (_gameControl == null)
+        {
+            return;
+        }
+
+        try
+        {
+            _gameControl.OnElevatorClosedWithPlayer(_elevatorIndex, _elevatorControl != null ? _elevatorControl.transform : transform);
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Failed to notify GameControl about elevator closing with index {_elevatorIndex}: {ex}");
         }
     }
 

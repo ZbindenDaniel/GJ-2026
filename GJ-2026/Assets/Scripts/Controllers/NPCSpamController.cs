@@ -4,7 +4,7 @@ using UnityEngine;
 public class NPCSpamController : MonoBehaviour
 {
     // Static tuning knobs (fast jam tweaks)
-    public static Vector3 LevelSize = new Vector3(12f, 0f, 12f);
+    public static Vector3 LevelSize = new Vector3(9f, 0f, 9f);
     public static float MinNpcDistance = 1.5f;
     public static int MaxAttemptsPerNpc = 25;
     public static Vector3 LevelCenter = Vector3.zero;
@@ -16,9 +16,15 @@ public class NPCSpamController : MonoBehaviour
     [SerializeField] private Transform player;
 
     private readonly List<GameObject> spawnedNpcs = new List<GameObject>();
+    private bool loggedOnce;
 
     public void SpawnLevel(LevelDesignData design)
     {
+        if (!loggedOnce)
+        {
+            Debug.Log("NPCSpamController SpawnLevel called.");
+            loggedOnce = true;
+        }
         if (design == null)
         {
             Debug.LogWarning("NPCSpamController: Missing level design data.");

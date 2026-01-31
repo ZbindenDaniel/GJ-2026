@@ -9,7 +9,7 @@ public class MaskSpamController : MonoBehaviour
     public static int MaxMasks = 8;
     public static float AutoHideSeconds = 5f;
 
-    [Header("UI")]
+    [Header("UI / World")]
     [SerializeField] private RectTransform maskParent;
     [SerializeField] private GameObject maskPrefab;
 
@@ -31,63 +31,12 @@ public class MaskSpamController : MonoBehaviour
 
     public void SpawnMasks(LevelDesignData design)
     {
-        if (design == null)
-        {
-            Debug.LogWarning("MaskSpamController: Missing level design data.");
-            return;
-        }
-        if (maskPrefab == null)
-        {
-            Debug.LogWarning("MaskSpamController: No mask prefab assigned.");
-            return;
-        }
-        if (maskParent == null)
-        {
-            Debug.LogWarning("MaskSpamController: No mask parent assigned.");
-            return;
-        }
+        SpawnMasksInternal(design, maskParent);
+    }
 
-        ClearMasks();
-
-        lastDesign = design;
-        List<MaskOptionData> options = design.AvailableMasks ?? new List<MaskOptionData>();
-        int count = Mathf.Clamp(options.Count, MinMasks, MaxMasks);
-        if (logSpawnDetails)
-        {
-            Debug.Log($"MaskSpamController spawning {count} masks (options: {options.Count}).");
-        }
-
-        List<Vector3> positions = GeneratePositions(count);
-        for (int i = 0; i < count; i++)
-        {
-            GameObject maskObject = Instantiate(maskPrefab, maskParent);
-            spawnedMasks.Add(maskObject);
-
-            RectTransform rectTransform = maskObject.GetComponent<RectTransform>();
-            if (rectTransform != null)
-            {
-                rectTransform.anchoredPosition = new Vector2(positions[i].x, positions[i].y);
-            }
-            else
-            {
-                if (i == 0)
-                {
-                    Debug.LogWarning("MaskSpamController: maskPrefab has no RectTransform. Use a UI prefab (Image/Button) under a Canvas.");
-                }
-                maskObject.transform.localPosition = positions[i];
-            }
-
-            if (i < options.Count)
-            {
-                ApplyMaskData(maskObject, options[i]);
-                if (logSpawnDetails)
-                {
-                    Debug.Log($"Mask {i}: shape={options[i].Mask.Shape}, eye={options[i].Mask.EyeColor}, pattern={options[i].Mask.Pattern}, fit={options[i].FitType}");
-                }
-            }
-        }
-
-        hideTimer = AutoHideSeconds;
+    public void SpawnMasks(LevelDesignData design, Transform worldParent)
+    {
+        SpawnMasksInternal(design, worldParent);
     }
 
     private void Update()
@@ -159,6 +108,67 @@ public class MaskSpamController : MonoBehaviour
         return positions;
     }
 
+    private void SpawnMasksInternal(LevelDesignData design, Transform parentTransform)
+    {
+        if (design == null)
+        {
+            Debug.LogWarning("MaskSpamController: Missing level design data.");
+            return;
+        }
+        if (maskPrefab == null)
+        {
+            Debug.LogWarning("MaskSpamController: No mask prefab assigned.");
+            return;
+        }
+        if (parentTransform == null)
+        {
+            Debug.LogWarning("MaskSpamController: No parent transform assigned.");
+            return;
+        }
+
+        ClearMasks();
+
+        lastDesign = design;
+        List<MaskOptionData> options = design.AvailableMasks ?? new List<MaskOptionData>();
+        int count = Mathf.Clamp(options.Count, MinMasks, MaxMasks);
+        if (logSpawnDetails)
+        {
+            Debug.Log($"MaskSpamController spawning {count} masks (options: {options.Count}).");
+            Debug.Log($"MaskSpamController parent: {parentTransform.name}, useRect={maskParent != null && parentTransform == maskParent}");
+        }
+
+        List<Vector3> positions = GeneratePositions(count);
+        for (int i = 0; i < count; i++)
+        {
+            GameObject maskObject = Instantiate(maskPrefab, parentTransform);
+            spawnedMasks.Add(maskObject);
+
+            RectTransform rectTransform = maskObject.GetComponent<RectTransform>();
+            if (rectTransform != null)
+            {
+                rectTransform.anchoredPosition = new Vector2(positions[i].x, positions[i].y);
+            }
+            else
+            {
+                if (i == 0)
+                {
+                    Debug.LogWarning("MaskSpamController: maskPrefab has no RectTransform. Using localPosition for world spawning.");
+                }
+                maskObject.transform.localPosition = positions[i];
+            }
+
+            if (i < options.Count)
+            {
+                ApplyMaskData(maskObject, options[i]);
+                if (logSpawnDetails)
+                {
+                    Debug.Log($"Mask {i}: shape={options[i].Mask.Shape}, eye={options[i].Mask.EyeColor}, pattern={options[i].Mask.Pattern}, fit={options[i].FitType}");
+                }
+            }
+        }
+
+        hideTimer = AutoHideSeconds;
+    }
     private static void ApplyMaskData(GameObject maskObject, MaskOptionData option)
     {
         Image image = maskObject.GetComponent<Image>();

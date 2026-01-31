@@ -13,6 +13,7 @@ public class GameControl : MonoBehaviour
     // TODO: tobi private PlayerManager playerManager;
 
     [SerializeField] private int startLevel = 1;
+    [SerializeField] private bool spawnOnStart = false;
     [SerializeField] private bool testingLevelCycle = false;
     [SerializeField] private float testingLevelIntervalSeconds = 10f;
 
@@ -24,6 +25,7 @@ public class GameControl : MonoBehaviour
     private int currentLevel;
     private float testingTimer;
     private LevelDesignData currentDesign;
+    private bool loggedSpawnOnce;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -57,7 +59,10 @@ public class GameControl : MonoBehaviour
         }
 
         currentLevel = Mathf.Max(1, startLevel);
-        SpawnLevel(currentLevel);
+        if (spawnOnStart)
+        {
+            SpawnLevel(currentLevel, null);
+        }
 
         // load all submodules
 
@@ -81,15 +86,22 @@ public class GameControl : MonoBehaviour
         {
             testingTimer = 0f;
             currentLevel++;
-            SpawnLevel(currentLevel);
+            SpawnLevel(currentLevel, null);
         }
     }
 
-    private void SpawnLevel(int level)
+    private void SpawnLevel(int level, Transform elevatorTransform)
     {
         if (levelDesigner == null || npcSpamController == null)
         {
+            Debug.LogWarning("GameControl SpawnLevel aborted: missing LevelDesigner or NPCSpamController.");
             return;
+        }
+
+        if (!loggedSpawnOnce)
+        {
+            Debug.Log($"GameControl SpawnLevel called. Level={level}.");
+            loggedSpawnOnce = true;
         }
 
         LevelDesignData design = levelDesigner.GetLevelDesign(level);
@@ -97,7 +109,14 @@ public class GameControl : MonoBehaviour
         npcSpamController.SpawnLevel(design);
         if (maskSpamController != null)
         {
-            maskSpamController.SpawnMasks(design);
+            if (elevatorTransform != null)
+            {
+                maskSpamController.SpawnMasks(design, elevatorTransform);
+            }
+            else
+            {
+                maskSpamController.SpawnMasks(design);
+            }
         }
     }
 
@@ -130,6 +149,13 @@ public class GameControl : MonoBehaviour
     public void OnElevatorClosedWithPlayer(string elevatorName)
     {
         Debug.Log($"GameControl elevator closed with player inside. Elevator: {elevatorName}");
+    }
+
+    public void OnElevatorClosedWithPlayer(int elevatorIndex, Transform elevatorTransform)
+    {
+        Debug.Log($"GameControl elevator closed with player inside. Elevator index: {elevatorIndex}");
+        currentLevel++;
+        SpawnLevel(currentLevel, elevatorTransform);
     }
 
     public void SetNpcReaction(NpcMood reaction)
