@@ -3,11 +3,27 @@ using UnityEngine;
 
 public class ElevatorControl : MonoBehaviour
 {
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip _elevatorMusic;
+
     private Transform leftDoor;
     private Vector3 leftDoorTargetPos;
 
     private Transform rightDoor;
     private  Vector3 rightDoorTargetPos;
+
+    private void Awake()
+    {
+        if (_audioSource == null)
+        {
+            _audioSource = GetComponent<AudioSource>();
+        }
+
+        if (_audioSource == null)
+        {
+            Debug.LogWarning("ElevatorControl is missing an AudioSource reference.", this);
+        }
+    }
 
     public void Start()
     {
@@ -48,4 +64,27 @@ public class ElevatorControl : MonoBehaviour
         rightDoorTargetPos = new Vector3(0f, 0f, -.01f);
     }
 
+    public void PlayElevetorMusic()
+    {
+        try
+        {
+            if (_audioSource == null)
+            {
+                Debug.LogWarning("ElevatorControl cannot play elevator music because no AudioSource is assigned.", this);
+                return;
+            }
+
+            if (_elevatorMusic == null)
+            {
+                Debug.LogWarning("ElevatorControl has no elevator music configured.", this);
+                return;
+            }
+
+            _audioSource.PlayOneShot(_elevatorMusic);
+        }
+        catch (Exception exception)
+        {
+            Debug.LogError($"ElevatorControl failed to play elevator music: {exception}", this);
+        }
+    }
 }
