@@ -62,6 +62,14 @@ public class NPCManager : MonoBehaviour
         simulationTimer = 0f;
 
 
+
+        // check npc moods
+
+        // accoring to moods set room reactio (attack, dance, ignore, whatevaaa)
+        
+        // update GameControl
+
+
         // Look randomly around for 10 cycles, then look at player for 4 cycles, then idle
 
         if (cnt == 20)

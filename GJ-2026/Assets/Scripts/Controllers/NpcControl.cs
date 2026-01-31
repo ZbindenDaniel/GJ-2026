@@ -64,7 +64,12 @@ public class NpcControl : MonoBehaviour
             Quaternion toRotation = Quaternion.LookRotation(direction, Vector3.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, Time.fixedDeltaTime * 2f);
         }
+
+        // raycast -- player
         
+        // hit -- evaluate mask
+
+        // set mood
     }
 
     public void LookAtPlayer()
