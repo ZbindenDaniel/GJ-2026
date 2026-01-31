@@ -104,7 +104,7 @@ public class NpcControl : MonoBehaviour
         if (direction != Vector3.zero)
         {
             Quaternion toRotation = Quaternion.LookRotation(direction, Vector3.up);
-            transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, Time.fixedDeltaTime * 2f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, Time.fixedDeltaTime * 1f);
         }
 
         TryMoveAssault();
@@ -228,7 +228,6 @@ public class NpcControl : MonoBehaviour
             }
 
             _headAnimation.playAutomatically = false;
-
             try
             {
                 AddHeadClips();

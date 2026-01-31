@@ -50,6 +50,7 @@ public class MusicManager : MonoBehaviour
                 return;
             }
 
+            Debug.Log($"MusicManager playing floor sound for floor index {floorIndex}.");
             AudioClip clip = _floorSounds[floorIndex];
             if (clip == null)
             {

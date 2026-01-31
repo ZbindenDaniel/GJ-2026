@@ -96,6 +96,8 @@ public class GameControl : MonoBehaviour
         LevelDesignData design = levelDesigner.GetLevelDesign(level);
         currentDesign = design;
         npcSpamController.SpawnLevel(design);
+        musicManager.PlayFloorSound(design.LevelIndex);
+        elevatorManager.ResetElevators();
         if (maskSpamController != null)
         {
             maskSpamController.SpawnMasks(design);
@@ -153,6 +155,7 @@ public class GameControl : MonoBehaviour
                 return;
             }
 
+            SpawnLevel(currentLevel++);
             musicManager.FadeIn();
         }
         catch (Exception ex)
