@@ -104,9 +104,9 @@ public class GameControl : MonoBehaviour
         Debug.Log($"GameControl elevator occupancy changed. Player inside: {isInside}");
     }
 
-    public void OnElevatorClosedWithPlayer()
+    public void OnElevatorClosedWithPlayer(string elevatorName)
     {
-        Debug.Log("GameControl elevator closed with player inside.");
+        Debug.Log($"GameControl elevator closed with player inside. Elevator: {elevatorName}");
     }
 
     public void SetNpcReaction(NpcReactionState reaction)

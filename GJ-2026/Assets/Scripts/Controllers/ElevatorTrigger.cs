@@ -130,7 +130,7 @@ public class ElevatorTrigger : MonoBehaviour
 
         if (isPlayerInside)
         {
-            NotifyGameControlElevatorClosedWithPlayer();
+            NotifyGameControlElevatorClosedWithPlayer(GetElevatorName());
             ScheduleOpenDoors();
         }
         closeDoorsRoutine = null;
@@ -185,7 +185,7 @@ public class ElevatorTrigger : MonoBehaviour
         }
     }
 
-    private void NotifyGameControlElevatorClosedWithPlayer()
+    private void NotifyGameControlElevatorClosedWithPlayer(string elevatorName)
     {
         if (_gameControl == null)
         {
@@ -195,11 +195,11 @@ public class ElevatorTrigger : MonoBehaviour
 
         try
         {
-            _gameControl.OnElevatorClosedWithPlayer();
+            _gameControl.OnElevatorClosedWithPlayer(elevatorName);
         }
         catch (Exception ex)
         {
-            Debug.LogError($"Failed to notify GameControl about elevator closing with player: {ex}");
+            Debug.LogError($"Failed to notify GameControl about elevator closing with player ({elevatorName}): {ex}");
         }
     }
 
