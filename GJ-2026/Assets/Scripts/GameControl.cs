@@ -12,9 +12,12 @@ public class GameControl : MonoBehaviour
 
     // TODO: tobi private PlayerManager playerManager;
 
-    private NPCManager npcManager;
+    [SerializeField] private int startLevel = 1;
 
+    private NPCManager npcManager;
     private ElevatorManager elevatorManager;
+    private LevelDesigner levelDesigner;
+    private NPCSpamController npcSpamController;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -24,6 +27,12 @@ public class GameControl : MonoBehaviour
 
         elevatorManager = gameObject.AddComponent<ElevatorManager>();
         elevatorManager.Init();
+
+        levelDesigner = gameObject.AddComponent<LevelDesigner>();
+        npcSpamController = gameObject.AddComponent<NPCSpamController>();
+
+        LevelDesignData design = levelDesigner.GetLevelDesign(startLevel);
+        npcSpamController.SpawnLevel(design);
 
         // load all submodules
 
