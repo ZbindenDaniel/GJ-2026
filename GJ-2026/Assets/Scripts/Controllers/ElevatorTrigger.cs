@@ -250,11 +250,11 @@ public class ElevatorTrigger : MonoBehaviour
 
         try
         {
-            _gameControl.OnElevatorClosedWithPlayer(_elevatorIndex, _elevatorControl != null ? _elevatorControl.transform : transform);
+            _gameControl.OnElevatorOpenedWithPlayer(elevatorName);
         }
         catch (Exception ex)
         {
-            Debug.LogError($"Failed to notify GameControl about elevator closing with index {_elevatorIndex}: {ex}");
+            Debug.LogError($"Failed to notify GameControl about elevator opening with player ({elevatorName}): {ex}");
         }
     }
 

@@ -51,30 +51,25 @@ public class NPCSpamController : MonoBehaviour
         List<SpawnPoint> spawnPoints = GeneratePositions(design.NpcCount);
         for (int i = 0; i < spawnPoints.Count; i++)
         {
-            try
-            {
-                Vector3 direction = spawnPoints[i].LookAt - spawnPoints[i].Position;
-                Quaternion rotation = direction.sqrMagnitude > 0.001f
-                    ? Quaternion.LookRotation(direction, Vector3.up)
-                    : Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
-                GameObject npc = Instantiate(npcPrefab, spawnPoints[i].Position, rotation, npcParent);
-                if (!npc.activeSelf)
-                {
-                    npc.SetActive(true);
-                    npc.GetComponent<NpcControl>().LookAtPlayer();
-                }
-                spawnedNpcs.Add(npc);
 
-                NpcControl npcControl = npc.GetComponent<NpcControl>();
-                if (npcControl != null && player != null)
-                {
-                    npcControl.player = player;
-                }
-            }
-            catch (System.Exception ex)
+            Vector3 direction = spawnPoints[i].LookAt - spawnPoints[i].Position;
+            Quaternion rotation = direction.sqrMagnitude > 0.001f
+                ? Quaternion.LookRotation(direction, Vector3.up)
+                : Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
+            GameObject npc = Instantiate(npcPrefab, spawnPoints[i].Position, rotation, npcParent);
+            if (!npc.activeSelf)
             {
-                Debug.LogError($"NPCSpamController: Failed to spawn NPC {i}. {ex.Message}");
+                npc.SetActive(true);
+                npc.GetComponent<NpcControl>().LookAtPlayer();
             }
+            spawnedNpcs.Add(npc);
+
+            NpcControl npcControl = npc.GetComponent<NpcControl>();
+            if (npcControl != null && player != null)
+            {
+                npcControl.player = player;
+            }
+
         }
     }
 

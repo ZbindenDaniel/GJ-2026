@@ -17,6 +17,7 @@ public enum NpcMood
 public class NpcControl : MonoBehaviour
 {
     public Transform player;
+    [SerializeField] private MaskAttributes maskAttributes;
     [SerializeField] private Animator _animator;
     [SerializeField] private Transform _headTransform;
     [SerializeField] private Transform _bodyTransform;
@@ -381,9 +382,67 @@ public class NpcControl : MonoBehaviour
             return;
         }
 
-        nextReactionTime = Time.time + _reactionInterval;
-        NpcMood evaluatedMood = (NpcMood)Random.Range(0, System.Enum.GetNames(typeof(NpcMood)).Length);
-        SetMood(evaluatedMood);
+        GameControl gameControl = FindFirstObjectByType<GameControl>();
+        if (gameControl == null)
+        {
+            Debug.LogWarning($"{name} could not find GameControl for mask evaluation.");
+            return;
+        }
+
+        MaskAttributes playerMask = gameControl.CurrentPlayerMask;
+        int matches = 0;
+
+        if (playerMask.Shape == maskAttributes.Shape)
+        {
+            matches++;
+        }
+
+        bool hasFace = playerMask.EyeState != EyeState.None && playerMask.Mouth != MouthMood.None;
+        if (hasFace)
+        {
+            if (playerMask.EyeState == maskAttributes.EyeState)
+            {
+                matches++;
+            }
+            if (playerMask.Mouth == maskAttributes.Mouth)
+            {
+                matches++;
+            }
+        }
+
+        if (!hasFace)
+        {
+            SetMood(matches >= 1 ? NpcMood.Nodding : NpcMood.HeadShaking);
+            return;
+        }
+
+        if (matches >= 2)
+        {
+            SetMood(NpcMood.Nodding);
+        }
+        else if (matches == 1)
+        {
+            SetMood(NpcMood.Idle);
+        }
+        else
+        {
+            SetMood(NpcMood.HeadShaking);
+        }
+    }
+
+    private bool IsPlayer(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            return true;
+        }
+
+        return other.GetComponent<PlayerController>() != null;
+    }
+
+    public void SetMaskAttributes(MaskAttributes attributes)
+    {
+        maskAttributes = attributes;
     }
 
     private void AddHeadClips()
