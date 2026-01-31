@@ -423,14 +423,19 @@ MonoBehaviour:
   _lookAtPlayerCycle: 20
   _idleResetCycle: 30
   _audioSource: {fileID: 4229973137754095392}
-  _lookAtPlayerClip: {fileID: 8300000, guid: 634e247d2996eb89ea4f167f858caf32, type: 3}
-  _idleClip: {fileID: 0}
-  _happyClip: {fileID: 8300000, guid: ed9c4fb5e4bfde36c8badfbe0f321491, type: 3}
-  _vibeClip: {fileID: 0}
-  _assaultClip: {fileID: 8300000, guid: 020efcd9ffa0c66ff96e27afa5981693, type: 3}
-  _engageClip: {fileID: 8300000, guid: 86858e0086b878504955eef28648ae67, type: 3}
-  _noddingClip: {fileID: 8300000, guid: 17536c95b43722db2ad05884929e561d, type: 3}
-  _headShakingClip: {fileID: 0}
+  _lookAtPlayerClips:
+  - {fileID: 8300000, guid: 634e247d2996eb89ea4f167f858caf32, type: 3}
+  _idleClips: []
+  _happyClips:
+  - {fileID: 8300000, guid: ed9c4fb5e4bfde36c8badfbe0f321491, type: 3}
+  _vibeClips: []
+  _assaultClips:
+  - {fileID: 8300000, guid: 020efcd9ffa0c66ff96e27afa5981693, type: 3}
+  _engageClips:
+  - {fileID: 8300000, guid: 86858e0086b878504955eef28648ae67, type: 3}
+  _noddingClips:
+  - {fileID: 8300000, guid: 17536c95b43722db2ad05884929e561d, type: 3}
+  _headShakingClips: []
   Mood: 1
 --- !u!54 &2573335260912716472
 Rigidbody:
