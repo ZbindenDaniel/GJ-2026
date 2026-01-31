@@ -52,14 +52,14 @@ public class ElevatorControl : MonoBehaviour
 
     public void OpenDoors()
     {
-        Debug.Log("Elevator doors opening.");
+        // Debug.Log("Elevator doors opening.");
         leftDoorTargetPos = new Vector3(0f, 0f, .5f);
         rightDoorTargetPos = new Vector3(0f, 0f, -.5f);
     }
 
     public void CloseDoors()
     {
-        Debug.Log("Elevator doors closing.");
+        // Debug.Log("Elevator doors closing.");
         leftDoorTargetPos = new Vector3(0f, 0f, .01f);
         rightDoorTargetPos = new Vector3(0f, 0f, -.01f);
     }

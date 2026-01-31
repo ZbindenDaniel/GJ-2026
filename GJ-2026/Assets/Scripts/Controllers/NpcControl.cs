@@ -693,7 +693,7 @@ public class NpcControl : MonoBehaviour
                 return;
             }
 
-            Debug.Log($"{name} skipped looking at player for {context} because they are out of awareness range.");
+            // Debug.Log($"{name} skipped looking at player for {context} because they are out of awareness range.");
             return;
         }
 

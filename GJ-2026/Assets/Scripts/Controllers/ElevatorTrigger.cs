@@ -201,6 +201,12 @@ public class ElevatorTrigger : MonoBehaviour
 
         try
         {
+            if (_elevatorIndex < 0)
+            {
+                Debug.LogWarning($"ElevatorTrigger missing elevator index on {name}. Skipping occupancy notify.");
+                return;
+            }
+
             if (_elevatorIndex >= 0)
             {
                 _gameControl.OnElevatorOccupancyChanged(_elevatorIndex, isInside);
@@ -244,11 +250,11 @@ public class ElevatorTrigger : MonoBehaviour
 
         try
         {
-            _gameControl.OnElevatorOpenedWithPlayer(elevatorName);
+            _gameControl.OnElevatorClosedWithPlayer(_elevatorIndex, _elevatorControl != null ? _elevatorControl.transform : transform);
         }
         catch (Exception ex)
         {
-            Debug.LogError($"Failed to notify GameControl about elevator opening with player ({elevatorName}): {ex}");
+            Debug.LogError($"Failed to notify GameControl about elevator closing with index {_elevatorIndex}: {ex}");
         }
     }
 

@@ -13,6 +13,7 @@ public class GameControl : MonoBehaviour
     // TODO: tobi private PlayerManager playerManager;
 
     [SerializeField] private int startLevel = 1;
+    [SerializeField] private bool spawnOnStart = false;
     [SerializeField] private bool testingLevelCycle = false;
     [SerializeField] private float testingLevelIntervalSeconds = 10f;
 
@@ -22,9 +23,11 @@ public class GameControl : MonoBehaviour
     [SerializeField] private ElevatorManager elevatorManager;
     [SerializeField] private MaskSpamController maskSpamController;
     [SerializeField] private MusicManager musicManager;
+    [SerializeField] private MaskSelectionController maskSelectionController;
     private int currentLevel;
     private float testingTimer;
     private LevelDesignData currentDesign;
+    private bool loggedSpawnOnce;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -48,6 +51,7 @@ public class GameControl : MonoBehaviour
         {
             levelDesigner = GetComponent<LevelDesigner>();
         }
+
         if (npcSpamController == null)
         {
             npcSpamController = GetComponent<NPCSpamController>();
@@ -56,9 +60,10 @@ public class GameControl : MonoBehaviour
         {
             maskSpamController = GetComponent<MaskSpamController>();
         }
-
-        currentLevel = Mathf.Max(1, startLevel);
-        SpawnLevel(currentLevel);
+        if (maskSelectionController == null)
+        {
+            maskSelectionController = FindFirstObjectByType<MaskSelectionController>();
+        }
 
         // load all submodules
 
@@ -82,15 +87,22 @@ public class GameControl : MonoBehaviour
         {
             testingTimer = 0f;
             currentLevel++;
-            SpawnLevel(currentLevel);
+            SpawnLevel(currentLevel, null);
         }
     }
 
-    private void SpawnLevel(int level)
+    private void SpawnLevel(int level, Transform elevatorTransform)
     {
         if (levelDesigner == null || npcSpamController == null)
         {
+            Debug.LogWarning("GameControl SpawnLevel aborted: missing LevelDesigner or NPCSpamController.");
             return;
+        }
+
+        if (!loggedSpawnOnce)
+        {
+            Debug.Log($"GameControl SpawnLevel called. Level={level}.");
+            loggedSpawnOnce = true;
         }
 
         LevelDesignData design = levelDesigner.GetLevelDesign(level);
@@ -100,13 +112,35 @@ public class GameControl : MonoBehaviour
         elevatorManager.ResetElevators();
         if (maskSpamController != null)
         {
-            maskSpamController.SpawnMasks(design);
+            if (elevatorTransform != null)
+            {
+                maskSpamController.SpawnMasks(design, elevatorTransform, elevatorTransform.rotation);
+            }
+            else
+            {
+                maskSpamController.SpawnMasks(design, null);
+            }
+        }
+
+        if (maskSelectionController != null)
+        {
+            maskSelectionController.ResetSelection();
+        }
+        else
+        {
+            Debug.LogWarning("GameControl missing MaskSelectionController. Selection will not reset between levels.");
         }
     }
 
     public void OnElevatorOccupancyChanged(int elevatorIndex, bool isInside)
     {
         Debug.Log($"GameControl elevator occupancy changed. Elevator {elevatorIndex} inside: {isInside}");
+        if (elevatorIndex < 0)
+        {
+            Debug.LogWarning("GameControl received invalid elevator index.");
+            return;
+        }
+
         if (!isInside || currentDesign == null || currentDesign.Elevators == null)
         {
             return;
@@ -162,6 +196,18 @@ public class GameControl : MonoBehaviour
         {
             Debug.LogError($"GameControl failed to fade in music for elevator {elevatorName}: {ex}");
         }
+    }
+
+    public void OnElevatorClosedWithPlayer(int elevatorIndex, Transform elevatorTransform)
+    {
+        Debug.Log($"GameControl elevator closed with player inside. Elevator index: {elevatorIndex}");
+        currentLevel++;
+        SpawnLevel(currentLevel, elevatorTransform);
+    }
+
+    public void OnMaskSelected(MaskAttributes mask, MaskFitType fitType)
+    {
+        Debug.Log($"GameControl mask selected. Shape={mask.Shape}, Eyes={mask.EyeState}, Mouth={mask.Mouth}, Fit={fitType}");
     }
 
     public void SetNpcReaction(NpcMood reaction)

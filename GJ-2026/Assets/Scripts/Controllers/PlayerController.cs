@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+        rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionY;
     }
 
     private void OnEnable()
@@ -67,6 +67,8 @@ public class PlayerController : MonoBehaviour
         Vector3 move = transform.forward * moveInput.y + transform.right * moveInput.x;
         if (move.sqrMagnitude > 1f) move.Normalize();
 
-        rb.MovePosition(rb.position + move * moveSpeed * Time.fixedDeltaTime);
+        Vector3 target = rb.position + move * moveSpeed * Time.fixedDeltaTime;
+        target.y = rb.position.y;
+        rb.MovePosition(target);
     }
 }
