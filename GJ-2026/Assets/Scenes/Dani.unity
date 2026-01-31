@@ -592,6 +592,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2031695176}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!20 &469460920 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 5687888011888850980, guid: 70cb3053c22854c75b80db17b5622e45, type: 3}
+  m_PrefabInstance: {fileID: 1832701235}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &560763460 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5105453403498910641, guid: a380cb5868aefec73bed6ffd2b226601, type: 3}
@@ -810,6 +815,7 @@ GameObject:
   - component: {fileID: 1116848576}
   - component: {fileID: 1116848574}
   - component: {fileID: 1116848577}
+  - component: {fileID: 1116848578}
   m_Layer: 0
   m_Name: NPCs
   m_TagString: Untagged
@@ -860,6 +866,24 @@ MonoBehaviour:
   npcPrefab: {fileID: 7792247951767706446, guid: a380cb5868aefec73bed6ffd2b226601, type: 3}
   npcParent: {fileID: 1116848576}
   player: {fileID: 757022895}
+--- !u!114 &1116848578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1116848573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c21899c711e74f2d860062af8ee07ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskSelectionController
+  playerCamera: {fileID: 469460920}
+  maxDistance: 5
+  maskLayer:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  gameControl: {fileID: 1425304569}
 --- !u!1001 &1125569865
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11932,6 +11956,10 @@ PrefabInstance:
       propertyPath: testingLevelCycle
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 803935820003556103, guid: 0f2f7917f31911ee694b2f60c1762191, type: 3}
+      propertyPath: maskSelectionController
+      value: 
+      objectReference: {fileID: 1116848578}
     - target: {fileID: 3970704373224541561, guid: 0f2f7917f31911ee694b2f60c1762191, type: 3}
       propertyPath: m_Name
       value: GameControl
@@ -12063,6 +12091,10 @@ PrefabInstance:
     - target: {fileID: 7792247951767706446, guid: a380cb5868aefec73bed6ffd2b226601, type: 3}
       propertyPath: m_Name
       value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 7792247951767706446, guid: a380cb5868aefec73bed6ffd2b226601, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7230911780600946133, guid: a380cb5868aefec73bed6ffd2b226601, type: 3}

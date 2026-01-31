@@ -30,16 +30,11 @@ public class MaskSelectionController : MonoBehaviour
     {
         UpdateHover();
 
-        if (hasSelected)
-        {
-            return;
-        }
 
         if (IsSelectPressed() && hovered != null)
         {
             if (hovered.Select())
             {
-                hasSelected = true;
                 if (gameControl != null)
                 {
                     gameControl.OnMaskSelected(hovered.MaskAttributes, hovered.FitType);

@@ -91,14 +91,16 @@ public class MaskSelectable : MonoBehaviour
 
     public bool Select()
     {
-        if (isSelected)
+        SetHighlighted(false);
+
+        // Get the parent NPCControl and call 'EvaluateMask'
+        NpcControl npcControl = GetComponentInParent<NpcControl>();
+        if (npcControl != null)
         {
-            return false;
+            Debug.Log($"MaskSelectable: {name} selected mask for NPC {npcControl.name}.");
+            npcControl.EvaluateMask();
         }
 
-        isSelected = true;
-        SetHighlighted(false);
-        gameObject.SetActive(false);
         return true;
     }
 
