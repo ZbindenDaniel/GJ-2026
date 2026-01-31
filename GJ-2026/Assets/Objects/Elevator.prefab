@@ -83,6 +83,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ElevatorTrigger
   _elevatorControl: {fileID: 5619889465101651748}
   _gameControl: {fileID: 0}
+  _elevatorIndex: -1
   _closeDoorsDelay: 1.5
   _reopenDoorsDelay: 5
 --- !u!1001 &3934319135603135991
@@ -340,6 +341,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4714295347506035268}
     m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 87b6b6920667df8d58bdfb2b834bb060, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 87b6b6920667df8d58bdfb2b834bb060, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.8

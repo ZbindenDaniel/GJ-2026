@@ -577,6 +577,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7899568243340148333, guid: 70cb3053c22854c75b80db17b5622e45, type: 3}
   m_PrefabInstance: {fileID: 1832701235}
   m_PrefabAsset: {fileID: 0}
+--- !u!20 &802290693 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 5687888011888850980, guid: 70cb3053c22854c75b80db17b5622e45, type: 3}
+  m_PrefabInstance: {fileID: 1832701235}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &953241391
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1168,6 +1173,29 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4714295347506035268, guid: 9cc55eb6cbd48e8d0a8441f88f5c6b81, type: 3}
   m_PrefabInstance: {fileID: 1306485417}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1687980469 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8177708246003185148, guid: 70cb3053c22854c75b80db17b5622e45, type: 3}
+  m_PrefabInstance: {fileID: 1832701235}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1687980475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687980469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c21899c711e74f2d860062af8ee07ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskSelectionController
+  playerCamera: {fileID: 802290693}
+  maxDistance: 5
+  maskLayer:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  gameControl: {fileID: 1425304569}
 --- !u!1001 &1832701235
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1178,7 +1206,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3562594159390169233, guid: 70cb3053c22854c75b80db17b5622e45, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.56
+      value: 0.62
       objectReference: {fileID: 0}
     - target: {fileID: 7899568243340148333, guid: 70cb3053c22854c75b80db17b5622e45, type: 3}
       propertyPath: m_LocalScale.x
@@ -1186,7 +1214,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7899568243340148333, guid: 70cb3053c22854c75b80db17b5622e45, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.7
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 7899568243340148333, guid: 70cb3053c22854c75b80db17b5622e45, type: 3}
       propertyPath: m_LocalScale.z
@@ -1243,7 +1271,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8177708246003185148, guid: 70cb3053c22854c75b80db17b5622e45, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1687980475}
   m_SourcePrefab: {fileID: 100100000, guid: 70cb3053c22854c75b80db17b5622e45, type: 3}
 --- !u!4 &1850665113 stripped
 Transform:
@@ -1297,10 +1328,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MaskSpamController
   maskParent: {fileID: 0}
   maskPrefab: {fileID: 8982437066094884216, guid: 178725466fe0e4c8bab7a4f12cd6807b, type: 3}
-  padding: 24
-  spacing: 16
-  circleRadius: 2.5
-  maskYOffset: 3
+  spacing: 0.3
+  primaryY: 2.3
+  x: 0.09
+  primaryZStart: 0.5
+  primaryZEnd: -0.5
+  secondaryZ: 0.5
+  secondaryYStart: 2.3
+  secondaryYEnd: 0.4
+  zDirection: 1
   testingMaskCycle: 0
   testingMaskIntervalSeconds: 10
   logSpawnDetails: 1

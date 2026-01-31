@@ -180,6 +180,12 @@ public class ElevatorTrigger : MonoBehaviour
 
         try
         {
+            if (_elevatorIndex < 0)
+            {
+                Debug.LogWarning($"ElevatorTrigger missing elevator index on {name}. Skipping occupancy notify.");
+                return;
+            }
+
             if (_elevatorIndex >= 0)
             {
                 _gameControl.OnElevatorOccupancyChanged(_elevatorIndex, isInside);

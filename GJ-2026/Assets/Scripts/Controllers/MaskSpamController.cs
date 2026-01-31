@@ -1,23 +1,27 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-
 public class MaskSpamController : MonoBehaviour
 {
     // Static tuning knobs (fast jam tweaks)
     public static int MinMasks = 3;
     public static int MaxMasks = 8;
-    public static float AutoHideSeconds = 5f;
+    public static float AutoHideSeconds = 20f;
 
-    [Header("UI / World")]
-    [SerializeField] private RectTransform maskParent;
+    [Header("World")]
+    [SerializeField] private Transform maskParent;
     [SerializeField] private GameObject maskPrefab;
 
     [Header("Layout")]
-    [SerializeField] private float padding = 24f;
-    [SerializeField] private float spacing = 16f;
-    [SerializeField] private float circleRadius = 2.5f;
-    [SerializeField] private float maskYOffset = 3f;
+    [SerializeField] private float spacing = 0.2f;
+    [SerializeField] private float primaryY = 2.3f;
+    [SerializeField] private float x = 0.09f;
+
+    [SerializeField] private float primaryZStart = 0.5f;
+    [SerializeField] private float primaryZEnd = -0.5f;
+    [SerializeField] private float secondaryZ = 0.5f;
+    [SerializeField] private float secondaryYStart = 2.3f;
+    [SerializeField] private float secondaryYEnd = 0.6f;
+    [SerializeField] private float zDirection = 1f;
 
     [Header("Testing")]
     [SerializeField] private bool testingMaskCycle = false;
@@ -90,19 +94,30 @@ public class MaskSpamController : MonoBehaviour
             return positions;
         }
 
-        float step = 360f / count;
-        float startAngle = 0f;
-
-        for (int i = 0; i < count; i++)
+        float primaryRange = Mathf.Abs(primaryZStart - primaryZEnd);
+        int maxPrimary = Mathf.Max(1, Mathf.FloorToInt(primaryRange / Mathf.Max(0.0001f, spacing)));
+        int primaryCount = Mathf.Min(count, maxPrimary);
+        float primaryStep = primaryRange / Mathf.Max(1, primaryCount);
+        if (primaryStep < spacing)
         {
-            float offsetIndex = i == 0 ? 0f : Mathf.Ceil(i / 2f);
-            float direction = (i % 2 == 0) ? -1f : 1f;
-            float angle = startAngle + direction * step * offsetIndex;
-            float radians = angle * Mathf.Deg2Rad;
+            primaryStep = spacing;
+            primaryCount = Mathf.Max(1, Mathf.FloorToInt(primaryRange / primaryStep));
+        }
 
-            float x = Mathf.Sin(radians) * circleRadius;
-            float z = -Mathf.Cos(radians) * circleRadius;
-            positions.Add(new Vector3(x, maskYOffset, z));
+        float direction = primaryZStart >= primaryZEnd ? -1f : 1f;
+        float start = primaryZStart;
+        float offset = primaryStep * 0.5f;
+        for (int i = 0; i < primaryCount && positions.Count < count; i++)
+        {
+            float z = start + direction * (offset + primaryStep * i);
+            positions.Add(new Vector3(x, primaryY, z * zDirection));
+        }
+
+        float y = secondaryYStart;
+        while (y >= secondaryYEnd - 0.0001f && positions.Count < count)
+        {
+            positions.Add(new Vector3(x, y, secondaryZ * zDirection));
+            y -= spacing;
         }
 
         return positions;
@@ -134,27 +149,25 @@ public class MaskSpamController : MonoBehaviour
         if (logSpawnDetails)
         {
             Debug.Log($"MaskSpamController spawning {count} masks (options: {options.Count}).");
-            Debug.Log($"MaskSpamController parent: {parentTransform.name}, useRect={maskParent != null && parentTransform == maskParent}");
+            Debug.Log($"MaskSpamController parent: {parentTransform.name}");
+            Debug.Log($"MaskSpamController parent world pos: {parentTransform.position}, scale: {parentTransform.lossyScale}");
         }
 
         List<Vector3> positions = GeneratePositions(count);
+        if (positions.Count < count)
+        {
+            Debug.LogWarning($"MaskSpamController generated {positions.Count} positions for {count} masks. Extra masks will use the last position.");
+        }
         for (int i = 0; i < count; i++)
         {
             GameObject maskObject = Instantiate(maskPrefab, parentTransform);
             spawnedMasks.Add(maskObject);
 
-            RectTransform rectTransform = maskObject.GetComponent<RectTransform>();
-            if (rectTransform != null)
+            Vector3 position = positions.Count > 0 ? positions[Mathf.Min(i, positions.Count - 1)] : Vector3.zero;
+            maskObject.transform.localPosition = position;
+            if (logSpawnDetails)
             {
-                rectTransform.anchoredPosition = new Vector2(positions[i].x, positions[i].y);
-            }
-            else
-            {
-                if (i == 0)
-                {
-                    Debug.LogWarning("MaskSpamController: maskPrefab has no RectTransform. Using localPosition for world spawning.");
-                }
-                maskObject.transform.localPosition = positions[i];
+                Debug.Log($"Mask {i} local pos: {maskObject.transform.localPosition}, world pos: {maskObject.transform.position}");
             }
 
             if (i < options.Count)
@@ -171,21 +184,17 @@ public class MaskSpamController : MonoBehaviour
     }
     private static void ApplyMaskData(GameObject maskObject, MaskOptionData option)
     {
-        Image image = maskObject.GetComponent<Image>();
-        if (image != null)
+        if (maskObject == null)
         {
-            switch (option.FitType)
-            {
-                case MaskFitType.Best:
-                    image.color = new Color(0.2f, 0.9f, 0.2f, 1f);
-                    break;
-                case MaskFitType.Partial:
-                    image.color = new Color(0.9f, 0.8f, 0.2f, 1f);
-                    break;
-                default:
-                    image.color = new Color(0.9f, 0.2f, 0.2f, 1f);
-                    break;
-            }
+            return;
         }
+
+        MaskSelectable selectable = maskObject.GetComponent<MaskSelectable>();
+        if (selectable == null)
+        {
+            selectable = maskObject.AddComponent<MaskSelectable>();
+        }
+
+        selectable.SetData(option);
     }
 }
