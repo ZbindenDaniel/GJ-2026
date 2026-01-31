@@ -9,24 +9,15 @@ public class ElevatorControl : MonoBehaviour
     private Transform rightDoor;
     private  Vector3 rightDoorTargetPos;
 
-    // private Collider elevatorCollider;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-
     public void Start()
     {
         // elevatorCollider = GetComponent<Collider>();
     }
 
-    // void OnCollisionEnter(Collision collision)
-    // {
-    //     Debug.Log("Collision detected with elevator: " + collision.gameObject.name);        
-    // }
-
     public void Init()
     {
-        leftDoor = transform.Find("LeftElevatorDoor");
-        rightDoor = transform.Find("RightElevatorDoor");
+        leftDoor = transform.GetChild(0).Find("LeftElevatorDoor");
+        rightDoor = transform.GetChild(0).Find("RightElevatorDoor");
         leftDoorTargetPos = leftDoor.localPosition;
         rightDoorTargetPos = rightDoor.localPosition;
     }
@@ -46,16 +37,15 @@ public class ElevatorControl : MonoBehaviour
     public void OpenDoors()
     {
         Debug.Log("Elevator doors opening.");
-        leftDoorTargetPos = new Vector3(0f, 0f, 1f);
-        rightDoorTargetPos = new Vector3(0f, 0f, -1f);
+        leftDoorTargetPos = new Vector3(0f, 0f, .5f);
+        rightDoorTargetPos = new Vector3(0f, 0f, -.5f);
     }
 
     public void CloseDoors()
     {
         Debug.Log("Elevator doors closing.");
-        leftDoorTargetPos = new Vector3(0f, 0f, .5f);
-        rightDoorTargetPos = new Vector3(0f, 0f, -.5f);
-        // Implementation for closing elevator doors
+        leftDoorTargetPos = new Vector3(0f, 0f, .01f);
+        rightDoorTargetPos = new Vector3(0f, 0f, -.01f);
     }
 
 }
