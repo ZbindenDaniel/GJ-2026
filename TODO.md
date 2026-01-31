@@ -5,19 +5,32 @@
 
 ### GameControl (Dani & Tobi)
 
-- master control
-- Trackt progress
+- master control: sync and control the manager classes. This could be done using an event system or some sort of state machine
+- progress tracking
+
+The flow of the game is like this:
+- Player starts inside the elevator 
+- elevator sounds play, background music gets louder and louder
+- elevator arrives at destination, door opens
+- Player can turn around inside the elevator and have a glimps outside.
+- player can then select a mask from inside the elevator and then leaves it
+- NPCs react to the player (head movements, noises)
+- based on the mask and the players movements the NPC either guide them, ignore the or push them back into the elevator.
 
 ### EnvironmentManager (Tobi)
-- masken laden
-. Räume/props laden
-- NPC laden
+
+this class manages the environment in the scene
+
+- masken laden: load a selection of masks into the elevator
+- Räume/props laden
+- NPCs laden
 
 ### PlayerManager (Tobi)
 
 - walking, looking around
 - mask selection
 - (emotes)
+- player effects: player gets drunk which effects steering (done by creating a fluctuating inertia on the player body)
 
 ### NPCManager (Dani)
 
