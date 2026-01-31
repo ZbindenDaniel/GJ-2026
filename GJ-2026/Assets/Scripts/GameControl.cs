@@ -181,7 +181,7 @@ public class GameControl : MonoBehaviour
 
     public void OnMaskSelected(MaskAttributes mask, MaskFitType fitType)
     {
-        Debug.Log($"GameControl mask selected. Shape={mask.Shape}, Eye={mask.EyeColor}, Pattern={mask.Pattern}, Fit={fitType}");
+        Debug.Log($"GameControl mask selected. Shape={mask.Shape}, Eyes={mask.EyeState}, Mouth={mask.Mouth}, Fit={fitType}");
     }
 
     public void SetNpcReaction(NpcMood reaction)

@@ -87,18 +87,18 @@ public class LevelDesigner : MonoBehaviour
         MaskAttributes mask = new MaskAttributes
         {
             Shape = GetRandomShape(),
-            EyeColor = GetRandomEyeColor(),
-            Pattern = GetRandomPattern()
+            EyeState = GetRandomEyeState(),
+            Mouth = GetRandomMouthMood()
         };
 
         // Reduce attributes for early levels.
         if (attributeCount < 3)
         {
-            mask.Pattern = MaskPattern.None;
+            mask.Mouth = MouthMood.None;
         }
         if (attributeCount < 2)
         {
-            mask.EyeColor = EyeColor.None;
+            mask.EyeState = EyeState.None;
         }
 
         return mask;
@@ -252,11 +252,11 @@ public class LevelDesigner : MonoBehaviour
     {
         if (attributeCount < 3)
         {
-            mask.Pattern = MaskPattern.None;
+            mask.Mouth = MouthMood.None;
         }
         if (attributeCount < 2)
         {
-            mask.EyeColor = EyeColor.None;
+            mask.EyeState = EyeState.None;
         }
         return mask;
     }
@@ -275,11 +275,11 @@ public class LevelDesigner : MonoBehaviour
 
         if (attributeCount >= 3)
         {
-            mask.Pattern = GetDifferentPattern(baseMask.Pattern);
+            mask.Mouth = GetDifferentMouthMood(baseMask.Mouth);
         }
         else if (attributeCount == 2)
         {
-            mask.EyeColor = GetDifferentEyeColor(baseMask.EyeColor);
+            mask.EyeState = GetDifferentEyeState(baseMask.EyeState);
         }
         else
         {
@@ -296,11 +296,11 @@ public class LevelDesigner : MonoBehaviour
         mask.Shape = GetDifferentShape(baseMask.Shape);
         if (attributeCount >= 2)
         {
-            mask.EyeColor = GetDifferentEyeColor(baseMask.EyeColor);
+            mask.EyeState = GetDifferentEyeState(baseMask.EyeState);
         }
         if (attributeCount >= 3)
         {
-            mask.Pattern = GetDifferentPattern(baseMask.Pattern);
+            mask.Mouth = GetDifferentMouthMood(baseMask.Mouth);
         }
 
         return mask;
@@ -316,22 +316,22 @@ public class LevelDesigner : MonoBehaviour
         return next;
     }
 
-    private static EyeColor GetDifferentEyeColor(EyeColor current)
+    private static EyeState GetDifferentEyeState(EyeState current)
     {
-        EyeColor next = GetRandomEyeColor();
+        EyeState next = GetRandomEyeState();
         while (next == current)
         {
-            next = GetRandomEyeColor();
+            next = GetRandomEyeState();
         }
         return next;
     }
 
-    private static MaskPattern GetDifferentPattern(MaskPattern current)
+    private static MouthMood GetDifferentMouthMood(MouthMood current)
     {
-        MaskPattern next = GetRandomPattern();
+        MouthMood next = GetRandomMouthMood();
         while (next == current)
         {
-            next = GetRandomPattern();
+            next = GetRandomMouthMood();
         }
         return next;
     }
@@ -341,13 +341,13 @@ public class LevelDesigner : MonoBehaviour
         return (MaskShape)Random.Range(0, 3);
     }
 
-    private static EyeColor GetRandomEyeColor()
+    private static EyeState GetRandomEyeState()
     {
-        return (EyeColor)Random.Range(0, 3);
+        return (EyeState)Random.Range(0, 3);
     }
 
-    private static MaskPattern GetRandomPattern()
+    private static MouthMood GetRandomMouthMood()
     {
-        return (MaskPattern)Random.Range(0, 3);
+        return (MouthMood)Random.Range(0, 3);
     }
 }

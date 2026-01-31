@@ -14,8 +14,7 @@ public class MaskSpamController : MonoBehaviour
     [SerializeField] private MaskModelLibrary maskModelLibrary;
 
     [Header("Model Codes")]
-    [SerializeField] private EyeColorCode[] eyeColorCodes;
-    [SerializeField] private FitTypeCode[] fitTypeCodes;
+    [SerializeField] private EyeStateCode[] eyeStateCodes;
 
     [Header("Layout")]
     [SerializeField] private float spacing = 0.2f;
@@ -194,7 +193,7 @@ public class MaskSpamController : MonoBehaviour
                 ApplyMaskData(maskObject, option);
                 if (logSpawnDetails)
                 {
-                    Debug.Log($"Mask {i}: shape={option.Mask.Shape}, eye={option.Mask.EyeColor}, pattern={option.Mask.Pattern}, fit={option.FitType}");
+                    Debug.Log($"Mask {i}: shape={option.Mask.Shape}, eyes={option.Mask.EyeState}, mouth={option.Mask.Mouth}, fit={option.FitType}");
                 }
             }
         }
@@ -218,16 +217,9 @@ public class MaskSpamController : MonoBehaviour
     }
 
     [Serializable]
-    private struct EyeColorCode
+    private struct EyeStateCode
     {
-        public EyeColor eyeColor;
-        public string code;
-    }
-
-    [Serializable]
-    private struct FitTypeCode
-    {
-        public MaskFitType fitType;
+        public EyeState eyeState;
         public string code;
     }
 
@@ -239,18 +231,18 @@ public class MaskSpamController : MonoBehaviour
         }
 
         string shapeCode = GetShapeCode(option.Mask.Shape);
-        string eyeCode = GetEyeCode(option.Mask.EyeColor);
+        string eyeCode = GetEyeCode(option.Mask.EyeState);
         if (string.IsNullOrWhiteSpace(shapeCode))
         {
             return null;
         }
 
-        if (string.Equals(eyeCode, "O", System.StringComparison.OrdinalIgnoreCase))
+        if (string.Equals(eyeCode, "O", StringComparison.OrdinalIgnoreCase))
         {
             return $"M{shapeCode}.O";
         }
 
-        string moodCode = GetFitCode(option.FitType);
+        string moodCode = GetMouthCode(option.Mask.Mouth);
         if (string.IsNullOrWhiteSpace(eyeCode) || string.IsNullOrWhiteSpace(moodCode))
         {
             return null;
@@ -274,44 +266,46 @@ public class MaskSpamController : MonoBehaviour
         }
     }
 
-    private string GetEyeCode(EyeColor eyeColor)
+    private string GetEyeCode(EyeState eyeState)
     {
-        if (eyeColor == EyeColor.None)
+        if (eyeState == EyeState.None)
         {
             return "O";
         }
 
-        if (eyeColorCodes == null)
+        if (eyeStateCodes == null)
         {
             return string.Empty;
         }
 
-        for (int i = 0; i < eyeColorCodes.Length; i++)
+        for (int i = 0; i < eyeStateCodes.Length; i++)
         {
-            if (eyeColorCodes[i].eyeColor == eyeColor)
+            if (eyeStateCodes[i].eyeState == eyeState)
             {
-                return eyeColorCodes[i].code;
+                return eyeStateCodes[i].code;
             }
         }
 
         return string.Empty;
     }
 
-    private string GetFitCode(MaskFitType fitType)
+    private string GetMouthCode(MouthMood mouthMood)
     {
-        if (fitTypeCodes == null)
+        if (mouthMood == MouthMood.None)
         {
             return string.Empty;
         }
 
-        for (int i = 0; i < fitTypeCodes.Length; i++)
+        switch (mouthMood)
         {
-            if (fitTypeCodes[i].fitType == fitType)
-            {
-                return fitTypeCodes[i].code;
-            }
+            case MouthMood.Happy:
+                return "H";
+            case MouthMood.Indifferent:
+                return "I";
+            case MouthMood.Sad:
+                return "S";
+            default:
+                return string.Empty;
         }
-
-        return string.Empty;
     }
 }
