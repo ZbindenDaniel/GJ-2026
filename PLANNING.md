@@ -37,13 +37,13 @@
 - **Details:** Add a simple raycast in player controller (or a small new component) with max distance; use a LayerMask for masks.
 - **Logging/try-catch:** Log selection changes; guard raycast hits and input reads.
 
-### 3) Room entry trigger and reaction timing
+### 3) Room entry trigger and reaction timing (Dani)
 - **Reason:** We need a deterministic moment to pause audio/NPCs and then react.
 - **Higher-level goal:** Make the room flow feel readable and consistent.
 - **Details:** Add a trigger volume (or existing doorway collider) that starts a timer; after delay, notify NPCManager.
 - **Logging/try-catch:** Log room entry and reaction start; guard missing references.
 
-### 4) NPC reaction state stub
+### 4) NPC reaction state stub (Dani)
 - **Reason:** We need a placeholder for idle/happy/aggressive behaviors even before final logic.
 - **Higher-level goal:** Enable designers to test the loop visually.
 - **Details:** Add a simple enum state on NPC; switch animations or placeholder Debug logs.

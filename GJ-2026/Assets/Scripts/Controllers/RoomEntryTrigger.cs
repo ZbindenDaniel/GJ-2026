@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class RoomEntryTrigger : MonoBehaviour
 {
-    public GameControl GameControl;
+    [SerializeField] public GameControl GameControl;
     [SerializeField] private float _reactionDelay = 0.5f;
-    [SerializeField] private NPCManager _npcManager;
     [SerializeField] private Collider _triggerCollider;
     [SerializeField] private NpcReactionState _reaction = NpcReactionState.Idle;
 
+    private NPCManager _npcManager;
     private bool _reactionScheduled;
 
 
