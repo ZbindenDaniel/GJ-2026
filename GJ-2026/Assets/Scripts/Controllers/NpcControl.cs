@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum NpcMood
@@ -40,14 +41,14 @@ public class NpcControl : MonoBehaviour
     [SerializeField] private int _idleResetCycle = 30;
     [Header("Reaction Audio Settings")]
     [SerializeField] private AudioSource _audioSource;
-    [SerializeField] private AudioClip _lookAtPlayerClip;
-    [SerializeField] private AudioClip _idleClip;
-    [SerializeField] private AudioClip _happyClip;
-    [SerializeField] private AudioClip _vibeClip;
-    [SerializeField] private AudioClip _assaultClip;
-    [SerializeField] private AudioClip _engageClip;
-    [SerializeField] private AudioClip _noddingClip;
-    [SerializeField] private AudioClip _headShakingClip;
+    [SerializeField] private List<AudioClip> _lookAtPlayerClips;
+    [SerializeField] private List<AudioClip> _idleClips;
+    [SerializeField] private List<AudioClip> _happyClips;
+    [SerializeField] private List<AudioClip> _vibeClips;
+    [SerializeField] private List<AudioClip> _assaultClips;
+    [SerializeField] private List<AudioClip> _engageClips;
+    [SerializeField] private List<AudioClip> _noddingClips;
+    [SerializeField] private List<AudioClip> _headShakingClips;
 
     public NpcMood Mood = NpcMood.Idle;
 
@@ -322,7 +323,7 @@ public class NpcControl : MonoBehaviour
         AudioClip clip = GetMoodClip(mood);
         if (clip == null)
         {
-            Debug.LogWarning($"{name} has no audio clip assigned for mood {mood}.");
+            Debug.LogWarning($"{name} has no audio clips assigned for mood {mood}.");
             return;
         }
 
@@ -338,26 +339,61 @@ public class NpcControl : MonoBehaviour
 
     private AudioClip GetMoodClip(NpcMood mood)
     {
+        List<AudioClip> clips = null;
+
         switch (mood)
         {
             case NpcMood.LookAtPlayer:
-                return _lookAtPlayerClip;
+                clips = _lookAtPlayerClips;
+                break;
             case NpcMood.Idle:
-                return _idleClip;
+                clips = _idleClips;
+                break;
             case NpcMood.Happy:
-                return _happyClip;
+                clips = _happyClips;
+                break;
             case NpcMood.Vibe:
-                return _vibeClip;
+                clips = _vibeClips;
+                break;
             case NpcMood.Assault:
-                return _assaultClip;
+                clips = _assaultClips;
+                break;
             case NpcMood.Engage:
-                return _engageClip;
+                clips = _engageClips;
+                break;
             case NpcMood.Nodding:
-                return _noddingClip;
+                clips = _noddingClips;
+                break;
             case NpcMood.HeadShaking:
-                return _headShakingClip;
-            default:
-                return null;
+                clips = _headShakingClips;
+                break;
+        }
+
+        return GetRandomClip(clips, mood);
+    }
+
+    private AudioClip GetRandomClip(List<AudioClip> clips, NpcMood mood)
+    {
+        if (clips == null || clips.Count == 0)
+        {
+            return null;
+        }
+
+        try
+        {
+            int index = Random.Range(0, clips.Count);
+            AudioClip clip = clips[index];
+            if (clip == null)
+            {
+                Debug.LogWarning($"{name} has an empty audio slot for mood {mood}.");
+            }
+
+            return clip;
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogWarning($"{name} failed to select audio for mood {mood}: {ex.Message}");
+            return null;
         }
     }
 
