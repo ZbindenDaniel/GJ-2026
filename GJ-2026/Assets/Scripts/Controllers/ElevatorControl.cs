@@ -62,10 +62,6 @@ public class ElevatorControl : MonoBehaviour
         Debug.Log("Elevator doors closing.");
         leftDoorTargetPos = new Vector3(0f, 0f, .01f);
         rightDoorTargetPos = new Vector3(0f, 0f, -.01f);
-
-        // TODO: only if player inside elevator play music
-
-        PlayElevetorMusic();
     }
 
     public void PlayElevetorMusic()
@@ -84,11 +80,36 @@ public class ElevatorControl : MonoBehaviour
                 return;
             }
 
-            _audioSource.PlayOneShot(_elevatorMusic);
+            _audioSource.clip = _elevatorMusic;
+            if (!_audioSource.isPlaying)
+            {
+                _audioSource.Play();
+            }
         }
         catch (Exception exception)
         {
             Debug.LogError($"ElevatorControl failed to play elevator music: {exception}", this);
+        }
+    }
+
+    public void StopElevatorMusic()
+    {
+        try
+        {
+            if (_audioSource == null)
+            {
+                Debug.LogWarning("ElevatorControl cannot stop elevator music because no AudioSource is assigned.", this);
+                return;
+            }
+
+            if (_audioSource.isPlaying)
+            {
+                _audioSource.Stop();
+            }
+        }
+        catch (Exception exception)
+        {
+            Debug.LogError($"ElevatorControl failed to stop elevator music: {exception}", this);
         }
     }
 }

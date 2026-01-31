@@ -131,6 +131,39 @@ public class GameControl : MonoBehaviour
     public void OnElevatorClosedWithPlayer(string elevatorName)
     {
         Debug.Log($"GameControl elevator closed with player inside. Elevator: {elevatorName}");
+        try
+        {
+            if (musicManager == null)
+            {
+                Debug.LogWarning("GameControl cannot fade out music because MusicManager is missing.");
+                return;
+            }
+
+            musicManager.FadeOut();
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"GameControl failed to fade out music for elevator {elevatorName}: {ex}");
+        }
+    }
+
+    public void OnElevatorOpenedWithPlayer(string elevatorName)
+    {
+        Debug.Log($"GameControl elevator opened with player inside. Elevator: {elevatorName}");
+        try
+        {
+            if (musicManager == null)
+            {
+                Debug.LogWarning("GameControl cannot fade in music because MusicManager is missing.");
+                return;
+            }
+
+            musicManager.FadeIn();
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"GameControl failed to fade in music for elevator {elevatorName}: {ex}");
+        }
     }
 
     public void SetNpcReaction(NpcMood reaction)
