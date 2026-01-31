@@ -27,7 +27,7 @@ this class manages the environment in the scene
 
 ### PlayerManager (Tobi)
 
-- walking, looking around
+- walking, looking around (Done)
 - mask selection
 - (emotes)
 - player effects: player gets drunk which effects steering (done by creating a fluctuating inertia on the player body)
