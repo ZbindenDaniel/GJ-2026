@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum NpcReactionState
+public enum NpcMood
 {
     LookAtPlayer,
 
@@ -32,8 +32,11 @@ public class NpcControl : MonoBehaviour
     [SerializeField] private float _nodSpeed = 2f;
     [SerializeField] private float _headShakeAngle = 15f;
     [SerializeField] private float _headShakeSpeed = 2f;
+    [SerializeField] private float _playerDetectionDistance = 4f;
 
-    private NpcReactionState currentReactionState = NpcReactionState.Idle;
+    public NpcMood Mood = NpcMood.Idle;
+
+    private NpcMood currentMood = NpcMood.Idle;
     private Vector3 initialViewDirection;
     private Vector3 initialHeadLocalEulerAngles;
     private Vector3 initialHeadLocalPosition;
@@ -66,10 +69,20 @@ public class NpcControl : MonoBehaviour
         }
 
         // raycast -- player
-        
-        // hit -- evaluate mask
-
-        // set mood
+        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, _playerDetectionDistance))
+        {
+            if (IsPlayer(hit.collider))
+            {
+                try
+                {
+                    EvaluateMask(hit.collider);
+                }
+                catch (System.Exception ex)
+                {
+                    Debug.LogWarning($"{name} failed to evaluate mask during raycast: {ex.Message}");
+                }
+            }
+        }
     }
 
     public void LookAtPlayer()
@@ -90,22 +103,22 @@ public class NpcControl : MonoBehaviour
         LookAtPoint(transform.position + initialViewDirection);
     }
 
-    public void ApplyReactionState(NpcReactionState newState)
+    public void ApplyReactionState(NpcMood newState)
     {
-        if (newState == currentReactionState)
+        if (newState == currentMood)
         {
             return;
         }
 
-        currentReactionState = newState;
+        currentMood = newState;
         Debug.Log($"{name} reaction state -> {newState}");
 
         switch (newState)
         {
-            case NpcReactionState.Idle:
+            case NpcMood.Idle:
                 Idle();
                 break;
-            case NpcReactionState.Aggressive:
+            case NpcMood.Aggressive:
                 if (player != null)
                 {
                     LookAtPlayer();
@@ -115,13 +128,13 @@ public class NpcControl : MonoBehaviour
                     Debug.LogWarning($"{name} has no player assigned for aggressive reaction.");
                 }
                 break;
-            case NpcReactionState.Happy:
+            case NpcMood.Happy:
                 Debug.Log($"{name} is happy.");
                 break;
-            case NpcReactionState.Vibe:
+            case NpcMood.Vibe:
                 Idle();
                 break;
-            case NpcReactionState.Assault:
+            case NpcMood.Assault:
                 if (player != null)
                 {
                     LookAtPlayer();
@@ -131,7 +144,7 @@ public class NpcControl : MonoBehaviour
                     Debug.LogWarning($"{name} has no player assigned for assault reaction.");
                 }
                 break;
-            case NpcReactionState.Engage:
+            case NpcMood.Engage:
                 if (player != null)
                 {
                     LookAtPlayer();
@@ -141,10 +154,10 @@ public class NpcControl : MonoBehaviour
                     Debug.LogWarning($"{name} has no player assigned for engage reaction.");
                 }
                 break;
-            case NpcReactionState.Nodding:
+            case NpcMood.Nodding:
                 Idle();
                 break;
-            case NpcReactionState.HeadShaking:
+            case NpcMood.HeadShaking:
                 Idle();
                 break;
         }
@@ -243,29 +256,29 @@ public class NpcControl : MonoBehaviour
         }
     }
 
-    private void PlayReactionAnimation(NpcReactionState state)
+    private void PlayReactionAnimation(NpcMood state)
     {
         try
         {
             switch (state)
             {
-                case NpcReactionState.Vibe:
+                case NpcMood.Vibe:
                     PlayHeadClip("NpcVibe", _vibeBounceSpeed);
                     StopBodyClip();
                     break;
-                case NpcReactionState.Assault:
+                case NpcMood.Assault:
                     PlayHeadClip("NpcAssault", _assaultShakeSpeed);
                     StopBodyClip();
                     break;
-                case NpcReactionState.Engage:
+                case NpcMood.Engage:
                     PlayHeadClip("NpcEngageHead", _engageBounceSpeed);
                     PlayBodyClip("NpcEngageBody", _engageBounceSpeed);
                     break;
-                case NpcReactionState.Nodding:
+                case NpcMood.Nodding:
                     PlayHeadClip("NpcNod", _nodSpeed);
                     StopBodyClip();
                     break;
-                case NpcReactionState.HeadShaking:
+                case NpcMood.HeadShaking:
                     PlayHeadClip("NpcShake", _headShakeSpeed);
                     StopBodyClip();
                     break;
@@ -279,6 +292,32 @@ public class NpcControl : MonoBehaviour
         {
             Debug.LogWarning($"{name} failed to play reaction animation for {state}: {ex.Message}");
         }
+    }
+
+    private void EvaluateMask(Collider playerCollider)
+    {
+        if (playerCollider == null)
+        {
+            Debug.LogWarning($"{name} EvaluateMask called with no player collider.");
+            return;
+        }
+
+        NpcMood evaluatedMood = NpcMood.Aggressive;
+        if (Mood != evaluatedMood)
+        {
+            Mood = evaluatedMood;
+            Debug.Log($"{name} mood set to {Mood} after evaluating player mask.");
+        }
+    }
+
+    private bool IsPlayer(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            return true;
+        }
+
+        return other.GetComponent<PlayerController>() != null;
     }
 
     private void AddHeadClips()

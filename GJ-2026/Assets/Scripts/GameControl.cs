@@ -104,7 +104,7 @@ public class GameControl : MonoBehaviour
         Debug.Log($"GameControl elevator occupancy changed. Player inside: {isInside}");
     }
 
-    public void SetNpcReaction(NpcReactionState reaction)
+    public void SetNpcReaction(NpcMood reaction)
     {
         Debug.Log($"GameControl requested NPC reaction change to: {reaction}");
 
