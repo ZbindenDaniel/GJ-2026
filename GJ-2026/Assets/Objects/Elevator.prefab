@@ -233,7 +233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ElevatorMaskDisplayController
   elevatorIndex: -1
-  maskRoot: {fileID: 0}
+  maskRoot: {fileID: 8323366483407819970}
   logDetails: 0
 --- !u!1001 &2259370121375177469
 PrefabInstance:

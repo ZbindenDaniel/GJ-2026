@@ -11,11 +11,6 @@ public static class MaskCode
             return null;
         }
 
-        if (string.Equals(eyeCode, "O", StringComparison.OrdinalIgnoreCase))
-        {
-            return $"M{shapeCode}.O";
-        }
-
         string mouthCode = GetMouthCode(mask.Mouth);
         if (string.IsNullOrWhiteSpace(eyeCode) || string.IsNullOrWhiteSpace(mouthCode))
         {
