@@ -126,7 +126,7 @@ public class GameControl : MonoBehaviour
 
     public void OnElevatorOccupancyChanged(int elevatorIndex, bool isInside)
     {
-        Debug.Log($"GameControl elevator occupancy changed. Elevator {elevatorIndex} inside: {isInside}");
+        // Debug.Log($"GameControl elevator occupancy changed. Elevator {elevatorIndex} inside: {isInside}");
         if (elevatorIndex < 0)
         {
             Debug.LogWarning("GameControl received invalid elevator index.");
@@ -151,25 +151,6 @@ public class GameControl : MonoBehaviour
         Debug.LogWarning($"GameControl could not find elevator index {elevatorIndex} in current design.");
     }
 
-    public void OnElevatorClosedWithPlayer(string elevatorName)
-    {
-        Debug.Log($"GameControl elevator closed with player inside. Elevator: {elevatorName}");
-        try
-        {
-            if (musicManager == null)
-            {
-                Debug.LogWarning("GameControl cannot fade out music because MusicManager is missing.");
-                return;
-            }
-
-            musicManager.FadeOut();
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError($"GameControl failed to fade out music for elevator {elevatorName}: {ex}");
-        }
-    }
-
     public void OnElevatorOpenedWithPlayer(string elevatorName)
     {
         Debug.Log($"GameControl elevator opened with player inside. Elevator: {elevatorName}");
@@ -190,15 +171,50 @@ public class GameControl : MonoBehaviour
         }
     }
 
-    public void OnElevatorClosedWithPlayer(int elevatorIndex, Transform elevatorTransform)
+    public void OnElevatorClosedWithPlayer(int elevatorIndex)
     {
-        Debug.Log($"GameControl elevator closed with player inside. Elevator index: {elevatorIndex}");
-        currentLevel++;
-        SpawnLevel(currentLevel);
+        try
+        {
+            if (musicManager == null)
+            {
+                Debug.LogWarning("GameControl cannot fade out music because MusicManager is missing.");
+                return;
+            }
+
+            musicManager.FadeOut();
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"GameControl failed to fade out music for elevator {elevatorIndex}: {ex}");
+        }
+
+        // Debug.Log($"GameControl elevator closed with player inside. Elevator index: {elevatorIndex}");
+
+        // elevator check goes here
+        if (currentDesign == null)
+        {
+            Debug.LogWarning("GameControl cannot process elevator close: missing current level design.");
+            return;
+        }
+        if (elevatorIndex == currentDesign.TargetElevatorIndex)
+        {
+            Debug.Log("GameControl: Player entered the correct elevator.");
+            SetNpcReaction(NpcMood.Happy);
+            SpawnLevel(currentLevel++);
+        }
+        else
+        {
+            Debug.Log("GameControl: Player entered the wrong elevator.");
+            SetNpcReaction(NpcMood.Assault);
+            SpawnLevel(0);
+                
+            }
+
     }
 
     public void OnMaskSelected(MaskAttributes mask)
     {
+        // TODO: tobi apply mask to player character maybe here the best place??
         Debug.Log($"GameControl mask selected. Shape={mask.Shape}, Eyes={mask.EyeState}, Mouth={mask.Mouth}");
     }
 

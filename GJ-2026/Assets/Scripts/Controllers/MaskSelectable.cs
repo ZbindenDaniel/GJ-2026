@@ -45,10 +45,6 @@ public class MaskSelectable : MonoBehaviour
 
     public void SetHighlighted(bool active)
     {
-        if (isSelected)
-        {
-            return;
-        }
 
         if (highlightObject != null)
         {
