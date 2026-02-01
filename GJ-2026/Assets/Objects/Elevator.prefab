@@ -141,7 +141,7 @@ GameObject:
   - component: {fileID: 5619889465101651748}
   - component: {fileID: 7837073721013421494}
   - component: {fileID: 7973604915376941760}
-  - component: {fileID: 1483117462457132186}
+  - component: {fileID: 1954807350650414513}
   m_Layer: 0
   m_Name: Elevator
   m_TagString: Untagged
@@ -220,7 +220,7 @@ MonoBehaviour:
   _elevatorIndex: -1
   _closeDoorsDelay: 1.5
   _reopenDoorsDelay: 10
---- !u!114 &1483117462457132186
+--- !u!114 &1954807350650414513
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -229,11 +229,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2560745637436707299}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0e1fdcf9df1c4aaf90a9137a90a16ba, type: 3}
+  m_Script: {fileID: 11500000, guid: ad6cf1f7c24404fdcaf92bde8d4e81f4, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ElevatorMaskDisplayController
-  elevatorIndex: -1
+  m_EditorClassIdentifier: Assembly-CSharp::MaskDisplayController
   maskRoot: {fileID: 8323366483407819970}
+  destroyNonSelected: 0
   logDetails: 0
 --- !u!1001 &2259370121375177469
 PrefabInstance:
@@ -247,21 +247,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mask
       objectReference: {fileID: 0}
-    - target: {fileID: 5536624056537439303, guid: 551ade1ff1e9f4e30961bd0340c265f0, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6867475954279146809, guid: 551ade1ff1e9f4e30961bd0340c265f0, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
+    - target: {fileID: 7761510371826722630, guid: 551ade1ff1e9f4e30961bd0340c265f0, type: 3}
+      propertyPath: maskDisplay
+      value: 
+      objectReference: {fileID: 1954807350650414513}
     - target: {fileID: 7843138117574364735, guid: 551ade1ff1e9f4e30961bd0340c265f0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.062
+      value: -0.020574741
       objectReference: {fileID: 0}
     - target: {fileID: 7843138117574364735, guid: 551ade1ff1e9f4e30961bd0340c265f0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.405
+      value: 2.5420182
       objectReference: {fileID: 0}
     - target: {fileID: 7843138117574364735, guid: 551ade1ff1e9f4e30961bd0340c265f0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -269,23 +265,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7843138117574364735, guid: 551ade1ff1e9f4e30961bd0340c265f0, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.7071068
+      value: -0.7055015
       objectReference: {fileID: 0}
     - target: {fileID: 7843138117574364735, guid: 551ade1ff1e9f4e30961bd0340c265f0, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0.047620393
       objectReference: {fileID: 0}
     - target: {fileID: 7843138117574364735, guid: 551ade1ff1e9f4e30961bd0340c265f0, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.7071068
+      value: 0.7055015
       objectReference: {fileID: 0}
     - target: {fileID: 7843138117574364735, guid: 551ade1ff1e9f4e30961bd0340c265f0, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: -0.0476204
       objectReference: {fileID: 0}
     - target: {fileID: 7843138117574364735, guid: 551ade1ff1e9f4e30961bd0340c265f0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 7.723
       objectReference: {fileID: 0}
     - target: {fileID: 7843138117574364735, guid: 551ade1ff1e9f4e30961bd0340c265f0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y

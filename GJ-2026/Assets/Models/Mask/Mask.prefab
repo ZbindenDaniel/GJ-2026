@@ -1301,6 +1301,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7843138117574364735}
   - component: {fileID: 3317052710566089614}
+  - component: {fileID: 7761510371826722630}
+  - component: {fileID: 1442856515703871804}
   m_Layer: 0
   m_Name: Mask
   m_TagString: Untagged
@@ -1318,7 +1320,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.70090926, z: 0, w: 0.71325046}
   m_LocalPosition: {x: 0, y: 0.336, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1620637015630679077}
@@ -1370,6 +1372,35 @@ MonoBehaviour:
   highlightRenderers:
   - {fileID: 750101468926129411}
   highlightColor: {r: 1, g: 0.9, b: 0.2, a: 1}
+--- !u!114 &7761510371826722630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3947771559289593377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0e1fdcf9df1c4aaf90a9137a90a16ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ElevatorMaskDisplayController
+  elevatorIndex: -1
+  maskDisplay: {fileID: 0}
+--- !u!114 &1442856515703871804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3947771559289593377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad6cf1f7c24404fdcaf92bde8d4e81f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskDisplayController
+  maskRoot: {fileID: 7843138117574364735}
+  destroyNonSelected: 0
+  logDetails: 0
 --- !u!1 &4160617133394895717
 GameObject:
   m_ObjectHideFlags: 0
@@ -2058,7 +2089,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6328846280379435192
 Transform:
   m_ObjectHideFlags: 0
