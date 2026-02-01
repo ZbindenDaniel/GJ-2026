@@ -25,11 +25,13 @@ public class GameControl : MonoBehaviour
     [SerializeField] private MusicManager musicManager;
     [SerializeField] private MaskSelectionController maskSelectionController;
     [SerializeField] private bool enableMaskSpawning = false;
+    [SerializeField] private Vector3 elevatorMaskLocalOffset = new Vector3(0f, 2.3f, 0.5f);
     private int currentLevel;
     private float testingTimer;
     private LevelDesignData currentDesign;
     private bool loggedSpawnOnce;
     public MaskAttributes CurrentPlayerMask { get; private set; }
+    private readonly System.Collections.Generic.Dictionary<int, GameObject> elevatorMasks = new System.Collections.Generic.Dictionary<int, GameObject>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -113,6 +115,7 @@ public class GameControl : MonoBehaviour
         CurrentPlayerMask = design.PlayerMask;
         musicManager.PlayFloorSound(design.LevelIndex);
         elevatorManager.ResetElevators();
+        SpawnElevatorMasks(design);
 
         if (maskSelectionController != null)
         {
@@ -212,10 +215,80 @@ public class GameControl : MonoBehaviour
 
     }
 
+    public void OnElevatorEntered(int elevatorIndex)
+    {
+        if (elevatorMasks.TryGetValue(elevatorIndex, out GameObject maskObject) && maskObject != null)
+        {
+            Destroy(maskObject);
+        }
+    }
+
+    public void OnElevatorExited(int elevatorIndex)
+    {
+        if (elevatorManager == null)
+        {
+            return;
+        }
+
+        elevatorManager.CloseByIndex(elevatorIndex);
+        elevatorManager.OpenAllExcept(elevatorIndex);
+    }
+
     public void OnMaskSelected(MaskAttributes mask)
     {
         // TODO: tobi apply mask to player character maybe here the best place??
         Debug.Log($"GameControl mask selected. Shape={mask.Shape}, Eyes={mask.EyeState}, Mouth={mask.Mouth}");
+    }
+
+    private void SpawnElevatorMasks(LevelDesignData design)
+    {
+        if (maskSpamController == null || elevatorManager == null || design == null || design.LiftChoices == null)
+        {
+            return;
+        }
+
+        foreach (var pair in elevatorMasks)
+        {
+            if (pair.Value != null)
+            {
+                Destroy(pair.Value);
+            }
+        }
+        elevatorMasks.Clear();
+
+        ElevatorControl[] controls = elevatorManager.GetElevatorControls();
+        if (controls == null)
+        {
+            return;
+        }
+
+        for (int i = 0; i < controls.Length; i++)
+        {
+            ElevatorControl control = controls[i];
+            if (control == null)
+            {
+                continue;
+            }
+
+            ElevatorTrigger trigger = control.GetComponentInChildren<ElevatorTrigger>(true);
+            if (trigger == null)
+            {
+                continue;
+            }
+
+            int index = trigger.ElevatorIndex;
+            if (index < 0 || index >= design.LiftChoices.Count)
+            {
+                continue;
+            }
+
+            MaskAttributes mask = design.LiftChoices[index];
+            GameObject maskObject = maskSpamController.SpawnSingleMask(mask, control.transform, control.transform.rotation, elevatorMaskLocalOffset);
+            if (maskObject != null)
+            {
+                elevatorMasks[index] = maskObject;
+            }
+        }
     }
 
 

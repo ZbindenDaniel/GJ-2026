@@ -35,6 +35,8 @@ public class ElevatorTrigger : MonoBehaviour
         }
     }
 
+    public int ElevatorIndex => _elevatorIndex;
+
     private void OnDisable()
     {
         if (closeDoorsRoutine != null)

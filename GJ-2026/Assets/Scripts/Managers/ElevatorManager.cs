@@ -64,4 +64,63 @@ public class ElevatorManager : MonoBehaviour
         }
         
     }
+
+    public void OpenAllExcept(int excludeIndex)
+    {
+        if (elevatorControls == null)
+        {
+            return;
+        }
+
+        foreach (var elevator in elevatorControls)
+        {
+            if (elevator == null)
+            {
+                continue;
+            }
+
+            ElevatorTrigger trigger = elevator.GetComponentInChildren<ElevatorTrigger>(true);
+            int index = trigger != null ? trigger.ElevatorIndex : -1;
+            if (index == excludeIndex)
+            {
+                continue;
+            }
+
+            elevator.OpenDoors();
+        }
+    }
+
+    public void CloseByIndex(int indexToClose)
+    {
+        if (elevatorControls == null)
+        {
+            return;
+        }
+
+        foreach (var elevator in elevatorControls)
+        {
+            if (elevator == null)
+            {
+                continue;
+            }
+
+            ElevatorTrigger trigger = elevator.GetComponentInChildren<ElevatorTrigger>(true);
+            int index = trigger != null ? trigger.ElevatorIndex : -1;
+            if (index == indexToClose)
+            {
+                elevator.CloseDoors();
+                return;
+            }
+        }
+    }
+
+    public ElevatorControl[] GetElevatorControls()
+    {
+        if (elevatorControls == null || elevatorControls.Length == 0)
+        {
+            elevatorControls = UnityEngine.Object.FindObjectsByType<ElevatorControl>(FindObjectsSortMode.None);
+        }
+
+        return elevatorControls;
+    }
 }
