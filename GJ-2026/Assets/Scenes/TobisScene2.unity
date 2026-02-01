@@ -1043,7 +1043,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1045164720}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c992a6c83afdafdb921958c435ab9b8, type: 3}
   m_Name: 
@@ -1053,6 +1053,7 @@ MonoBehaviour:
   backButton: {fileID: 1045164722}
   quitGameButton: {fileID: 1045164721}
   mainMenuButton: {fileID: 1045164723}
+  firstSelectedButton: {fileID: 0}
   mainMenuSceneName: MainMenu
 --- !u!4 &1099909478 stripped
 Transform:
@@ -12265,7 +12266,7 @@ PrefabInstance:
       objectReference: {fileID: 1116848574}
     - target: {fileID: 803935820003556103, guid: 0f2f7917f31911ee694b2f60c1762191, type: 3}
       propertyPath: startLevel
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 803935820003556103, guid: 0f2f7917f31911ee694b2f60c1762191, type: 3}
       propertyPath: musicManager

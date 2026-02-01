@@ -12,7 +12,7 @@ public class GameControl : MonoBehaviour
 
     // TODO: tobi private PlayerManager playerManager;
 
-    [SerializeField] private int startLevel = 1;
+    [SerializeField] private int startLevel = 0;
     [SerializeField] private bool spawnOnStart = false;
     [SerializeField] private bool testingLevelCycle = false;
     [SerializeField] private float testingLevelIntervalSeconds = 10f;
@@ -26,10 +26,13 @@ public class GameControl : MonoBehaviour
     [SerializeField] private MaskSelectionController maskSelectionController;
     [SerializeField] private ElevatorResultUI elevatorResultUI;
     [SerializeField] private bool enableMaskSpawning = false;
+    [SerializeField] private float elevatorLockSeconds = 5f;
     private int currentLevel;
     private float testingTimer;
     private LevelDesignData currentDesign;
     private bool loggedSpawnOnce;
+    private bool hasSpawnedInitialLevel;
+    private float elevatorLockUntilTime;
     public MaskAttributes CurrentPlayerMask { get; private set; }
     private int spawnCallCount;
 
@@ -73,6 +76,15 @@ public class GameControl : MonoBehaviour
             elevatorResultUI = FindFirstObjectByType<ElevatorResultUI>();
         }
 
+        currentLevel = Mathf.Max(0, startLevel);
+        elevatorLockUntilTime = Time.time + Mathf.Max(0f, elevatorLockSeconds);
+
+        if (spawnOnStart && !hasSpawnedInitialLevel)
+        {
+            hasSpawnedInitialLevel = true;
+            SpawnLevel(currentLevel);
+        }
+
         // load all submoelevatorTransformdules
 
         // UI Manager: open UI
@@ -94,15 +106,16 @@ public class GameControl : MonoBehaviour
         if (testingTimer >= testingLevelIntervalSeconds)
         {
             testingTimer = 0f;
-            currentLevel++;
-            SpawnLevel(currentLevel);
+            int nextLevel = currentLevel + 1;
+            SpawnLevel(nextLevel);
         }
     }
 
     private void SpawnLevel(int level)
     {
+        currentLevel = Mathf.Max(0, level);
         spawnCallCount++;
-        Debug.Log($"GameControl SpawnLevel call #{spawnCallCount} for level {level}.");
+        Debug.Log($"GameControl SpawnLevel call #{spawnCallCount} for level {currentLevel}.");
         if (levelDesigner == null || npcSpamController == null)
         {
             Debug.LogWarning("GameControl SpawnLevel aborted: missing LevelDesigner or NPCSpamController.");
@@ -115,7 +128,7 @@ public class GameControl : MonoBehaviour
             loggedSpawnOnce = true;
         }
 
-        LevelDesignData design = levelDesigner.GetLevelDesign(level);
+        LevelDesignData design = levelDesigner.GetLevelDesign(currentLevel);
         currentDesign = design;
         npcSpamController.SpawnLevel(design);
         CurrentPlayerMask = design.PlayerMask;
@@ -181,6 +194,12 @@ public class GameControl : MonoBehaviour
 
     public void OnElevatorClosedWithPlayer(int elevatorIndex)
     {
+        if (Time.time < elevatorLockUntilTime)
+        {
+            Debug.Log($"GameControl: Ignoring elevator close for {elevatorIndex} during startup lock.");
+            return;
+        }
+
         try
         {
             if (musicManager == null)
@@ -201,9 +220,9 @@ public class GameControl : MonoBehaviour
         // elevator check goes here
         if (currentDesign == null)
         {
-            currentLevel = Mathf.Max(1, startLevel);
-            Debug.Log($"GameControl: No current design. Starting level {currentLevel}.");
-            StartCoroutine(SpawnLevelAfterDelay(currentLevel, 4f));
+            int fallbackStartLevel = Mathf.Max(0, startLevel);
+            Debug.Log($"GameControl: No current design. Starting level {fallbackStartLevel}.");
+            StartCoroutine(SpawnLevelAfterDelay(fallbackStartLevel, 4f));
             return;
         }
         if (elevatorIndex == currentDesign.TargetElevatorIndex)
@@ -212,11 +231,10 @@ public class GameControl : MonoBehaviour
             Debug.Log($"GameControl: Correct elevator {elevatorIndex}. Advancing to level {nextLevel}.");
             if (elevatorResultUI != null)
             {
-                elevatorResultUI.ShowResult(true, nextLevel);
+                elevatorResultUI.ShowResult(true, nextLevel, currentLevel);
             }
             SetNpcReaction(NpcMood.Happy);
             StartCoroutine(SpawnLevelAfterDelay(nextLevel, 4f));
-            currentLevel++;
         }
         else
         {
@@ -224,7 +242,7 @@ public class GameControl : MonoBehaviour
             int fallbackLevel = currentLevel == 0 ? 0 : currentLevel - 1;
             if (elevatorResultUI != null)
             {
-                elevatorResultUI.ShowResult(false, fallbackLevel);
+                elevatorResultUI.ShowResult(false, fallbackLevel, currentLevel);
             }
             SetNpcReaction(NpcMood.Assault);
             StartCoroutine(SpawnLevelAfterDelay(fallbackLevel, 4f));

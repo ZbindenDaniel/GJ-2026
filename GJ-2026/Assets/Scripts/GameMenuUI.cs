@@ -1,8 +1,10 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 #endif
 
 public class GameMenuUI : MonoBehaviour
@@ -15,6 +17,7 @@ public class GameMenuUI : MonoBehaviour
     [SerializeField] private Button backButton;
     [SerializeField] private Button quitGameButton;
     [SerializeField] private Button mainMenuButton;
+    [SerializeField] private Button firstSelectedButton;
 
     [Header("Scene Names")]
     [SerializeField] private string mainMenuSceneName = "MainMenu";
@@ -84,6 +87,8 @@ public class GameMenuUI : MonoBehaviour
         {
             gameMenuCanvas.SetActive(true);
         }
+        EnsureEventSystem();
+        SelectFirstButton();
     }
 
     private void CloseMenu()
@@ -91,6 +96,10 @@ public class GameMenuUI : MonoBehaviour
         if (gameMenuCanvas != null)
         {
             gameMenuCanvas.SetActive(false);
+        }
+        if (EventSystem.current != null)
+        {
+            EventSystem.current.SetSelectedGameObject(null);
         }
     }
 
@@ -102,6 +111,15 @@ public class GameMenuUI : MonoBehaviour
         }
 
         gameMenuCanvas.SetActive(!gameMenuCanvas.activeSelf);
+        if (gameMenuCanvas.activeSelf)
+        {
+            EnsureEventSystem();
+            SelectFirstButton();
+        }
+        else if (EventSystem.current != null)
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+        }
     }
 
     private void QuitGame()
@@ -145,6 +163,35 @@ public class GameMenuUI : MonoBehaviour
         }
 
         return target.GetComponentInChildren<Button>(true);
+    }
+
+    private void SelectFirstButton()
+    {
+        if (EventSystem.current == null)
+        {
+            return;
+        }
+
+        Button target = firstSelectedButton != null ? firstSelectedButton : backButton;
+        if (target != null)
+        {
+            EventSystem.current.SetSelectedGameObject(target.gameObject);
+        }
+    }
+
+    private static void EnsureEventSystem()
+    {
+        if (EventSystem.current != null)
+        {
+            return;
+        }
+
+        GameObject eventSystemObject = new GameObject("EventSystem", typeof(EventSystem));
+#if ENABLE_INPUT_SYSTEM
+        eventSystemObject.AddComponent<InputSystemUIInputModule>();
+#else
+        eventSystemObject.AddComponent<StandaloneInputModule>();
+#endif
     }
 
     private static GameObject FindInactiveObject(string name)

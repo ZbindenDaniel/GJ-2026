@@ -31,11 +31,11 @@ public class ElevatorResultUI : MonoBehaviour
         SetVisible(false);
     }
 
-    public void ShowResult(bool success, int targetLevel)
+    public void ShowResult(bool success, int targetLevel, int previousLevel)
     {
         string message = success
-            ? $"Correct! Going to level {targetLevel}."
-            : $"Wrong elevator. Returning to level {targetLevel}.";
+            ? $"Correct! Going to level {targetLevel}. (From level {previousLevel})"
+            : $"Wrong elevator. Returning to level {targetLevel}. (From level {previousLevel})";
 
         ShowMessage(message);
     }

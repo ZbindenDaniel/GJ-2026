@@ -24,7 +24,7 @@ public class LevelDesigner : MonoBehaviour
             Debug.Log($"LevelDesigner called. Level={level}.");
             _loggedOnce = true;
         }
-        int safeLevel = Mathf.Max(1, level);
+        int safeLevel = Mathf.Max(0, level);
         int attributeCount = GetAttributeCount(safeLevel);
         int npcCount = CalculateNpcCount(safeLevel);
 
