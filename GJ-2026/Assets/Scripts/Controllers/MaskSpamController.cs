@@ -20,7 +20,6 @@ public class MaskSpamController : MonoBehaviour
     [SerializeField] private Vector3 maskLocalScaleMultiplier = Vector3.one;
 
     [Header("Model Codes")]
-    [SerializeField] private EyeStateCode[] eyeStateCodes;
 
     [Header("Layout")]
     [SerializeField] private float spacing = 0.2f;
@@ -67,7 +66,7 @@ public class MaskSpamController : MonoBehaviour
             return null;
         }
 
-        string maskCode = BuildMaskCode(mask);
+        string maskCode = MaskCode.Build(mask);
         GameObject maskObject = Instantiate(maskPrefab, parentTransform);
 
         if (useCombinedMaskPrefab && !string.IsNullOrWhiteSpace(maskCode))
@@ -208,7 +207,7 @@ public class MaskSpamController : MonoBehaviour
         {
             MaskAttributes? option = i < options.Count ? options[i] : null;
             GameObject prefabToSpawn = maskPrefab;
-            string maskCode = option.HasValue ? BuildMaskCode(option.Value) : null;
+            string maskCode = option.HasValue ? MaskCode.Build(option.Value) : null;
             if (logSpawnDetails)
             {
                 Debug.Log($"MaskSpamController combined={useCombinedMaskPrefab}, maskCode={maskCode ?? "none"}");
@@ -368,91 +367,5 @@ public class MaskSpamController : MonoBehaviour
         }
     }
 
-    [Serializable]
-    private struct EyeStateCode
-    {
-        public EyeState eyeState;
-        public string code;
-    }
-
-    private string BuildMaskCode(MaskAttributes option)
-    {
-        string shapeCode = GetShapeCode(option.Shape);
-        string eyeCode = GetEyeCode(option.EyeState);
-        if (string.IsNullOrWhiteSpace(shapeCode))
-        {
-            return null;
-        }
-
-        if (string.Equals(eyeCode, "O", StringComparison.OrdinalIgnoreCase))
-        {
-            return $"M{shapeCode}.O";
-        }
-
-        string moodCode = GetMouthCode(option.Mouth);
-        if (string.IsNullOrWhiteSpace(eyeCode) || string.IsNullOrWhiteSpace(moodCode))
-        {
-            return null;
-        }
-
-        return $"M{shapeCode}.{eyeCode}{moodCode}";
-    }
-
-    private static string GetShapeCode(MaskShape shape)
-    {
-        switch (shape)
-        {
-            case MaskShape.Round:
-                return "R";
-            case MaskShape.Square:
-                return "S";
-            case MaskShape.Triangle:
-                return "T";
-            default:
-                return string.Empty;
-        }
-    }
-
-    private string GetEyeCode(EyeState eyeState)
-    {
-        if (eyeState == EyeState.None)
-        {
-            return "O";
-        }
-
-        if (eyeStateCodes == null)
-        {
-            return string.Empty;
-        }
-
-        for (int i = 0; i < eyeStateCodes.Length; i++)
-        {
-            if (eyeStateCodes[i].eyeState == eyeState)
-            {
-                return eyeStateCodes[i].code;
-            }
-        }
-
-        return string.Empty;
-    }
-
-    private string GetMouthCode(MouthMood mouthMood)
-    {
-        if (mouthMood == MouthMood.None)
-        {
-            return string.Empty;
-        }
-
-        switch (mouthMood)
-        {
-            case MouthMood.Happy:
-                return "H";
-            case MouthMood.Indifferent:
-                return "I";
-            case MouthMood.Sad:
-                return "S";
-            default:
-                return string.Empty;
-        }
-    }
+    // Mask code mapping lives in MaskCode.
 }
