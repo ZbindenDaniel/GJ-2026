@@ -807,6 +807,27 @@ Light:
   m_LightUnit: 1
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
+--- !u!1 &601982316 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2162003316709533566, guid: c1bc714c172af470da515d23d68a5c3f, type: 3}
+  m_PrefabInstance: {fileID: 1045164719}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &601982320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601982316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1357ad2409aa3476099f128c9d00f564, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ElevatorResultUI
+  messageLabel: {fileID: 0}
+  messageRoot: {fileID: 0}
+  canvasGroup: {fileID: 0}
+  displaySeconds: 2.5
 --- !u!1 &668285456 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 546153281530351124, guid: c1bc714c172af470da515d23d68a5c3f, type: 3}
@@ -817,6 +838,85 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7899568243340148333, guid: 70cb3053c22854c75b80db17b5622e45, type: 3}
   m_PrefabInstance: {fileID: 1832701235}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &759534104
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 759534107}
+  - component: {fileID: 759534106}
+  - component: {fileID: 759534105}
+  m_Layer: 0
+  m_Name: EventSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &759534105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 759534104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.UI.InputSystemUIInputModule
+  m_SendPointerHoverToParent: 1
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_DeselectOnBackgroundClick: 1
+  m_PointerBehavior: 0
+  m_CursorLockBehavior: 0
+  m_ScrollDeltaPerTick: 6
+--- !u!114 &759534106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 759534104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.EventSystem
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!4 &759534107
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 759534104}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &813411070 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4043567388268300933, guid: a380cb5868aefec73bed6ffd2b226601, type: 3}
@@ -836,7 +936,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 303653754670073967, guid: c1bc714c172af470da515d23d68a5c3f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2488898540110695501, guid: c1bc714c172af470da515d23d68a5c3f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -878,6 +978,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8932962717725083573, guid: c1bc714c172af470da515d23d68a5c3f, type: 3}
+      propertyPath: m_text
+      value: Which mask do I wear?
+      objectReference: {fileID: 0}
+    - target: {fileID: 8932962717725083573, guid: c1bc714c172af470da515d23d68a5c3f, type: 3}
+      propertyPath: m_margin.z
+      value: -458.36005
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4603456001193671664, guid: c1bc714c172af470da515d23d68a5c3f, type: 3}
     m_RemovedGameObjects: []
@@ -886,6 +994,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 303653754670073967, guid: c1bc714c172af470da515d23d68a5c3f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1045164725}
+    - targetCorrespondingSourceObject: {fileID: 2162003316709533566, guid: c1bc714c172af470da515d23d68a5c3f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 601982320}
   m_SourcePrefab: {fileID: 100100000, guid: c1bc714c172af470da515d23d68a5c3f, type: 3}
 --- !u!1 &1045164720 stripped
 GameObject:
@@ -12173,6 +12284,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 430315229}
     - target: {fileID: 803935820003556103, guid: 0f2f7917f31911ee694b2f60c1762191, type: 3}
+      propertyPath: elevatorResultUI
+      value: 
+      objectReference: {fileID: 601982320}
+    - target: {fileID: 803935820003556103, guid: 0f2f7917f31911ee694b2f60c1762191, type: 3}
       propertyPath: npcSpamController
       value: 
       objectReference: {fileID: 1116848577}
@@ -12352,3 +12467,4 @@ SceneRoots:
   - {fileID: 430315230}
   - {fileID: 1168703732}
   - {fileID: 1045164719}
+  - {fileID: 759534107}

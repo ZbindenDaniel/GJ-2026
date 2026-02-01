@@ -24,6 +24,7 @@ public class GameControl : MonoBehaviour
     [SerializeField] private MaskSpamController maskSpamController;
     [SerializeField] private MusicManager musicManager;
     [SerializeField] private MaskSelectionController maskSelectionController;
+    [SerializeField] private ElevatorResultUI elevatorResultUI;
     [SerializeField] private bool enableMaskSpawning = false;
     private int currentLevel;
     private float testingTimer;
@@ -66,6 +67,10 @@ public class GameControl : MonoBehaviour
         if (maskSelectionController == null)
         {
             maskSelectionController = FindFirstObjectByType<MaskSelectionController>();
+        }
+        if (elevatorResultUI == null)
+        {
+            elevatorResultUI = FindFirstObjectByType<ElevatorResultUI>();
         }
 
         // load all submoelevatorTransformdules
@@ -205,6 +210,10 @@ public class GameControl : MonoBehaviour
         {
             int nextLevel = currentLevel + 1;
             Debug.Log($"GameControl: Correct elevator {elevatorIndex}. Advancing to level {nextLevel}.");
+            if (elevatorResultUI != null)
+            {
+                elevatorResultUI.ShowResult(true, nextLevel);
+            }
             SetNpcReaction(NpcMood.Happy);
             StartCoroutine(SpawnLevelAfterDelay(nextLevel, 4f));
             currentLevel++;
@@ -212,8 +221,13 @@ public class GameControl : MonoBehaviour
         else
         {
             Debug.Log($"GameControl: Wrong elevator {elevatorIndex} (target {currentDesign.TargetElevatorIndex}).");
+            int fallbackLevel = currentLevel == 0 ? 0 : currentLevel - 1;
+            if (elevatorResultUI != null)
+            {
+                elevatorResultUI.ShowResult(false, fallbackLevel);
+            }
             SetNpcReaction(NpcMood.Assault);
-            StartCoroutine(SpawnLevelAfterDelay(currentLevel == 0 ? 0 : currentLevel -1 , 4f));
+            StartCoroutine(SpawnLevelAfterDelay(fallbackLevel, 4f));
                 
         }
 
