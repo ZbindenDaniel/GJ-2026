@@ -59,6 +59,35 @@ public class MaskSpamController : MonoBehaviour
         SpawnMasksInternal(design, worldParent, rotationOverride);
     }
 
+    public GameObject SpawnSingleMask(MaskAttributes mask, Transform parentTransform, Quaternion rotationOverride, Vector3 localPosition)
+    {
+        if (maskPrefab == null || parentTransform == null)
+        {
+            Debug.LogWarning("MaskSpamController: Cannot spawn single mask (missing prefab or parent).");
+            return null;
+        }
+
+        string maskCode = BuildMaskCode(mask);
+        GameObject maskObject = Instantiate(maskPrefab, parentTransform);
+
+        if (useCombinedMaskPrefab && !string.IsNullOrWhiteSpace(maskCode))
+        {
+            ActivateMaskVariant(maskObject.transform, maskCode, logSpawnDetails);
+        }
+
+        maskObject.transform.rotation = rotationOverride;
+        maskObject.transform.localPosition = localPosition + maskLocalPositionOffset;
+        maskObject.transform.localRotation = Quaternion.Euler(maskLocalRotationOffset);
+        maskObject.transform.localScale = Vector3.Scale(maskObject.transform.localScale, maskLocalScaleMultiplier);
+
+        if (logSpawnDetails)
+        {
+            Debug.Log($"MaskSpamController spawned single mask {maskCode} at {maskObject.transform.localPosition}.");
+        }
+
+        return maskObject;
+    }
+
     private void Update()
     {
         if (hideTimer > 0f)

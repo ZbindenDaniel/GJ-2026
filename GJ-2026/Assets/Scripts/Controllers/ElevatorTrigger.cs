@@ -35,6 +35,8 @@ public class ElevatorTrigger : MonoBehaviour
         }
     }
 
+    public int ElevatorIndex => _elevatorIndex;
+
     private void OnDisable()
     {
         if (closeDoorsRoutine != null)
@@ -64,6 +66,7 @@ public class ElevatorTrigger : MonoBehaviour
 
         isPlayerInside = true;
         Debug.Log($"Player entered elevator trigger for {GetElevatorName()}.");
+        NotifyGameControlElevatorEntered();
         NotifyGameControl(true);
         ScheduleCloseDoors();
     }
@@ -82,6 +85,7 @@ public class ElevatorTrigger : MonoBehaviour
 
         isPlayerInside = false;
         Debug.Log($"Player exited elevator trigger for {GetElevatorName()}.");
+        NotifyGameControlElevatorExited();
         NotifyGameControl(false);
         ScheduleCloseDoors();
     }
@@ -219,6 +223,40 @@ public class ElevatorTrigger : MonoBehaviour
         catch (Exception ex)
         {
             Debug.LogError($"Failed to notify GameControl about elevator occupancy: {ex}");
+        }
+    }
+
+    private void NotifyGameControlElevatorEntered()
+    {
+        if (_gameControl == null)
+        {
+            return;
+        }
+
+        try
+        {
+            _gameControl.OnElevatorEntered(_elevatorIndex);
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Failed to notify GameControl about elevator enter: {ex}");
+        }
+    }
+
+    private void NotifyGameControlElevatorExited()
+    {
+        if (_gameControl == null)
+        {
+            return;
+        }
+
+        try
+        {
+            _gameControl.OnElevatorExited(_elevatorIndex);
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Failed to notify GameControl about elevator exit: {ex}");
         }
     }
 
