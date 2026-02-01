@@ -11,7 +11,6 @@ public class MaskSelectionController : MonoBehaviour
     [SerializeField] private GameControl gameControl;
 
     private MaskSelectable hovered;
-    private bool hasSelected;
 
     private void Awake()
     {
@@ -38,6 +37,7 @@ public class MaskSelectionController : MonoBehaviour
                 if (gameControl != null)
                 {
                     gameControl.OnMaskSelected(hovered.MaskAttributes);
+                    
                 }
             }
         }
@@ -45,7 +45,6 @@ public class MaskSelectionController : MonoBehaviour
 
     public void ResetSelection()
     {
-        hasSelected = false;
         if (hovered != null)
         {
             hovered.SetHighlighted(false);
@@ -62,14 +61,14 @@ public class MaskSelectionController : MonoBehaviour
             Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
             if (Physics.Raycast(ray, out RaycastHit hit, maxDistance, maskLayer, QueryTriggerInteraction.Collide))
             {
-                if (hit.collider.GetComponentInParent<NpcControl>() == null)
+                if (hit.collider.GetComponentInParent<NpcControl>() != null)
                 {
                     newHover = hit.collider.GetComponentInParent<MaskSelectable>();
                 }
             }
         }
 
-        if (newHover != hovered)
+        if (newHover != null)
         {
             if (hovered != null)
             {

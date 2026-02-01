@@ -131,6 +131,7 @@ public class ElevatorTrigger : MonoBehaviour
         catch (Exception ex)
         {
             Debug.LogError($"Failed to close elevator doors for {GetElevatorName()}: {ex}");
+            yield break;
         }
 
         if (isPlayerInside)
@@ -144,7 +145,7 @@ public class ElevatorTrigger : MonoBehaviour
                 Debug.LogError($"Failed to start elevator music for {GetElevatorName()}: {ex}");
             }
 
-            NotifyGameControlElevatorClosedWithPlayer(GetElevatorName());
+            NotifyGameControlElevatorClosedWithPlayer(_elevatorIndex);
             ScheduleOpenDoors();
         }
         closeDoorsRoutine = null;
@@ -226,41 +227,7 @@ public class ElevatorTrigger : MonoBehaviour
         }
     }
 
-    private void NotifyGameControlElevatorEntered()
-    {
-        if (_gameControl == null)
-        {
-            return;
-        }
-
-        try
-        {
-            _gameControl.OnElevatorEntered(_elevatorIndex);
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError($"Failed to notify GameControl about elevator enter: {ex}");
-        }
-    }
-
-    private void NotifyGameControlElevatorExited()
-    {
-        if (_gameControl == null)
-        {
-            return;
-        }
-
-        try
-        {
-            _gameControl.OnElevatorExited(_elevatorIndex);
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError($"Failed to notify GameControl about elevator exit: {ex}");
-        }
-    }
-
-    private void NotifyGameControlElevatorClosedWithPlayer(string elevatorName)
+    private void NotifyGameControlElevatorClosedWithPlayer(int elevatorIndex)
     {
         if (_gameControl == null)
         {
@@ -270,11 +237,11 @@ public class ElevatorTrigger : MonoBehaviour
 
         try
         {
-            _gameControl.OnElevatorClosedWithPlayer(elevatorName);
+            _gameControl.OnElevatorClosedWithPlayer(elevatorIndex);
         }
         catch (Exception ex)
         {
-            Debug.LogError($"Failed to notify GameControl about elevator closing with player ({elevatorName}): {ex}");
+            Debug.LogError($"Failed to notify GameControl about elevator closing with player ({elevatorIndex}): {ex}");
         }
     }
 

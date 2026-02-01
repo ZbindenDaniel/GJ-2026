@@ -9,7 +9,7 @@ public class LevelDesignData
     public int AttributeCount;
     public List<NpcDesignData> Npcs;
     public List<ElevatorDesignData> Elevators;
-    public int PlayerElevatorIndex;
+    public int TargetElevatorIndex;
     public MaskAttributes PlayerMask;
     public List<MaskAttributes> LiftChoices;
 }

@@ -377,11 +377,6 @@ public class NpcControl : MonoBehaviour
 
     public void EvaluateMask()
     {
-        if (Time.time < nextReactionTime)
-        {
-            return;
-        }
-
         GameControl gameControl = FindFirstObjectByType<GameControl>();
         if (gameControl == null)
         {
@@ -428,6 +423,8 @@ public class NpcControl : MonoBehaviour
         {
             SetMood(NpcMood.HeadShaking);
         }
+
+        UpdateMoodState();
     }
 
     private bool IsPlayer(Collider other)

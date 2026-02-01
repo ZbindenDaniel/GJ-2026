@@ -28,8 +28,8 @@ Transform:
   m_GameObject: {fileID: 50128160814195469}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.0045, z: 0.0031}
-  m_LocalScale: {x: 0.015063999, y: 0.01, z: 0.01}
+  m_LocalPosition: {x: -0, y: -0.0002, z: 0.0006}
+  m_LocalScale: {x: 0.02474563, y: 0.015465, z: 0.01}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2931948924169173398}
@@ -113,7 +113,7 @@ CapsuleCollider:
   m_Radius: 0.50000024
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: -0.00000011920935, y: 0, z: -2.6645353e-15}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2659719537079708251
 GameObject:
   m_ObjectHideFlags: 0
@@ -516,6 +516,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   player: {fileID: 0}
+  maskAttributes:
+    Shape: 0
+    EyeState: 0
+    Mouth: 0
   _animator: {fileID: 1296228998298693328}
   _headTransform: {fileID: 567268782076249135}
   _bodyTransform: {fileID: 4172138216966117723}
@@ -530,7 +534,6 @@ MonoBehaviour:
   _nodSpeed: 2
   _headShakeAngle: 20
   _headShakeSpeed: 4
-  _playerDetectionDistance: 4
   _playerAwarenessRange: 4
   _viewUpdateInterval: 1
   _reactionInterval: 2
@@ -946,7 +949,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MaskSelectable
   highlightObject: {fileID: 50128160814195469}
   highlightRenderers: []
-  highlightColor: {r: 1, g: 0.9, b: 0.2, a: 1}
+  highlightColor: {r: 1, g: 0.9, b: 0.2, a: 0.2901961}
 --- !u!64 &1840491581579727777
 MeshCollider:
   m_ObjectHideFlags: 0

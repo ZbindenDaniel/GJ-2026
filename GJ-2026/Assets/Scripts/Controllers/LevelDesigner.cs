@@ -35,7 +35,7 @@ public class LevelDesigner : MonoBehaviour
             AttributeCount = attributeCount,
             Npcs = new List<NpcDesignData>(npcCount),
             Elevators = new List<ElevatorDesignData>(),
-            PlayerElevatorIndex = 0,
+            TargetElevatorIndex = 0,
             LiftChoices = new List<MaskAttributes>()
         };
 
@@ -52,7 +52,9 @@ public class LevelDesigner : MonoBehaviour
         design.PlayerMask = PickPlayerMask(design.Npcs, attributeCount);
         design.LiftChoices = CreateLiftChoices(design.PlayerMask, attributeCount);
         design.Elevators = CreateElevators();
-        design.PlayerElevatorIndex = GetPlayerElevatorIndex(design.Elevators.Count);
+
+        Debug.Log("TODO: here we need to set the target elevator index");
+        design.TargetElevatorIndex = 2; //ayerElevatorIndex(design.Elevators.Count);
         return design;
     }
 
