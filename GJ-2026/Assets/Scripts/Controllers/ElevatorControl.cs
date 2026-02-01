@@ -60,8 +60,8 @@ public class ElevatorControl : MonoBehaviour
     public void CloseDoors()
     {
         // Debug.Log("Elevator doors closing.");
-        leftDoorTargetPos = new Vector3(0f, 0f, .01f);
-        rightDoorTargetPos = new Vector3(0f, 0f, -.01f);
+        leftDoorTargetPos = new Vector3(0f, 0f, .001f);
+        rightDoorTargetPos = new Vector3(0f, 0f, -.001f);
     }
 
     public void PlayElevetorMusic()

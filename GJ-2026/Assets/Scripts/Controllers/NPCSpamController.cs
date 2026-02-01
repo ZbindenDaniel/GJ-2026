@@ -4,7 +4,7 @@ using UnityEngine;
 public class NPCSpamController : MonoBehaviour
 {
     // Static tuning knobs (fast jam tweaks)
-    public static Vector3 LevelSize = new Vector3(8.5f, 0f, 8.5f);
+    public static Vector3 LevelSize = new Vector3(7.5f, 0f, 7.5f);
     public static float MinNpcDistance = 1.5f;
     public static int MaxAttemptsPerNpc = 25;
     public static Vector3 LevelCenter = Vector3.zero;

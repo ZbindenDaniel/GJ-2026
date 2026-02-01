@@ -11989,6 +11989,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 78810700}
     - target: {fileID: 803935820003556103, guid: 0f2f7917f31911ee694b2f60c1762191, type: 3}
+      propertyPath: spawnOnStart
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 803935820003556103, guid: 0f2f7917f31911ee694b2f60c1762191, type: 3}
       propertyPath: levelDesigner
       value: 
       objectReference: {fileID: 1747712518}

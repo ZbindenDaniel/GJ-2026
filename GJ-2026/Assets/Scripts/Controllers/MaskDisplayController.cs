@@ -70,9 +70,34 @@ public class MaskDisplayController : MonoBehaviour
             }
         }
 
-        if (!found && logDetails)
+        if (!found)
         {
-            Debug.LogWarning($"MaskDisplayController could not find '{code}' under {name}.");
+            if (logDetails)
+            {
+                System.Collections.Generic.List<string> childNames = new System.Collections.Generic.List<string>();
+                for (int i = 0; i < maskRoot.childCount; i++)
+                {
+                    Transform child = maskRoot.GetChild(i);
+                    if (child == null)
+                    {
+                        continue;
+                    }
+
+                    string childName = child.name;
+                    if (childName.EndsWith("(Clone)", StringComparison.OrdinalIgnoreCase))
+                    {
+                        childName = childName.Substring(0, childName.Length - "(Clone)".Length);
+                    }
+
+                    childNames.Add(childName);
+                }
+
+                Debug.LogWarning($"MaskDisplayController could not find '{code}' under {name}. Available: {string.Join(", ", childNames)}");
+            }
+            else
+            {
+                Debug.LogWarning($"MaskDisplayController could not find '{code}' under {name}.");
+            }
         }
     }
 

@@ -30,6 +30,7 @@ public class GameControl : MonoBehaviour
     private LevelDesignData currentDesign;
     private bool loggedSpawnOnce;
     public MaskAttributes CurrentPlayerMask { get; private set; }
+    private int spawnCallCount;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -95,6 +96,8 @@ public class GameControl : MonoBehaviour
 
     private void SpawnLevel(int level)
     {
+        spawnCallCount++;
+        Debug.Log($"GameControl SpawnLevel call #{spawnCallCount} for level {level}.");
         if (levelDesigner == null || npcSpamController == null)
         {
             Debug.LogWarning("GameControl SpawnLevel aborted: missing LevelDesigner or NPCSpamController.");
@@ -163,7 +166,6 @@ public class GameControl : MonoBehaviour
                 return;
             }
 
-            SpawnLevel(currentLevel++);
             musicManager.FadeIn();
         }
         catch (Exception ex)
@@ -194,22 +196,24 @@ public class GameControl : MonoBehaviour
         // elevator check goes here
         if (currentDesign == null)
         {
-            Debug.LogWarning("GameControl cannot process elevator close: missing current level design.");
+            currentLevel = Mathf.Max(1, startLevel);
+            StartCoroutine(SpawnLevelAfterDelay(currentLevel, 4f));
             return;
         }
         if (elevatorIndex == currentDesign.TargetElevatorIndex)
         {
             Debug.Log("GameControl: Player entered the correct elevator.");
             SetNpcReaction(NpcMood.Happy);
-            SpawnLevel(currentLevel++);
+            StartCoroutine(SpawnLevelAfterDelay(currentLevel + 1, 4f));
+            currentLevel++;
         }
         else
         {
             Debug.Log("GameControl: Player entered the wrong elevator.");
             SetNpcReaction(NpcMood.Assault);
-            SpawnLevel(0);
+            StartCoroutine(SpawnLevelAfterDelay(0, 4f));
                 
-            }
+        }
 
     }
 
@@ -236,6 +240,12 @@ public class GameControl : MonoBehaviour
     {
         // TODO: tobi apply mask to player character maybe here the best place??
         Debug.Log($"GameControl mask selected. Shape={mask.Shape}, Eyes={mask.EyeState}, Mouth={mask.Mouth}");
+    }
+
+    private System.Collections.IEnumerator SpawnLevelAfterDelay(int level, float delaySeconds)
+    {
+        yield return new WaitForSeconds(delaySeconds);
+        SpawnLevel(level);
     }
 
 

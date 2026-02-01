@@ -17,7 +17,7 @@ public static class MaskCode
             return null;
         }
 
-        return $"M{shapeCode}.{eyeCode}{mouthCode}";
+        return $"M{shapeCode}.{mouthCode}{eyeCode}";
     }
 
     public static string GetShapeCode(MaskShape shape)
