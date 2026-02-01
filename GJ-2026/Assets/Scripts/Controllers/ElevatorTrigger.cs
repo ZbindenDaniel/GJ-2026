@@ -87,6 +87,17 @@ public class ElevatorTrigger : MonoBehaviour
         Debug.Log($"Player exited elevator trigger for {GetElevatorName()}.");
         NotifyGameControlElevatorExited();
         NotifyGameControl(false);
+        try
+        {
+            if (_elevatorControl != null)
+            {
+                _elevatorControl.StopElevatorMusic();
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Failed to stop elevator music on exit for {GetElevatorName()}: {ex}");
+        }
         ScheduleCloseDoors();
     }
 
@@ -181,17 +192,17 @@ public class ElevatorTrigger : MonoBehaviour
             Debug.LogError($"Failed to open elevator doors for {GetElevatorName()}: {ex}");
         }
 
+        try
+        {
+            _elevatorControl.StopElevatorMusic();
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Failed to stop elevator music for {GetElevatorName()}: {ex}");
+        }
+
         if (isPlayerInside)
         {
-            try
-            {
-                _elevatorControl.StopElevatorMusic();
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError($"Failed to stop elevator music for {GetElevatorName()}: {ex}");
-            }
-
             NotifyGameControlElevatorOpenedWithPlayer(GetElevatorName());
         }
 
