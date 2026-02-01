@@ -521,8 +521,8 @@ MonoBehaviour:
     EyeState: 0
     Mouth: 0
   _animator: {fileID: 1296228998298693328}
-  _headTransform: {fileID: 567268782076249135}
-  _bodyTransform: {fileID: 4172138216966117723}
+  _headTransform: {fileID: 6919602229649831741}
+  _bodyTransform: {fileID: 0}
   _vibeBounceAngle: 12
   _vibeBounceSpeed: 3
   _assaultShakeAngle: 6
@@ -530,8 +530,8 @@ MonoBehaviour:
   _assaultMoveSpeed: 1.5
   _engageBounceHeight: 0.05
   _engageBounceSpeed: 2.5
-  _nodAngle: 40
-  _nodSpeed: 2
+  _nodAngle: 4
+  _nodSpeed: 1
   _headShakeAngle: 20
   _headShakeSpeed: 4
   _playerAwarenessRange: 4
@@ -594,7 +594,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 84
   m_CollisionDetection: 0
 --- !u!95 &1296228998298693328
 Animator:
@@ -605,8 +605,8 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7792247951767706446}
   m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: 8529fad2f371d5ce19d4a441208e6d7c, type: 3}
+  m_Controller: {fileID: 9100000, guid: aded09413fd0a3c28804904d5e9d5e56, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -796,6 +796,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 9b85559a79c481a09a010b2b9533fcf4, type: 3}
       propertyPath: m_Name
       value: BodyRigged
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9b85559a79c481a09a010b2b9533fcf4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

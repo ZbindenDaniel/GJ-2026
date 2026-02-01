@@ -74,13 +74,6 @@ public class LevelDesigner : MonoBehaviour
         return 2;
     }
 
-    private static int CalculateMaskCount(int level)
-    {
-        int levelIndex = Mathf.Max(0, level - BaseLevel);
-        int count = MinMasks + levelIndex * MasksPerLevel;
-        return Mathf.Clamp(count, MinMasks, MaxMasks);
-    }
-
     private static MaskAttributes CreateMaskAttributes(int attributeCount)
     {
         MaskAttributes mask = new MaskAttributes

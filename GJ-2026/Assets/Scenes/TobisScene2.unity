@@ -610,6 +610,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 430315230}
     m_Modifications:
+    - target: {fileID: 1483117462457132186, guid: 9cc55eb6cbd48e8d0a8441f88f5c6b81, type: 3}
+      propertyPath: logDetails
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1483117462457132186, guid: 9cc55eb6cbd48e8d0a8441f88f5c6b81, type: 3}
+      propertyPath: elevatorIndex
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2560745637436707299, guid: 9cc55eb6cbd48e8d0a8441f88f5c6b81, type: 3}
       propertyPath: m_Name
       value: Elevator (4)
@@ -892,6 +900,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 430315230}
     m_Modifications:
+    - target: {fileID: 1483117462457132186, guid: 9cc55eb6cbd48e8d0a8441f88f5c6b81, type: 3}
+      propertyPath: logDetails
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1483117462457132186, guid: 9cc55eb6cbd48e8d0a8441f88f5c6b81, type: 3}
+      propertyPath: elevatorIndex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2560745637436707299, guid: 9cc55eb6cbd48e8d0a8441f88f5c6b81, type: 3}
       propertyPath: m_Name
       value: Elevator (1)
@@ -1164,6 +1180,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 430315230}
     m_Modifications:
+    - target: {fileID: 1483117462457132186, guid: 9cc55eb6cbd48e8d0a8441f88f5c6b81, type: 3}
+      propertyPath: logDetails
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1483117462457132186, guid: 9cc55eb6cbd48e8d0a8441f88f5c6b81, type: 3}
+      propertyPath: elevatorIndex
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2560745637436707299, guid: 9cc55eb6cbd48e8d0a8441f88f5c6b81, type: 3}
       propertyPath: m_Name
       value: Elevator (2)
@@ -6321,6 +6345,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 430315230}
     m_Modifications:
+    - target: {fileID: 1483117462457132186, guid: 9cc55eb6cbd48e8d0a8441f88f5c6b81, type: 3}
+      propertyPath: logDetails
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1483117462457132186, guid: 9cc55eb6cbd48e8d0a8441f88f5c6b81, type: 3}
+      propertyPath: elevatorIndex
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2560745637436707299, guid: 9cc55eb6cbd48e8d0a8441f88f5c6b81, type: 3}
       propertyPath: m_Name
       value: Elevator (3)

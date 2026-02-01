@@ -4,6 +4,7 @@ using UnityEngine;
 public class ElevatorManager : MonoBehaviour
 {
     private ElevatorControl[] elevatorControls;
+    private ElevatorMaskDisplayController[] elevatorMaskDisplays;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -18,6 +19,7 @@ public class ElevatorManager : MonoBehaviour
     public void Init()
     {
         elevatorControls = UnityEngine.Object.FindObjectsByType<ElevatorControl>(FindObjectsSortMode.None);
+        elevatorMaskDisplays = UnityEngine.Object.FindObjectsByType<ElevatorMaskDisplayController>(FindObjectsSortMode.None);
         if (elevatorControls == null || elevatorControls.Length == 0)
         {
             Debug.LogError("ElevatorManager did not find any ElevatorControls in the scene.");
@@ -122,5 +124,58 @@ public class ElevatorManager : MonoBehaviour
         }
 
         return elevatorControls;
+    }
+
+    public void ApplyLiftMasks(System.Collections.Generic.List<MaskAttributes> liftChoices)
+    {
+        if (liftChoices == null || liftChoices.Count == 0)
+        {
+            return;
+        }
+
+        if (elevatorMaskDisplays == null || elevatorMaskDisplays.Length == 0)
+        {
+            elevatorMaskDisplays = UnityEngine.Object.FindObjectsByType<ElevatorMaskDisplayController>(FindObjectsSortMode.None);
+        }
+
+        for (int i = 0; i < elevatorMaskDisplays.Length; i++)
+        {
+            ElevatorMaskDisplayController display = elevatorMaskDisplays[i];
+            if (display == null)
+            {
+                continue;
+            }
+
+            int index = display.ElevatorIndex;
+            if (index < 0 || index >= liftChoices.Count)
+            {
+                continue;
+            }
+
+            display.ApplyMask(liftChoices[index]);
+        }
+    }
+
+    public void ClearLiftMask(int elevatorIndex)
+    {
+        if (elevatorMaskDisplays == null || elevatorMaskDisplays.Length == 0)
+        {
+            elevatorMaskDisplays = UnityEngine.Object.FindObjectsByType<ElevatorMaskDisplayController>(FindObjectsSortMode.None);
+        }
+
+        for (int i = 0; i < elevatorMaskDisplays.Length; i++)
+        {
+            ElevatorMaskDisplayController display = elevatorMaskDisplays[i];
+            if (display == null)
+            {
+                continue;
+            }
+
+            if (display.ElevatorIndex == elevatorIndex)
+            {
+                display.ClearMask();
+                return;
+            }
+        }
     }
 }
