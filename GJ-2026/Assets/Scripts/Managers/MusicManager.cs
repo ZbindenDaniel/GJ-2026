@@ -58,7 +58,16 @@ public class MusicManager : MonoBehaviour
                 return;
             }
 
-            _audioSource.PlayOneShot(clip);
+            _audioSource.loop = true;
+            if (_audioSource.clip != clip)
+            {
+                _audioSource.clip = clip;
+                _audioSource.Play();
+            }
+            else if (!_audioSource.isPlaying)
+            {
+                _audioSource.Play();
+            }
         }
         catch (Exception exception)
         {
