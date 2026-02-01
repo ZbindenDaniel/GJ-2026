@@ -66,7 +66,6 @@ public class ElevatorTrigger : MonoBehaviour
 
         isPlayerInside = true;
         Debug.Log($"Player entered elevator trigger for {GetElevatorName()}.");
-        NotifyGameControlElevatorEntered();
         NotifyGameControl(true);
         ScheduleCloseDoors();
     }
@@ -85,7 +84,6 @@ public class ElevatorTrigger : MonoBehaviour
 
         isPlayerInside = false;
         Debug.Log($"Player exited elevator trigger for {GetElevatorName()}.");
-        NotifyGameControlElevatorExited();
         NotifyGameControl(false);
         ScheduleCloseDoors();
     }
