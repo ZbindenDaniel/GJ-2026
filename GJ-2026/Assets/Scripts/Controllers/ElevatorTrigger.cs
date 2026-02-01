@@ -127,6 +127,7 @@ public class ElevatorTrigger : MonoBehaviour
         catch (Exception ex)
         {
             Debug.LogError($"Failed to close elevator doors for {GetElevatorName()}: {ex}");
+            yield break;
         }
 
         if (isPlayerInside)
