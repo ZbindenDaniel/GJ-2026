@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 3138653678809520909}
   - component: {fileID: 2157961029817888082}
   - component: {fileID: 6042011589031576194}
+  - component: {fileID: 4982626872535684160}
+  - component: {fileID: 8660031935652535067}
   m_Layer: 0
   m_Name: MT.HS(Clone)
   m_TagString: Untagged
@@ -90,6 +92,42 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4982626872535684160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 284863563974870031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96460283f6c94f9ab7f8dcccf7cd184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskSelectable
+  highlightObject: {fileID: 5410543873083670753}
+  highlightRenderers: []
+  highlightColor: {r: 1, g: 0.9, b: 0.2, a: 1}
+--- !u!135 &8660031935652535067
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 284863563974870031}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.010218632
+  m_Center: {x: -0.00000005447873, y: -0.007455052, z: 0.08530348}
 --- !u!1 &452265567967948040
 GameObject:
   m_ObjectHideFlags: 0
@@ -101,6 +139,8 @@ GameObject:
   - component: {fileID: 4751214922511097258}
   - component: {fileID: 4256110750564213418}
   - component: {fileID: 4065746821123479515}
+  - component: {fileID: 2369995839492925935}
+  - component: {fileID: 4355297635883304544}
   m_Layer: 0
   m_Name: MR.SN(Clone)
   m_TagString: Untagged
@@ -180,6 +220,42 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2369995839492925935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 452265567967948040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96460283f6c94f9ab7f8dcccf7cd184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskSelectable
+  highlightObject: {fileID: 5410543873083670753}
+  highlightRenderers: []
+  highlightColor: {r: 1, g: 0.9, b: 0.2, a: 1}
+--- !u!135 &4355297635883304544
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 452265567967948040}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.0096738655
+  m_Center: {x: -0.000027303811, y: -0.00017673448, z: -0.00047572597}
 --- !u!1 &471818129651486601
 GameObject:
   m_ObjectHideFlags: 0
@@ -191,6 +267,8 @@ GameObject:
   - component: {fileID: 7312980280097245412}
   - component: {fileID: 4839677357231503361}
   - component: {fileID: 3157168049648393003}
+  - component: {fileID: 4229989467527513511}
+  - component: {fileID: 6292275110773067019}
   m_Layer: 0
   m_Name: MS.IF(Clone)
   m_TagString: Untagged
@@ -270,6 +348,42 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4229989467527513511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 471818129651486601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96460283f6c94f9ab7f8dcccf7cd184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskSelectable
+  highlightObject: {fileID: 5410543873083670753}
+  highlightRenderers: []
+  highlightColor: {r: 1, g: 0.9, b: 0.2, a: 1}
+--- !u!135 &6292275110773067019
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 471818129651486601}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.009618087
+  m_Center: {x: -0.000000050527884, y: -0.007998254, z: 0.08522223}
 --- !u!1 &519652914200407801
 GameObject:
   m_ObjectHideFlags: 0
@@ -281,6 +395,8 @@ GameObject:
   - component: {fileID: 500169648099410616}
   - component: {fileID: 3209138934112160533}
   - component: {fileID: 1980766044997380588}
+  - component: {fileID: 4561384766422656250}
+  - component: {fileID: 3243803755736452012}
   m_Layer: 0
   m_Name: MT.IN(Clone)
   m_TagString: Untagged
@@ -360,6 +476,42 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4561384766422656250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519652914200407801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96460283f6c94f9ab7f8dcccf7cd184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskSelectable
+  highlightObject: {fileID: 5410543873083670753}
+  highlightRenderers: []
+  highlightColor: {r: 1, g: 0.9, b: 0.2, a: 1}
+--- !u!135 &3243803755736452012
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519652914200407801}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.010218632
+  m_Center: {x: -0.000000054486005, y: -0.007455053, z: 0.08530348}
 --- !u!1 &703914498556687644
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,6 +523,8 @@ GameObject:
   - component: {fileID: 8195496634194355256}
   - component: {fileID: 5228431352896494981}
   - component: {fileID: 2504213719997038808}
+  - component: {fileID: 8258807716414582913}
+  - component: {fileID: 5893389082918180123}
   m_Layer: 0
   m_Name: MT.OO(Clone)
   m_TagString: Untagged
@@ -450,6 +604,42 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8258807716414582913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 703914498556687644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96460283f6c94f9ab7f8dcccf7cd184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskSelectable
+  highlightObject: {fileID: 5410543873083670753}
+  highlightRenderers: []
+  highlightColor: {r: 1, g: 0.9, b: 0.2, a: 1}
+--- !u!135 &5893389082918180123
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 703914498556687644}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.010218632
+  m_Center: {x: -0.000000054486005, y: -0.007455053, z: 0.08530348}
 --- !u!1 &792574955234838023
 GameObject:
   m_ObjectHideFlags: 0
@@ -461,6 +651,8 @@ GameObject:
   - component: {fileID: 5549141213710454009}
   - component: {fileID: 8606304383797676073}
   - component: {fileID: 8100314674588222839}
+  - component: {fileID: 8155000727473428586}
+  - component: {fileID: 107572207023510711}
   m_Layer: 0
   m_Name: MR.HN(Clone)
   m_TagString: Untagged
@@ -540,6 +732,42 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8155000727473428586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792574955234838023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96460283f6c94f9ab7f8dcccf7cd184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskSelectable
+  highlightObject: {fileID: 5410543873083670753}
+  highlightRenderers: []
+  highlightColor: {r: 1, g: 0.9, b: 0.2, a: 1}
+--- !u!135 &107572207023510711
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792574955234838023}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.0096738655
+  m_Center: {x: -0.000027303811, y: -0.00017673448, z: -0.00047572597}
 --- !u!1 &796013773540241809
 GameObject:
   m_ObjectHideFlags: 0
@@ -551,6 +779,8 @@ GameObject:
   - component: {fileID: 2479063985005461529}
   - component: {fileID: 2504684301666775914}
   - component: {fileID: 187520133808020243}
+  - component: {fileID: 1924406580717543806}
+  - component: {fileID: 6150116721936632095}
   m_Layer: 0
   m_Name: MS.HF(Clone)
   m_TagString: Untagged
@@ -630,6 +860,42 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1924406580717543806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 796013773540241809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96460283f6c94f9ab7f8dcccf7cd184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskSelectable
+  highlightObject: {fileID: 5410543873083670753}
+  highlightRenderers: []
+  highlightColor: {r: 1, g: 0.9, b: 0.2, a: 1}
+--- !u!135 &6150116721936632095
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 796013773540241809}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.009618087
+  m_Center: {x: -0.000000050527884, y: -0.007998254, z: 0.08522223}
 --- !u!1 &1388017558252503044
 GameObject:
   m_ObjectHideFlags: 0
@@ -641,6 +907,8 @@ GameObject:
   - component: {fileID: 5928681348017142054}
   - component: {fileID: 5590924852822554718}
   - component: {fileID: 9152976407890863043}
+  - component: {fileID: 2873065826272824906}
+  - component: {fileID: 7642745004406702517}
   m_Layer: 0
   m_Name: MS.IN(Clone)
   m_TagString: Untagged
@@ -720,6 +988,42 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2873065826272824906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1388017558252503044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96460283f6c94f9ab7f8dcccf7cd184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskSelectable
+  highlightObject: {fileID: 5410543873083670753}
+  highlightRenderers: []
+  highlightColor: {r: 1, g: 0.9, b: 0.2, a: 1}
+--- !u!135 &7642745004406702517
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1388017558252503044}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.009618087
+  m_Center: {x: -0.000000050527884, y: -0.007998254, z: 0.08522223}
 --- !u!1 &2239741764481602608
 GameObject:
   m_ObjectHideFlags: 0
@@ -731,6 +1035,8 @@ GameObject:
   - component: {fileID: 8422292786348988494}
   - component: {fileID: 5387362432140981546}
   - component: {fileID: 6333075579564396789}
+  - component: {fileID: 3661574109000961920}
+  - component: {fileID: 7650023546100764409}
   m_Layer: 0
   m_Name: MS.IS(Clone)
   m_TagString: Untagged
@@ -810,6 +1116,42 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3661574109000961920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2239741764481602608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96460283f6c94f9ab7f8dcccf7cd184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskSelectable
+  highlightObject: {fileID: 5410543873083670753}
+  highlightRenderers: []
+  highlightColor: {r: 1, g: 0.9, b: 0.2, a: 1}
+--- !u!135 &7650023546100764409
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2239741764481602608}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.009618087
+  m_Center: {x: -0.000000050527884, y: -0.007998254, z: 0.08522223}
 --- !u!1 &2461225325725226418
 GameObject:
   m_ObjectHideFlags: 0
@@ -821,6 +1163,8 @@ GameObject:
   - component: {fileID: 2235741801710957900}
   - component: {fileID: 6811719179613059430}
   - component: {fileID: 5925005407387862360}
+  - component: {fileID: 1781436651285531306}
+  - component: {fileID: 2397488423219582931}
   m_Layer: 0
   m_Name: MS.SF(Clone)
   m_TagString: Untagged
@@ -900,6 +1244,42 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1781436651285531306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2461225325725226418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96460283f6c94f9ab7f8dcccf7cd184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskSelectable
+  highlightObject: {fileID: 5410543873083670753}
+  highlightRenderers: []
+  highlightColor: {r: 1, g: 0.9, b: 0.2, a: 1}
+--- !u!135 &2397488423219582931
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2461225325725226418}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.009618087
+  m_Center: {x: -0.000000050527884, y: -0.007998254, z: 0.08522223}
 --- !u!1 &2869123987517933513
 GameObject:
   m_ObjectHideFlags: 0
@@ -912,6 +1292,8 @@ GameObject:
   - component: {fileID: 1019283757352408687}
   - component: {fileID: 2151751521234283055}
   - component: {fileID: 817617538618199675}
+  - component: {fileID: 2280011316104619072}
+  - component: {fileID: 4418216899025116637}
   m_Layer: 0
   m_Name: MS.SS(Clone)
   m_TagString: Untagged
@@ -1012,6 +1394,42 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0.00000002980232, z: 0}
+--- !u!114 &2280011316104619072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2869123987517933513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96460283f6c94f9ab7f8dcccf7cd184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskSelectable
+  highlightObject: {fileID: 5410543873083670753}
+  highlightRenderers: []
+  highlightColor: {r: 1, g: 0.9, b: 0.2, a: 1}
+--- !u!135 &4418216899025116637
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2869123987517933513}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3114417155405276366
 GameObject:
   m_ObjectHideFlags: 0
@@ -1023,6 +1441,8 @@ GameObject:
   - component: {fileID: 3255447538587542945}
   - component: {fileID: 2645753297715395799}
   - component: {fileID: 84265807635489255}
+  - component: {fileID: 5419436854966259241}
+  - component: {fileID: 6750039000182441628}
   m_Layer: 0
   m_Name: MS.OO(Clone)
   m_TagString: Untagged
@@ -1102,6 +1522,42 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5419436854966259241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3114417155405276366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96460283f6c94f9ab7f8dcccf7cd184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskSelectable
+  highlightObject: {fileID: 5410543873083670753}
+  highlightRenderers: []
+  highlightColor: {r: 1, g: 0.9, b: 0.2, a: 1}
+--- !u!135 &6750039000182441628
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3114417155405276366}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.009618087
+  m_Center: {x: -0.000000050527884, y: -0.007998254, z: 0.08522223}
 --- !u!1 &3191227915851363667
 GameObject:
   m_ObjectHideFlags: 0
@@ -1113,6 +1569,8 @@ GameObject:
   - component: {fileID: 585510335409473106}
   - component: {fileID: 2479280469864730240}
   - component: {fileID: 1280305775992151917}
+  - component: {fileID: 450308188756761921}
+  - component: {fileID: 5689812690179317582}
   m_Layer: 0
   m_Name: MS.HS(Clone)
   m_TagString: Untagged
@@ -1192,6 +1650,42 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &450308188756761921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3191227915851363667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96460283f6c94f9ab7f8dcccf7cd184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskSelectable
+  highlightObject: {fileID: 5410543873083670753}
+  highlightRenderers: []
+  highlightColor: {r: 1, g: 0.9, b: 0.2, a: 1}
+--- !u!135 &5689812690179317582
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3191227915851363667}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.009618087
+  m_Center: {x: -0.000000050527884, y: -0.007998254, z: 0.08522223}
 --- !u!1 &3312298697757983270
 GameObject:
   m_ObjectHideFlags: 0
@@ -1203,6 +1697,8 @@ GameObject:
   - component: {fileID: 3204475600491745003}
   - component: {fileID: 3665952010193759270}
   - component: {fileID: 5442188796321371821}
+  - component: {fileID: 8091407881920684905}
+  - component: {fileID: 4483104003745586566}
   m_Layer: 0
   m_Name: MT.SN(Clone)
   m_TagString: Untagged
@@ -1282,6 +1778,42 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8091407881920684905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3312298697757983270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96460283f6c94f9ab7f8dcccf7cd184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskSelectable
+  highlightObject: {fileID: 5410543873083670753}
+  highlightRenderers: []
+  highlightColor: {r: 1, g: 0.9, b: 0.2, a: 1}
+--- !u!135 &4483104003745586566
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3312298697757983270}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.010218632
+  m_Center: {x: -0.000000054486005, y: -0.007455053, z: 0.08530348}
 --- !u!1 &3787001012640075365
 GameObject:
   m_ObjectHideFlags: 0
@@ -1293,6 +1825,8 @@ GameObject:
   - component: {fileID: 6160611057245665890}
   - component: {fileID: 520693041167744747}
   - component: {fileID: 5302511956462818941}
+  - component: {fileID: 7621794270642864466}
+  - component: {fileID: 2832474167835576449}
   m_Layer: 0
   m_Name: MT.IF(Clone)
   m_TagString: Untagged
@@ -1372,6 +1906,42 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7621794270642864466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3787001012640075365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96460283f6c94f9ab7f8dcccf7cd184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskSelectable
+  highlightObject: {fileID: 5410543873083670753}
+  highlightRenderers: []
+  highlightColor: {r: 1, g: 0.9, b: 0.2, a: 1}
+--- !u!135 &2832474167835576449
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3787001012640075365}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.010218632
+  m_Center: {x: -0.000000054486005, y: -0.007455053, z: 0.08530348}
 --- !u!1 &3947771559289593377
 GameObject:
   m_ObjectHideFlags: 0
@@ -1493,6 +2063,8 @@ GameObject:
   - component: {fileID: 3928615276172347594}
   - component: {fileID: 4133163204891348300}
   - component: {fileID: 5561930994057447666}
+  - component: {fileID: 4848052890818899436}
+  - component: {fileID: 121057713494519638}
   m_Layer: 0
   m_Name: MS.SN(Clone)
   m_TagString: Untagged
@@ -1572,6 +2144,42 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4848052890818899436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4160617133394895717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96460283f6c94f9ab7f8dcccf7cd184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskSelectable
+  highlightObject: {fileID: 5410543873083670753}
+  highlightRenderers: []
+  highlightColor: {r: 1, g: 0.9, b: 0.2, a: 1}
+--- !u!135 &121057713494519638
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4160617133394895717}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.009618087
+  m_Center: {x: -0.000000050527884, y: -0.007998254, z: 0.08522223}
 --- !u!1 &4244016400639004997
 GameObject:
   m_ObjectHideFlags: 0
@@ -1583,6 +2191,8 @@ GameObject:
   - component: {fileID: 8936309239468220649}
   - component: {fileID: 669069868415562965}
   - component: {fileID: 4730461595366282551}
+  - component: {fileID: 9149280345220660708}
+  - component: {fileID: 4462743894116277094}
   m_Layer: 0
   m_Name: MR.IN(Clone)
   m_TagString: Untagged
@@ -1662,6 +2272,42 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &9149280345220660708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4244016400639004997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96460283f6c94f9ab7f8dcccf7cd184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskSelectable
+  highlightObject: {fileID: 5410543873083670753}
+  highlightRenderers: []
+  highlightColor: {r: 1, g: 0.9, b: 0.2, a: 1}
+--- !u!135 &4462743894116277094
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4244016400639004997}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.0096738655
+  m_Center: {x: -0.000027303819, y: -0.00017673425, z: -0.00047572597}
 --- !u!1 &4775859389265128142
 GameObject:
   m_ObjectHideFlags: 0
@@ -1673,6 +2319,8 @@ GameObject:
   - component: {fileID: 5274062232855307614}
   - component: {fileID: 2345678037925253562}
   - component: {fileID: 2257655358969697591}
+  - component: {fileID: 8143833070997074505}
+  - component: {fileID: 6813022725228120858}
   m_Layer: 0
   m_Name: MS.HN(Clone)
   m_TagString: Untagged
@@ -1752,6 +2400,42 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8143833070997074505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4775859389265128142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96460283f6c94f9ab7f8dcccf7cd184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskSelectable
+  highlightObject: {fileID: 5410543873083670753}
+  highlightRenderers: []
+  highlightColor: {r: 1, g: 0.9, b: 0.2, a: 1}
+--- !u!135 &6813022725228120858
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4775859389265128142}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.009618087
+  m_Center: {x: -0.000000050527884, y: -0.007998254, z: 0.08522223}
 --- !u!1 &5078656688925401695
 GameObject:
   m_ObjectHideFlags: 0
@@ -1763,6 +2447,8 @@ GameObject:
   - component: {fileID: 2993478156015486574}
   - component: {fileID: 5390376074510039270}
   - component: {fileID: 603474027797237181}
+  - component: {fileID: 7180753301094951308}
+  - component: {fileID: 3065399828057578496}
   m_Layer: 0
   m_Name: MR.IS(Clone)
   m_TagString: Untagged
@@ -1842,6 +2528,42 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7180753301094951308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5078656688925401695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96460283f6c94f9ab7f8dcccf7cd184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskSelectable
+  highlightObject: {fileID: 5410543873083670753}
+  highlightRenderers: []
+  highlightColor: {r: 1, g: 0.9, b: 0.2, a: 1}
+--- !u!135 &3065399828057578496
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5078656688925401695}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.0096738655
+  m_Center: {x: -0.000027303811, y: -0.00017673448, z: -0.00047572597}
 --- !u!1 &5360177658637119060
 GameObject:
   m_ObjectHideFlags: 0
@@ -1853,6 +2575,8 @@ GameObject:
   - component: {fileID: 3405716635285316401}
   - component: {fileID: 1731842107679546915}
   - component: {fileID: 1221857721850546267}
+  - component: {fileID: 5148609082728340739}
+  - component: {fileID: 387395488215729481}
   m_Layer: 0
   m_Name: MT.IS(Clone)
   m_TagString: Untagged
@@ -1932,6 +2656,42 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5148609082728340739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5360177658637119060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96460283f6c94f9ab7f8dcccf7cd184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskSelectable
+  highlightObject: {fileID: 5410543873083670753}
+  highlightRenderers: []
+  highlightColor: {r: 1, g: 0.9, b: 0.2, a: 1}
+--- !u!135 &387395488215729481
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5360177658637119060}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.010218632
+  m_Center: {x: -0.000000054486005, y: -0.007455053, z: 0.08530348}
 --- !u!1 &5410543873083670753
 GameObject:
   m_ObjectHideFlags: 0
@@ -1950,7 +2710,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1620637015630679077
 Transform:
   m_ObjectHideFlags: 0
@@ -1960,8 +2720,8 @@ Transform:
   m_GameObject: {fileID: 5410543873083670753}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
+  m_LocalPosition: {x: 0, y: 1.2, z: 0.246}
+  m_LocalScale: {x: 0.3, y: 1.2, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7843138117574364735}
@@ -1981,7 +2741,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5410543873083670753}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2164,6 +2924,8 @@ GameObject:
   - component: {fileID: 6328846280379435192}
   - component: {fileID: 8136585052556179264}
   - component: {fileID: 2115429027665644581}
+  - component: {fileID: 8094533362128326940}
+  - component: {fileID: 7665858616705518300}
   m_Layer: 0
   m_Name: MR.IF(Clone)
   m_TagString: Untagged
@@ -2243,6 +3005,42 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8094533362128326940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5536624056537439303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96460283f6c94f9ab7f8dcccf7cd184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskSelectable
+  highlightObject: {fileID: 5410543873083670753}
+  highlightRenderers: []
+  highlightColor: {r: 1, g: 0.9, b: 0.2, a: 1}
+--- !u!135 &7665858616705518300
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5536624056537439303}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.0009673866
+  m_Center: {x: -0.0000027303754, y: -0.000017673445, z: -0.00004757262}
 --- !u!1 &6260096595756027577
 GameObject:
   m_ObjectHideFlags: 0
@@ -2254,6 +3052,8 @@ GameObject:
   - component: {fileID: 8053144644802896219}
   - component: {fileID: 4774248892713278117}
   - component: {fileID: 6656447473930410843}
+  - component: {fileID: 8064516791752950999}
+  - component: {fileID: 8601471794993173348}
   m_Layer: 0
   m_Name: MT.HN(Clone)
   m_TagString: Untagged
@@ -2333,6 +3133,42 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8064516791752950999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6260096595756027577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96460283f6c94f9ab7f8dcccf7cd184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskSelectable
+  highlightObject: {fileID: 5410543873083670753}
+  highlightRenderers: []
+  highlightColor: {r: 1, g: 0.9, b: 0.2, a: 1}
+--- !u!135 &8601471794993173348
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6260096595756027577}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.010218632
+  m_Center: {x: -0.000000054486005, y: -0.007455053, z: 0.08530348}
 --- !u!1 &6459672761432152126
 GameObject:
   m_ObjectHideFlags: 0
@@ -2344,6 +3180,8 @@ GameObject:
   - component: {fileID: 3511107616181843780}
   - component: {fileID: 5010478722134934718}
   - component: {fileID: 2047249751374924755}
+  - component: {fileID: 6200984530684259298}
+  - component: {fileID: 6330142016079087687}
   m_Layer: 0
   m_Name: MT.HF(Clone)
   m_TagString: Untagged
@@ -2423,6 +3261,42 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6200984530684259298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6459672761432152126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96460283f6c94f9ab7f8dcccf7cd184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskSelectable
+  highlightObject: {fileID: 5410543873083670753}
+  highlightRenderers: []
+  highlightColor: {r: 1, g: 0.9, b: 0.2, a: 1}
+--- !u!135 &6330142016079087687
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6459672761432152126}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.010218632
+  m_Center: {x: -0.000000054486005, y: -0.007455053, z: 0.08530348}
 --- !u!1 &6867475954279146809
 GameObject:
   m_ObjectHideFlags: 0
@@ -2434,13 +3308,15 @@ GameObject:
   - component: {fileID: 5213948584177477810}
   - component: {fileID: 8902287364451177684}
   - component: {fileID: 1987724418086642219}
+  - component: {fileID: 1257031570107287647}
+  - component: {fileID: 766799517848251312}
   m_Layer: 0
   m_Name: MR.HF(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5213948584177477810
 Transform:
   m_ObjectHideFlags: 0
@@ -2513,6 +3389,42 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1257031570107287647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6867475954279146809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96460283f6c94f9ab7f8dcccf7cd184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskSelectable
+  highlightObject: {fileID: 5410543873083670753}
+  highlightRenderers: []
+  highlightColor: {r: 1, g: 0.9, b: 0.2, a: 1}
+--- !u!135 &766799517848251312
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6867475954279146809}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.0078908
+  m_Center: {x: -0.00011432357, y: 8.471863, z: 0.8134264}
 --- !u!1 &7427984497452157715
 GameObject:
   m_ObjectHideFlags: 0
@@ -2524,6 +3436,8 @@ GameObject:
   - component: {fileID: 7496480781409507295}
   - component: {fileID: 3651875738835743479}
   - component: {fileID: 9169783964520708086}
+  - component: {fileID: 4975877135650090910}
+  - component: {fileID: 726511545354972502}
   m_Layer: 0
   m_Name: MT.SS(Clone)
   m_TagString: Untagged
@@ -2603,6 +3517,42 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4975877135650090910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7427984497452157715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96460283f6c94f9ab7f8dcccf7cd184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskSelectable
+  highlightObject: {fileID: 5410543873083670753}
+  highlightRenderers: []
+  highlightColor: {r: 1, g: 0.9, b: 0.2, a: 1}
+--- !u!135 &726511545354972502
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7427984497452157715}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.010218632
+  m_Center: {x: -0.000000054486005, y: -0.007455053, z: 0.08530348}
 --- !u!1 &7729193054919651815
 GameObject:
   m_ObjectHideFlags: 0
@@ -2614,6 +3564,8 @@ GameObject:
   - component: {fileID: 1264941799983494388}
   - component: {fileID: 1034153842878622869}
   - component: {fileID: 2440922022607801854}
+  - component: {fileID: 4257453203687944634}
+  - component: {fileID: 5656746402384407932}
   m_Layer: 0
   m_Name: MR.OO(Clone)
   m_TagString: Untagged
@@ -2693,6 +3645,42 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4257453203687944634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7729193054919651815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96460283f6c94f9ab7f8dcccf7cd184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskSelectable
+  highlightObject: {fileID: 5410543873083670753}
+  highlightRenderers: []
+  highlightColor: {r: 1, g: 0.9, b: 0.2, a: 1}
+--- !u!135 &5656746402384407932
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7729193054919651815}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.0096738655
+  m_Center: {x: -0.000027303811, y: -0.0001767332, z: -0.00047572597}
 --- !u!1 &8193121296353078007
 GameObject:
   m_ObjectHideFlags: 0
@@ -2704,6 +3692,8 @@ GameObject:
   - component: {fileID: 6219670419479170635}
   - component: {fileID: 8813592926813697597}
   - component: {fileID: 6775982501515853939}
+  - component: {fileID: 9153898655431029085}
+  - component: {fileID: 1736355583429081644}
   m_Layer: 0
   m_Name: MR.HS(Clone)
   m_TagString: Untagged
@@ -2783,6 +3773,42 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &9153898655431029085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8193121296353078007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96460283f6c94f9ab7f8dcccf7cd184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskSelectable
+  highlightObject: {fileID: 5410543873083670753}
+  highlightRenderers: []
+  highlightColor: {r: 1, g: 0.9, b: 0.2, a: 1}
+--- !u!135 &1736355583429081644
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8193121296353078007}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.0096738655
+  m_Center: {x: -0.000027303811, y: -0.00017673448, z: -0.00047572597}
 --- !u!1 &8494397304011590131
 GameObject:
   m_ObjectHideFlags: 0
@@ -2794,6 +3820,8 @@ GameObject:
   - component: {fileID: 7308054606016916552}
   - component: {fileID: 2488112726916690661}
   - component: {fileID: 1066663645250836626}
+  - component: {fileID: 5867903754870572339}
+  - component: {fileID: 7217604886552985430}
   m_Layer: 0
   m_Name: MR.SS(Clone)
   m_TagString: Untagged
@@ -2873,6 +3901,42 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5867903754870572339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8494397304011590131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96460283f6c94f9ab7f8dcccf7cd184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskSelectable
+  highlightObject: {fileID: 5410543873083670753}
+  highlightRenderers: []
+  highlightColor: {r: 1, g: 0.9, b: 0.2, a: 1}
+--- !u!135 &7217604886552985430
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8494397304011590131}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.0096738655
+  m_Center: {x: -0.000027303811, y: -0.00017673448, z: -0.00047572597}
 --- !u!1 &8529471833662225162
 GameObject:
   m_ObjectHideFlags: 0
@@ -2884,6 +3948,8 @@ GameObject:
   - component: {fileID: 3120453389976180194}
   - component: {fileID: 5135411070078741601}
   - component: {fileID: 337115547071690559}
+  - component: {fileID: 3947602383837747180}
+  - component: {fileID: 9049601925553749431}
   m_Layer: 0
   m_Name: MT.SF(Clone)
   m_TagString: Untagged
@@ -2963,6 +4029,42 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3947602383837747180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8529471833662225162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96460283f6c94f9ab7f8dcccf7cd184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskSelectable
+  highlightObject: {fileID: 5410543873083670753}
+  highlightRenderers: []
+  highlightColor: {r: 1, g: 0.9, b: 0.2, a: 1}
+--- !u!135 &9049601925553749431
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8529471833662225162}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.010218632
+  m_Center: {x: -0.000000054486005, y: -0.007455053, z: 0.08530348}
 --- !u!1 &9158321895455877199
 GameObject:
   m_ObjectHideFlags: 0
@@ -2974,6 +4076,8 @@ GameObject:
   - component: {fileID: 7780040434163349937}
   - component: {fileID: 5256364382131213519}
   - component: {fileID: 8588226729874737936}
+  - component: {fileID: 7430456266704055293}
+  - component: {fileID: 2558994076579798433}
   m_Layer: 0
   m_Name: MR.SF(Clone)
   m_TagString: Untagged
@@ -3053,3 +4157,39 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7430456266704055293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9158321895455877199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96460283f6c94f9ab7f8dcccf7cd184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskSelectable
+  highlightObject: {fileID: 5410543873083670753}
+  highlightRenderers: []
+  highlightColor: {r: 1, g: 0.9, b: 0.2, a: 1}
+--- !u!135 &2558994076579798433
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9158321895455877199}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.0096738655
+  m_Center: {x: -0.000027303815, y: -0.00017673448, z: -0.00047572597}

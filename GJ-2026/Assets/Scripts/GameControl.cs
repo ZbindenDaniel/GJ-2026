@@ -211,7 +211,7 @@ public class GameControl : MonoBehaviour
         {
             Debug.Log("GameControl: Player entered the wrong elevator.");
             SetNpcReaction(NpcMood.Assault);
-            StartCoroutine(SpawnLevelAfterDelay(0, 4f));
+            StartCoroutine(SpawnLevelAfterDelay(currentLevel == 0 ? 0 : currentLevel -1 , 4f));
                 
         }
 

@@ -479,6 +479,8 @@ GameObject:
   - component: {fileID: 5077064588749955318}
   - component: {fileID: 2573335260912716472}
   - component: {fileID: 1296228998298693328}
+  - component: {fileID: 24181146301494878}
+  - component: {fileID: 5126766251123312025}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -618,6 +620,42 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &24181146301494878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7792247951767706446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96460283f6c94f9ab7f8dcccf7cd184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskSelectable
+  highlightObject: {fileID: 2293409121734427739}
+  highlightRenderers: []
+  highlightColor: {r: 1, g: 0.9, b: 0.2, a: 1}
+--- !u!135 &5126766251123312025
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7792247951767706446}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8847180691850200145
 GameObject:
   m_ObjectHideFlags: 0
@@ -960,6 +998,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 551ade1ff1e9f4e30961bd0340c265f0, type: 3}
+--- !u!1 &2293409121734427739 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5410543873083670753, guid: 551ade1ff1e9f4e30961bd0340c265f0, type: 3}
+  m_PrefabInstance: {fileID: 6108516676331799738}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4043567388268300933 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7843138117574364735, guid: 551ade1ff1e9f4e30961bd0340c265f0, type: 3}
