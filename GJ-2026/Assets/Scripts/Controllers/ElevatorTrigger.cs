@@ -66,6 +66,7 @@ public class ElevatorTrigger : MonoBehaviour
 
         isPlayerInside = true;
         Debug.Log($"Player entered elevator trigger for {GetElevatorName()}.");
+        NotifyGameControlElevatorEntered();
         NotifyGameControl(true);
         ScheduleCloseDoors();
     }
@@ -84,9 +85,12 @@ public class ElevatorTrigger : MonoBehaviour
 
         isPlayerInside = false;
         Debug.Log($"Player exited elevator trigger for {GetElevatorName()}.");
+        NotifyGameControlElevatorExited();
         NotifyGameControl(false);
         ScheduleCloseDoors();
     }
+
+    public bool IsPlayerInside => isPlayerInside;
 
     private bool IsPlayerCollider(Collider other)
     {
@@ -240,6 +244,42 @@ public class ElevatorTrigger : MonoBehaviour
         catch (Exception ex)
         {
             Debug.LogError($"Failed to notify GameControl about elevator closing with player ({elevatorIndex}): {ex}");
+        }
+    }
+
+    private void NotifyGameControlElevatorEntered()
+    {
+        if (_gameControl == null)
+        {
+            Debug.LogWarning("ElevatorTrigger could not find GameControl to notify about elevator enter.");
+            return;
+        }
+
+        try
+        {
+            _gameControl.OnElevatorEntered(_elevatorIndex);
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Failed to notify GameControl about elevator enter ({_elevatorIndex}): {ex}");
+        }
+    }
+
+    private void NotifyGameControlElevatorExited()
+    {
+        if (_gameControl == null)
+        {
+            Debug.LogWarning("ElevatorTrigger could not find GameControl to notify about elevator exit.");
+            return;
+        }
+
+        try
+        {
+            _gameControl.OnElevatorExited(_elevatorIndex);
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Failed to notify GameControl about elevator exit ({_elevatorIndex}): {ex}");
         }
     }
 

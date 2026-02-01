@@ -5,6 +5,7 @@ public class ElevatorManager : MonoBehaviour
 {
     private ElevatorControl[] elevatorControls;
     private ElevatorMaskDisplayController[] elevatorMaskDisplays;
+    [SerializeField] private float closeWithoutMaskDelaySeconds = 0.2f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -128,11 +129,6 @@ public class ElevatorManager : MonoBehaviour
 
     public void ApplyLiftMasks(System.Collections.Generic.List<MaskAttributes> liftChoices)
     {
-        if (liftChoices == null || liftChoices.Count == 0)
-        {
-            return;
-        }
-
         if (elevatorMaskDisplays == null || elevatorMaskDisplays.Length == 0)
         {
             elevatorMaskDisplays = UnityEngine.Object.FindObjectsByType<ElevatorMaskDisplayController>(FindObjectsSortMode.None);
@@ -146,6 +142,19 @@ public class ElevatorManager : MonoBehaviour
                 continue;
             }
 
+            display.ClearMask();
+        }
+
+        if (liftChoices != null && liftChoices.Count > 0)
+        {
+            for (int i = 0; i < elevatorMaskDisplays.Length; i++)
+            {
+                ElevatorMaskDisplayController display = elevatorMaskDisplays[i];
+                if (display == null)
+                {
+                    continue;
+                }
+
             int index = display.ElevatorIndex;
             if (index < 0 || index >= liftChoices.Count)
             {
@@ -153,7 +162,104 @@ public class ElevatorManager : MonoBehaviour
             }
 
             display.ApplyMask(liftChoices[index]);
+            }
         }
+
+        OpenElevatorsWithMasks();
+        if (closeWithoutMaskDelaySeconds <= 0f)
+        {
+            CloseElevatorsWithoutMasks();
+        }
+        else
+        {
+            StartCoroutine(CloseElevatorsWithoutMasksAfterDelay());
+        }
+    }
+
+    public void OpenAllElevators()
+    {
+        if (elevatorControls == null)
+        {
+            return;
+        }
+
+        foreach (var elevator in elevatorControls)
+        {
+            if (elevator != null)
+            {
+                elevator.OpenDoors();
+            }
+        }
+    }
+
+    public void OpenElevatorsWithMasks()
+    {
+        if (elevatorControls == null)
+        {
+            return;
+        }
+
+        foreach (var elevator in elevatorControls)
+        {
+            if (elevator == null)
+            {
+                continue;
+            }
+
+            ElevatorTrigger trigger = elevator.GetComponentInChildren<ElevatorTrigger>(true);
+            if (trigger != null && trigger.IsPlayerInside)
+            {
+                elevator.OpenDoors();
+                continue;
+            }
+
+            ElevatorMaskDisplayController display = elevator.GetComponentInChildren<ElevatorMaskDisplayController>(true);
+            if (display != null && display.HasActiveMask())
+            {
+                elevator.OpenDoors();
+            }
+        }
+    }
+
+    public void CloseElevatorsWithoutMasks()
+    {
+        if (elevatorControls == null)
+        {
+            return;
+        }
+
+        foreach (var elevator in elevatorControls)
+        {
+            if (elevator == null)
+            {
+                continue;
+            }
+
+            ElevatorTrigger trigger = elevator.GetComponentInChildren<ElevatorTrigger>(true);
+            int index = trigger != null ? trigger.ElevatorIndex : -1;
+            if (trigger != null && trigger.IsPlayerInside)
+            {
+                Debug.Log($"ElevatorManager: Skip close for elevator {index} (player inside).");
+                continue;
+            }
+
+            ElevatorMaskDisplayController display = elevator.GetComponentInChildren<ElevatorMaskDisplayController>(true);
+            if (display == null || !display.HasActiveMask())
+            {
+                Debug.Log($"ElevatorManager: Closing elevator {index} (no active mask).");
+                elevator.CloseDoors();
+            }
+            else
+            {
+                Debug.Log($"ElevatorManager: Keeping elevator {index} open (mask present).");
+            }
+        }
+    }
+
+    private System.Collections.IEnumerator CloseElevatorsWithoutMasksAfterDelay()
+    {
+        yield return new WaitForSeconds(closeWithoutMaskDelaySeconds);
+        CloseElevatorsWithoutMasks();
     }
 
     public void ClearLiftMask(int elevatorIndex)

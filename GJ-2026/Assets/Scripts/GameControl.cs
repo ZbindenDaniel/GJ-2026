@@ -234,6 +234,7 @@ public class GameControl : MonoBehaviour
 
         elevatorManager.CloseByIndex(elevatorIndex);
         elevatorManager.OpenAllExcept(elevatorIndex);
+        elevatorManager.CloseElevatorsWithoutMasks();
     }
 
     public void OnMaskSelected(MaskAttributes mask)
