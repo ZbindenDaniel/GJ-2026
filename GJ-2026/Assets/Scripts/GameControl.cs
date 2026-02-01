@@ -197,19 +197,21 @@ public class GameControl : MonoBehaviour
         if (currentDesign == null)
         {
             currentLevel = Mathf.Max(1, startLevel);
+            Debug.Log($"GameControl: No current design. Starting level {currentLevel}.");
             StartCoroutine(SpawnLevelAfterDelay(currentLevel, 4f));
             return;
         }
         if (elevatorIndex == currentDesign.TargetElevatorIndex)
         {
-            Debug.Log("GameControl: Player entered the correct elevator.");
+            int nextLevel = currentLevel + 1;
+            Debug.Log($"GameControl: Correct elevator {elevatorIndex}. Advancing to level {nextLevel}.");
             SetNpcReaction(NpcMood.Happy);
-            StartCoroutine(SpawnLevelAfterDelay(currentLevel + 1, 4f));
+            StartCoroutine(SpawnLevelAfterDelay(nextLevel, 4f));
             currentLevel++;
         }
         else
         {
-            Debug.Log("GameControl: Player entered the wrong elevator.");
+            Debug.Log($"GameControl: Wrong elevator {elevatorIndex} (target {currentDesign.TargetElevatorIndex}).");
             SetNpcReaction(NpcMood.Assault);
             StartCoroutine(SpawnLevelAfterDelay(currentLevel == 0 ? 0 : currentLevel -1 , 4f));
                 

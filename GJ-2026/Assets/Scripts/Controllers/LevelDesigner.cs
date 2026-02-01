@@ -52,9 +52,8 @@ public class LevelDesigner : MonoBehaviour
         design.PlayerMask = PickPlayerMask(design.Npcs, attributeCount);
         design.LiftChoices = CreateLiftChoices(design.PlayerMask, attributeCount);
         design.Elevators = CreateElevators();
-
-        Debug.Log("TODO: here we need to set the target elevator index");
-        design.TargetElevatorIndex = 2; //ayerElevatorIndex(design.Elevators.Count);
+        design.TargetElevatorIndex = ResolveTargetElevatorIndex(design.PlayerMask, design.LiftChoices);
+        Debug.Log($"LevelDesigner: Level {design.LevelIndex} target elevator index {design.TargetElevatorIndex}.");
         return design;
     }
 
@@ -223,6 +222,24 @@ public class LevelDesigner : MonoBehaviour
         }
 
         return choices;
+    }
+
+    private static int ResolveTargetElevatorIndex(MaskAttributes playerMask, List<MaskAttributes> liftChoices)
+    {
+        if (liftChoices == null || liftChoices.Count == 0)
+        {
+            return 0;
+        }
+
+        for (int i = 0; i < liftChoices.Count; i++)
+        {
+            if (liftChoices[i].Equals(playerMask))
+            {
+                return i;
+            }
+        }
+
+        return 0;
     }
 
     private static MaskAttributes CreateDecoy(MaskAttributes baseMask, int changes)
