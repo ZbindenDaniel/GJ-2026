@@ -70,7 +70,11 @@ public class LevelDesigner : MonoBehaviour
         {
             return 1;
         }
-        return 2;
+        if (level <= 7)
+        {
+            return 2;
+        }
+        return 3;
     }
 
     private static int CalculateMaskCount(int level)
@@ -86,7 +90,8 @@ public class LevelDesigner : MonoBehaviour
         {
             Shape = GetRandomShape(),
             EyeState = GetRandomEyeState(),
-            Mouth = GetRandomMouthMood()
+            Mouth = GetRandomMouthMood(),
+            Color = GetRandomColor()
         };
 
         // Only allow both eyes + mouth or none at all.
@@ -94,6 +99,10 @@ public class LevelDesigner : MonoBehaviour
         {
             mask.EyeState = EyeState.None;
             mask.Mouth = MouthMood.None;
+        }
+        if (attributeCount < 3)
+        {
+            mask.Color = MaskColor.None;
         }
 
         return mask;
@@ -190,8 +199,8 @@ public class LevelDesigner : MonoBehaviour
         }
         else
         {
-            MaskAttributes decoy1 = CreateDecoy(normalizedPlayer, 1);
-            MaskAttributes decoy2 = CreateDecoy(normalizedPlayer, 2);
+            MaskAttributes decoy1 = CreateDecoy(normalizedPlayer, 1, attributeCount);
+            MaskAttributes decoy2 = CreateDecoy(normalizedPlayer, 2, attributeCount);
 
             if (used.Add(decoy1))
             {
@@ -204,7 +213,7 @@ public class LevelDesigner : MonoBehaviour
 
             while (choices.Count < 3)
             {
-                MaskAttributes extra = CreateDecoy(normalizedPlayer, Random.Range(1, 3));
+                MaskAttributes extra = CreateDecoy(normalizedPlayer, Random.Range(1, 3), attributeCount);
                 if (used.Add(extra))
                 {
                     choices.Add(extra);
@@ -242,24 +251,28 @@ public class LevelDesigner : MonoBehaviour
         return 0;
     }
 
-    private static MaskAttributes CreateDecoy(MaskAttributes baseMask, int changes)
+    private static MaskAttributes CreateDecoy(MaskAttributes baseMask, int changes, int attributeCount)
     {
         MaskAttributes mask = baseMask;
-        int remaining = Mathf.Clamp(changes, 1, 2);
+        int maxChanges = attributeCount >= 3 ? 3 : 2;
+        int remaining = Mathf.Clamp(changes, 1, maxChanges);
+        List<System.Action> options = new List<System.Action>
+        {
+            () => mask.Shape = GetDifferentShape(mask.Shape),
+            () => mask.EyeState = GetDifferentEyeState(mask.EyeState),
+            () => mask.Mouth = GetDifferentMouthMood(mask.Mouth)
+        };
+        if (attributeCount >= 3)
+        {
+            options.Add(() => mask.Color = GetDifferentColor(mask.Color));
+        }
 
-        if (remaining > 0)
+        for (int i = 0; i < remaining && options.Count > 0; i++)
         {
-            mask.Shape = GetDifferentShape(mask.Shape);
-            remaining--;
-        }
-        if (remaining > 0)
-        {
-            mask.EyeState = GetDifferentEyeState(mask.EyeState);
-            remaining--;
-        }
-        if (remaining > 0)
-        {
-            mask.Mouth = GetDifferentMouthMood(mask.Mouth);
+            int index = Random.Range(0, options.Count);
+            System.Action change = options[index];
+            options.RemoveAt(index);
+            change?.Invoke();
         }
 
         return mask;
@@ -273,6 +286,10 @@ public class LevelDesigner : MonoBehaviour
             mask.EyeState = EyeState.None;
             mask.Mouth = MouthMood.None;
         }
+        if (attributeCount < 3)
+        {
+            mask.Color = MaskColor.None;
+        }
         return mask;
     }
 
@@ -281,7 +298,8 @@ public class LevelDesigner : MonoBehaviour
         int shapeCount = 3;
         int eyeCount = attributeCount >= 2 ? 3 : 1;
         int mouthCount = attributeCount >= 2 ? 3 : 1;
-        return shapeCount * eyeCount * mouthCount;
+        int colorCount = attributeCount >= 3 ? 3 : 1;
+        return shapeCount * eyeCount * mouthCount * colorCount;
     }
 
 
@@ -328,5 +346,20 @@ public class LevelDesigner : MonoBehaviour
     private static MouthMood GetRandomMouthMood()
     {
         return (MouthMood)Random.Range(0, 3);
+    }
+
+    private static MaskColor GetRandomColor()
+    {
+        return (MaskColor)Random.Range(1, 4);
+    }
+
+    private static MaskColor GetDifferentColor(MaskColor current)
+    {
+        MaskColor next = GetRandomColor();
+        while (next == current)
+        {
+            next = GetRandomColor();
+        }
+        return next;
     }
 }

@@ -286,6 +286,7 @@ public class MaskSpamController : MonoBehaviour
         }
 
         selectable.SetData(option);
+        MaskColorPalette.ApplyToRenderers(maskObject.transform, option.Color);
     }
 
     private static void ActivateMaskVariant(Transform root, string code, bool logDetails)

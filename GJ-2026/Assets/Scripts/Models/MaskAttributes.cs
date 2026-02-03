@@ -6,10 +6,11 @@ public struct MaskAttributes : IEquatable<MaskAttributes>
     public MaskShape Shape;
     public EyeState EyeState;
     public MouthMood Mouth;
+    public MaskColor Color;
 
     public bool Equals(MaskAttributes other)
     {
-        return Shape == other.Shape && EyeState == other.EyeState && Mouth == other.Mouth;
+        return Shape == other.Shape && EyeState == other.EyeState && Mouth == other.Mouth && Color == other.Color;
     }
 
     public override bool Equals(object obj)
@@ -25,6 +26,7 @@ public struct MaskAttributes : IEquatable<MaskAttributes>
             hash = hash * 31 + (int)Shape;
             hash = hash * 31 + (int)EyeState;
             hash = hash * 31 + (int)Mouth;
+            hash = hash * 31 + (int)Color;
             return hash;
         }
     }
@@ -51,4 +53,12 @@ public enum MouthMood
     Happy = 0,
     Indifferent = 1,
     Sad = 2
+}
+
+public enum MaskColor
+{
+    None = 0,
+    Red = 1,
+    Green = 2,
+    Blue = 3
 }

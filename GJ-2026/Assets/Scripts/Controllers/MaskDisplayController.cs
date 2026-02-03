@@ -33,6 +33,7 @@ public class MaskDisplayController : MonoBehaviour
         }
 
         bool found = false;
+        Transform activeMask = null;
         int childCount = maskRoot.childCount;
         if (logDetails)
         {
@@ -67,7 +68,13 @@ public class MaskDisplayController : MonoBehaviour
             if (match)
             {
                 found = true;
+                activeMask = child;
             }
+        }
+
+        if (found && activeMask != null)
+        {
+            MaskColorPalette.ApplyToRenderers(activeMask, mask.Color);
         }
 
         if (!found)
