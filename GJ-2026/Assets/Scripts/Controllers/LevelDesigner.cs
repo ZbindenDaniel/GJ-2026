@@ -26,6 +26,7 @@ public class LevelDesigner : MonoBehaviour
         }
         int safeLevel = Mathf.Max(0, level);
         int attributeCount = GetAttributeCount(safeLevel);
+        int availableColorCount = GetAvailableColorCount(safeLevel);
         int npcCount = CalculateNpcCount(safeLevel);
 
         LevelDesignData design = new LevelDesignData
@@ -44,13 +45,13 @@ public class LevelDesigner : MonoBehaviour
             NpcDesignData npc = new NpcDesignData
             {
                 Id = i,
-                Mask = CreateMaskAttributes(attributeCount)
+                Mask = CreateMaskAttributes(attributeCount, availableColorCount)
             };
             design.Npcs.Add(npc);
         }
 
-        design.PlayerMask = PickPlayerMask(design.Npcs, attributeCount);
-        design.LiftChoices = CreateLiftChoices(design.PlayerMask, attributeCount);
+        design.PlayerMask = PickPlayerMask(design.Npcs, attributeCount, availableColorCount);
+        design.LiftChoices = CreateLiftChoices(design.PlayerMask, attributeCount, availableColorCount);
         design.Elevators = CreateElevators();
         design.TargetElevatorIndex = ResolveTargetElevatorIndex(design.PlayerMask, design.LiftChoices);
         Debug.Log($"LevelDesigner: Level {design.LevelIndex} target elevator index {design.TargetElevatorIndex}.");
@@ -77,6 +78,18 @@ public class LevelDesigner : MonoBehaviour
         return 3;
     }
 
+    private static int GetAvailableColorCount(int level)
+    {
+        if (level < 10)
+        {
+            return 0;
+        }
+
+        int unlocks = (level - 10) / 2;
+        int count = 3 + unlocks;
+        return Mathf.Clamp(count, 3, 8);
+    }
+
     private static int CalculateMaskCount(int level)
     {
         int levelIndex = Mathf.Max(0, level - BaseLevel);
@@ -84,14 +97,14 @@ public class LevelDesigner : MonoBehaviour
         return Mathf.Clamp(count, MinMasks, MaxMasks);
     }
 
-    private static MaskAttributes CreateMaskAttributes(int attributeCount)
+    private static MaskAttributes CreateMaskAttributes(int attributeCount, int availableColorCount)
     {
         MaskAttributes mask = new MaskAttributes
         {
             Shape = GetRandomShape(),
             EyeState = GetRandomEyeState(),
             Mouth = GetRandomMouthMood(),
-            Color = GetRandomColor()
+            Color = GetRandomColor(availableColorCount)
         };
 
         // Only allow both eyes + mouth or none at all.
@@ -101,6 +114,10 @@ public class LevelDesigner : MonoBehaviour
             mask.Mouth = MouthMood.None;
         }
         if (attributeCount < 3)
+        {
+            mask.Color = MaskColor.None;
+        }
+        else if (availableColorCount <= 0)
         {
             mask.Color = MaskColor.None;
         }
@@ -159,23 +176,23 @@ public class LevelDesigner : MonoBehaviour
         return index;
     }
 
-    private static MaskAttributes PickPlayerMask(List<NpcDesignData> npcs, int attributeCount)
+    private static MaskAttributes PickPlayerMask(List<NpcDesignData> npcs, int attributeCount, int availableColorCount)
     {
         if (npcs != null && npcs.Count > 0)
         {
             int index = Random.Range(0, npcs.Count);
-            return NormalizeMask(npcs[index].Mask, attributeCount);
+            return NormalizeMask(npcs[index].Mask, attributeCount, availableColorCount);
         }
 
-        return CreateMaskAttributes(attributeCount);
+        return CreateMaskAttributes(attributeCount, availableColorCount);
     }
 
-    private static List<MaskAttributes> CreateLiftChoices(MaskAttributes playerMask, int attributeCount)
+    private static List<MaskAttributes> CreateLiftChoices(MaskAttributes playerMask, int attributeCount, int availableColorCount)
     {
         List<MaskAttributes> choices = new List<MaskAttributes>(3);
         HashSet<MaskAttributes> used = new HashSet<MaskAttributes>();
 
-        MaskAttributes normalizedPlayer = NormalizeMask(playerMask, attributeCount);
+        MaskAttributes normalizedPlayer = NormalizeMask(playerMask, attributeCount, availableColorCount);
         choices.Add(normalizedPlayer);
         used.Add(normalizedPlayer);
 
@@ -199,8 +216,8 @@ public class LevelDesigner : MonoBehaviour
         }
         else
         {
-            MaskAttributes decoy1 = CreateDecoy(normalizedPlayer, 1, attributeCount);
-            MaskAttributes decoy2 = CreateDecoy(normalizedPlayer, 2, attributeCount);
+            MaskAttributes decoy1 = CreateDecoy(normalizedPlayer, 1, attributeCount, availableColorCount);
+            MaskAttributes decoy2 = CreateDecoy(normalizedPlayer, 2, attributeCount, availableColorCount);
 
             if (used.Add(decoy1))
             {
@@ -213,7 +230,7 @@ public class LevelDesigner : MonoBehaviour
 
             while (choices.Count < 3)
             {
-                MaskAttributes extra = CreateDecoy(normalizedPlayer, Random.Range(1, 3), attributeCount);
+                MaskAttributes extra = CreateDecoy(normalizedPlayer, Random.Range(1, 3), attributeCount, availableColorCount);
                 if (used.Add(extra))
                 {
                     choices.Add(extra);
@@ -251,10 +268,10 @@ public class LevelDesigner : MonoBehaviour
         return 0;
     }
 
-    private static MaskAttributes CreateDecoy(MaskAttributes baseMask, int changes, int attributeCount)
+    private static MaskAttributes CreateDecoy(MaskAttributes baseMask, int changes, int attributeCount, int availableColorCount)
     {
         MaskAttributes mask = baseMask;
-        int maxChanges = attributeCount >= 3 ? 3 : 2;
+        int maxChanges = attributeCount >= 3 && availableColorCount > 0 ? 3 : 2;
         int remaining = Mathf.Clamp(changes, 1, maxChanges);
         List<System.Action> options = new List<System.Action>
         {
@@ -262,9 +279,9 @@ public class LevelDesigner : MonoBehaviour
             () => mask.EyeState = GetDifferentEyeState(mask.EyeState),
             () => mask.Mouth = GetDifferentMouthMood(mask.Mouth)
         };
-        if (attributeCount >= 3)
+        if (attributeCount >= 3 && availableColorCount > 0)
         {
-            options.Add(() => mask.Color = GetDifferentColor(mask.Color));
+            options.Add(() => mask.Color = GetDifferentColor(mask.Color, availableColorCount));
         }
 
         for (int i = 0; i < remaining && options.Count > 0; i++)
@@ -279,7 +296,7 @@ public class LevelDesigner : MonoBehaviour
     }
 
 
-    private static MaskAttributes NormalizeMask(MaskAttributes mask, int attributeCount)
+    private static MaskAttributes NormalizeMask(MaskAttributes mask, int attributeCount, int availableColorCount)
     {
         if (attributeCount < 2)
         {
@@ -290,6 +307,14 @@ public class LevelDesigner : MonoBehaviour
         {
             mask.Color = MaskColor.None;
         }
+        else if (availableColorCount <= 0)
+        {
+            mask.Color = MaskColor.None;
+        }
+        else if ((int)mask.Color < 1 || (int)mask.Color > availableColorCount)
+        {
+            mask.Color = GetRandomColor(availableColorCount);
+        }
         return mask;
     }
 
@@ -298,7 +323,7 @@ public class LevelDesigner : MonoBehaviour
         int shapeCount = 3;
         int eyeCount = attributeCount >= 2 ? 3 : 1;
         int mouthCount = attributeCount >= 2 ? 3 : 1;
-        int colorCount = attributeCount >= 3 ? 3 : 1;
+        int colorCount = attributeCount >= 3 ? 8 : 1;
         return shapeCount * eyeCount * mouthCount * colorCount;
     }
 
@@ -348,17 +373,28 @@ public class LevelDesigner : MonoBehaviour
         return (MouthMood)Random.Range(0, 3);
     }
 
-    private static MaskColor GetRandomColor()
+    private static MaskColor GetRandomColor(int availableColorCount)
     {
-        return (MaskColor)Random.Range(1, 4);
+        if (availableColorCount <= 0)
+        {
+            return MaskColor.None;
+        }
+
+        int clamped = Mathf.Clamp(availableColorCount, 1, 8);
+        return (MaskColor)Random.Range(1, clamped + 1);
     }
 
-    private static MaskColor GetDifferentColor(MaskColor current)
+    private static MaskColor GetDifferentColor(MaskColor current, int availableColorCount)
     {
-        MaskColor next = GetRandomColor();
+        if (availableColorCount <= 1)
+        {
+            return GetRandomColor(availableColorCount);
+        }
+
+        MaskColor next = GetRandomColor(availableColorCount);
         while (next == current)
         {
-            next = GetRandomColor();
+            next = GetRandomColor(availableColorCount);
         }
         return next;
     }
