@@ -58,6 +58,13 @@ public class MusicManager : MonoBehaviour
                 return;
             }
 
+            if (fadeRoutine != null)
+            {
+                StopCoroutine(fadeRoutine);
+                fadeRoutine = null;
+            }
+
+            _audioSource.volume = _defaultVolume;
             _audioSource.loop = true;
             if (_audioSource.clip != clip)
             {
