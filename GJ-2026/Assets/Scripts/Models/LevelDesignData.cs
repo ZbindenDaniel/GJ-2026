@@ -12,4 +12,5 @@ public class LevelDesignData
     public int TargetElevatorIndex;
     public MaskAttributes PlayerMask;
     public List<MaskAttributes> LiftChoices;
+    public string LevelMessage;
 }

@@ -37,7 +37,8 @@ public class LevelDesigner : MonoBehaviour
             Npcs = new List<NpcDesignData>(npcCount),
             Elevators = new List<ElevatorDesignData>(),
             TargetElevatorIndex = 0,
-            LiftChoices = new List<MaskAttributes>()
+            LiftChoices = new List<MaskAttributes>(),
+            LevelMessage = GetLevelMessage(safeLevel)
         };
 
         for (int i = 0; i < npcCount; i++)
@@ -325,6 +326,21 @@ public class LevelDesigner : MonoBehaviour
         int mouthCount = attributeCount >= 2 ? 3 : 1;
         int colorCount = attributeCount >= 3 ? 8 : 1;
         return shapeCount * eyeCount * mouthCount * colorCount;
+    }
+
+    private static string GetLevelMessage(int level)
+    {
+        switch (level)
+        {
+            case 6:
+                return "Congrats, the easy rounds are over. Now it gets harder.";
+            case 10:
+                return "Final level: can you get the neutral level?";
+            case 11:
+                return "Congrats, you reached the end. Keep playing?";
+            default:
+                return null;
+        }
     }
 
 

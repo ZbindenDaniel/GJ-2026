@@ -135,6 +135,10 @@ public class GameControl : MonoBehaviour
         musicManager.PlayFloorSound(design.LevelIndex);
         elevatorManager.ResetElevators();
         elevatorManager.ApplyLiftMasks(design.LiftChoices);
+        if (elevatorResultUI != null && !string.IsNullOrWhiteSpace(design.LevelMessage))
+        {
+            elevatorResultUI.ShowMessage(design.LevelMessage);
+        }
 
         if (maskSelectionController != null)
         {
