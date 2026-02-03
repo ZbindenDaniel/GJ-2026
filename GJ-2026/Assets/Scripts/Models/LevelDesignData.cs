@@ -13,4 +13,5 @@ public class LevelDesignData
     public MaskAttributes PlayerMask;
     public List<MaskAttributes> LiftChoices;
     public string LevelMessage;
+    public FloorStyle FloorStyle;
 }

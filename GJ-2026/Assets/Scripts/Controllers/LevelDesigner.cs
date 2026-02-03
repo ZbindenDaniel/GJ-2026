@@ -38,7 +38,8 @@ public class LevelDesigner : MonoBehaviour
             Elevators = new List<ElevatorDesignData>(),
             TargetElevatorIndex = 0,
             LiftChoices = new List<MaskAttributes>(),
-            LevelMessage = GetLevelMessage(safeLevel)
+            LevelMessage = GetLevelMessage(safeLevel),
+            FloorStyle = GetFloorStyle(safeLevel)
         };
 
         for (int i = 0; i < npcCount; i++)
@@ -341,6 +342,12 @@ public class LevelDesigner : MonoBehaviour
             default:
                 return null;
         }
+    }
+
+    private static FloorStyle GetFloorStyle(int level)
+    {
+        int index = Mathf.Abs(level) % 8;
+        return (FloorStyle)index;
     }
 
 

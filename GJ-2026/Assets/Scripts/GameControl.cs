@@ -25,6 +25,7 @@ public class GameControl : MonoBehaviour
     [SerializeField] private MusicManager musicManager;
     [SerializeField] private MaskSelectionController maskSelectionController;
     [SerializeField] private ElevatorResultUI elevatorResultUI;
+    [SerializeField] private FloorVisualController floorVisualController;
     [SerializeField] private bool enableMaskSpawning = false;
     [SerializeField] private float elevatorLockSeconds = 5f;
     private int currentLevel;
@@ -74,6 +75,10 @@ public class GameControl : MonoBehaviour
         if (elevatorResultUI == null)
         {
             elevatorResultUI = FindFirstObjectByType<ElevatorResultUI>();
+        }
+        if (floorVisualController == null)
+        {
+            floorVisualController = FindFirstObjectByType<FloorVisualController>();
         }
 
         currentLevel = Mathf.Max(0, startLevel);
@@ -135,6 +140,10 @@ public class GameControl : MonoBehaviour
         musicManager.PlayFloorSound(design.LevelIndex);
         elevatorManager.ResetElevators();
         elevatorManager.ApplyLiftMasks(design.LiftChoices);
+        if (floorVisualController != null)
+        {
+            floorVisualController.ApplyStyle(design.FloorStyle);
+        }
         if (elevatorResultUI != null && !string.IsNullOrWhiteSpace(design.LevelMessage))
         {
             elevatorResultUI.ShowMessage(design.LevelMessage);
